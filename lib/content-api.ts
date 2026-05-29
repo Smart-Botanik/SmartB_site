@@ -9,6 +9,18 @@ export type ContentMedia = {
   height?: number | null;
 };
 
+export type GuideScope = "overview" | "variant" | "howto";
+
+export type TaxonomyChip = {
+  key: string;
+  label: string;
+};
+
+export type GuideMeta = {
+  scope: GuideScope;
+  terms: TaxonomyChip[];
+};
+
 export type CropGuide = {
   id: string;
   cropKind: CropKind;
@@ -87,3 +99,52 @@ export const CROP_KIND_LABELS: Record<CropKind, string> = {
   EGGPLANT: "Баклажаны",
   CUCUMBER: "Огурцы",
 };
+
+/** URL slug для hub-страницы культуры */
+export const CROP_KIND_SLUGS: Record<CropKind, string> = {
+  TOMATO: "tomat",
+  ZUCCHINI: "kabachok",
+  EGGPLANT: "baklazhan",
+  CUCUMBER: "ogurec",
+};
+
+const CROP_SLUG_TO_KIND: Record<string, CropKind> = {
+  tomat: "TOMATO",
+  kabachok: "ZUCCHINI",
+  baklazhan: "EGGPLANT",
+  ogurec: "CUCUMBER",
+};
+
+export function cropKindFromSlug(slug: string): CropKind | null {
+  return CROP_SLUG_TO_KIND[slug] ?? null;
+}
+
+export function parseGuideMeta(body: unknown): GuideMeta {
+  const fallback: GuideMeta = { scope: "overview", terms: [] };
+  if (!Array.isArray(body)) return fallback;
+
+  const taxonomyBlock = body.find(
+    block =>
+      typeof block === "object" &&
+      block !== null &&
+      (block as { type?: string }).type === "taxonomy",
+  ) as
+    | {
+        scope?: GuideScope;
+        terms?: Array<{ key?: string; label?: string }>;
+      }
+    | undefined;
+
+  if (!taxonomyBlock) return fallback;
+
+  const scope =
+    taxonomyBlock.scope === "variant" || taxonomyBlock.scope === "howto"
+      ? taxonomyBlock.scope
+      : "overview";
+
+  const terms = (taxonomyBlock.terms ?? [])
+    .filter(term => term.key && term.label)
+    .map(term => ({ key: String(term.key), label: String(term.label) }));
+
+  return { scope, terms };
+}

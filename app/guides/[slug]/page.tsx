@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { GuideBlocks, GuideCover } from "@/components/GuideBlocks";
-import { CROP_KIND_LABELS, fetchPublishedCropGuide } from "@/lib/content-api";
+import { GuideArticleLayout } from "@/components/GuideArticleLayout";
+import {
+  fetchPublishedCropGuide,
+  fetchPublishedCropGuides,
+  type CropGuide,
+} from "@/lib/content-api";
 
 export const revalidate = 3600;
 
@@ -28,9 +31,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function GuideDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let guide;
+  let guide: CropGuide | null | undefined;
+  let relatedGuides: CropGuide[] = [];
+
   try {
     guide = await fetchPublishedCropGuide(slug);
+    if (guide) {
+      relatedGuides = await fetchPublishedCropGuides(guide.cropKind);
+    }
   } catch {
     notFound();
   }
@@ -39,16 +47,5 @@ export default async function GuideDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <article className="guide-article">
-      <Link href="/guides" className="guide-back">
-        ← Все руководства
-      </Link>
-      <p className="guide-kind">{CROP_KIND_LABELS[guide.cropKind]}</p>
-      <h1 className="page-title">{guide.title}</h1>
-      {guide.excerpt ? <p className="page-lead">{guide.excerpt}</p> : null}
-      <GuideCover cover={guide.cover} />
-      <GuideBlocks body={guide.body} />
-    </article>
-  );
+  return <GuideArticleLayout guide={guide} relatedGuides={relatedGuides} />;
 }
