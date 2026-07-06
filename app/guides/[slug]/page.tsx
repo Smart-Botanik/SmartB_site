@@ -5,6 +5,7 @@ import { GuideArticleLayout } from "@/components/GuideArticleLayout";
 import {
   fetchPublishedCropGuide,
   fetchPublishedCropGuides,
+  sortPublishedGuides,
   type CropGuide,
 } from "@/lib/content-api";
 
@@ -37,7 +38,7 @@ export default async function GuideDetailPage({ params }: PageProps) {
   try {
     guide = await fetchPublishedCropGuide(slug);
     if (guide) {
-      relatedGuides = await fetchPublishedCropGuides(guide.cropKind);
+      relatedGuides = sortPublishedGuides(await fetchPublishedCropGuides(guide.cropKind));
     }
   } catch {
     notFound();
@@ -48,4 +49,13 @@ export default async function GuideDetailPage({ params }: PageProps) {
   }
 
   return <GuideArticleLayout guide={guide} relatedGuides={relatedGuides} />;
+}
+
+export async function generateStaticParams() {
+  try {
+    const guides = await fetchPublishedCropGuides();
+    return guides.map(guide => ({ slug: guide.slug }));
+  } catch {
+    return [];
+  }
 }

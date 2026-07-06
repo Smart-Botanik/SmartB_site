@@ -1,0 +1,83 @@
+import type { CropGuide } from "./content-api";
+
+export type GuideKnowledgeSection = "growing" | "preserving" | "reports" | "interesting";
+
+/** TOPIC keys → раздел на `/guides` (канон для редакторов). */
+export const GUIDE_SECTION_TOPIC_KEYS: Record<
+  Exclude<GuideKnowledgeSection, "growing">,
+  string[]
+> = {
+  preserving: ["topic.preserving", "topic.preservation", "topic.canning"],
+  reports: ["topic.reports", "topic.report"],
+  interesting: ["topic.interesting"],
+};
+
+const SECTION_ORDER: GuideKnowledgeSection[] = [
+  "growing",
+  "preserving",
+  "reports",
+  "interesting",
+];
+
+export const GUIDE_SECTION_META: Record<
+  GuideKnowledgeSection,
+  { title: string; subtitle: string; accentClass: string }
+> = {
+  growing: {
+    title: "Выращивание",
+    subtitle: "Техники, субстраты, свет и полив — от рассады до урожая.",
+    accentClass: "bg-primary-container",
+  },
+  preserving: {
+    title: "Закрутка",
+    subtitle: "Консервирование, маринование и хранение урожая.",
+    accentClass: "bg-secondary-fixed-dim",
+  },
+  reports: {
+    title: "Репорты",
+    subtitle: "Публичные гроу-репорты с заметками, метриками и фото по неделям.",
+    accentClass: "bg-secondary-fixed-dim",
+  },
+  interesting: {
+    title: "Интересное",
+    subtitle: "Подборки, эксперименты и истории из сообщества.",
+    accentClass: "bg-tertiary-container",
+  },
+};
+
+function guideTopicKeys(guide: CropGuide): string[] {
+  return (guide.taxonomyTags ?? []).map(tag => tag.key);
+}
+
+export function resolveGuideKnowledgeSection(guide: CropGuide): GuideKnowledgeSection {
+  const keys = guideTopicKeys(guide);
+
+  for (const section of SECTION_ORDER) {
+    if (section === "growing") {
+      continue;
+    }
+    const topicKeys = GUIDE_SECTION_TOPIC_KEYS[section];
+    if (topicKeys.some(key => keys.includes(key))) {
+      return section;
+    }
+  }
+
+  return "growing";
+}
+
+export function partitionGuidesByKnowledgeSection(
+  guides: CropGuide[],
+): Record<GuideKnowledgeSection, CropGuide[]> {
+  const buckets: Record<GuideKnowledgeSection, CropGuide[]> = {
+    growing: [],
+    preserving: [],
+    reports: [],
+    interesting: [],
+  };
+
+  for (const guide of guides) {
+    buckets[resolveGuideKnowledgeSection(guide)].push(guide);
+  }
+
+  return buckets;
+}

@@ -1,4 +1,5 @@
 import type { ContentMedia } from "@/lib/content-api";
+import { GuideFactCards } from "@/components/GuideFactCards";
 
 type TBlock = Record<string, unknown>;
 
@@ -77,6 +78,20 @@ export function GuideBlocks({ body }: { body: unknown }) {
           }
           case "image":
             return <div key={key}>{renderImageBlock(block)}</div>;
+          case "factCards":
+            return (
+              <GuideFactCards
+                key={key}
+                title={typeof block.title === "string" ? block.title : undefined}
+                subtitle={typeof block.subtitle === "string" ? block.subtitle : undefined}
+                heroImage={
+                  typeof block.heroImage === "object" && block.heroImage !== null
+                    ? (block.heroImage as { url?: string; alt?: string })
+                    : undefined
+                }
+                items={Array.isArray(block.items) ? block.items : undefined}
+              />
+            );
           default:
             return null;
         }

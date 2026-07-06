@@ -1,13 +1,34 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Hanken_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 
-import { siteEnv } from "@/lib/env";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 
 import "./globals.css";
 
+const hanken = Hanken_Grotesk({
+  subsets: ["latin", "latin-ext", "cyrillic-ext"],
+  variable: "--font-hanken",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Growing App — советы по выращиванию",
-  description: "Руководства по выращиванию овощей и приложение для ведения дневника",
+  title: "SmartБотаник — гайды и гроу-репорты",
+  description:
+    "Руководства по выращиванию, закрутке и публичные гроу-репорты. Сообщество в Telegram.",
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({
@@ -16,23 +37,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body>
-        <header className="site-header">
-          <Link href="/" className="site-logo">
-            Growing App
-          </Link>
-          <nav className="site-nav">
-            <Link href="/guides">Руководства</Link>
-            <Link href={siteEnv.appBasePath} className="site-nav-cta">
-              Открыть приложение
-            </Link>
-          </nav>
-        </header>
-        <main className="site-main">{children}</main>
-        <footer className="site-footer">
-          <span>© Growing App</span>
-        </footer>
+    <html lang="ru" className={`${hanken.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <body className="min-h-screen bg-background font-body text-on-background antialiased">
+        <SiteHeader />
+        <main className="pt-16">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );

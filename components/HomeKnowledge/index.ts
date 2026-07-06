@@ -1,0 +1,1 @@
+export { HomeKnowledge } from "./HomeKnowledge";

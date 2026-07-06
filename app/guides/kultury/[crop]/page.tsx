@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { GuideCultureFilters } from "@/components/GuideCultureFilters";
+import { GuidePreviewCard } from "@/components/GuidePreviewCard";
 import {
   CROP_KIND_LABELS,
   CROP_KIND_SLUGS,
+  collectCultureLabelFilters,
   cropKindFromSlug,
   fetchPublishedCropGuides,
   parseGuideMeta,
+  sortPublishedGuides,
   type CropGuide,
 } from "@/lib/content-api";
 
@@ -15,6 +19,7 @@ export const revalidate = 3600;
 
 type PageProps = {
   params: Promise<{ crop: string }>;
+  searchParams: Promise<{ label?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -27,54 +32,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-function GuideListItem({ guide }: { guide: CropGuide }) {
-  const meta = parseGuideMeta(guide.body);
-
-  return (
-    <li>
-      <Link href={`/guides/${guide.slug}`} className="guide-hub-card">
-        <div className="guide-hub-card-head">
-          <h2>{guide.title}</h2>
-          {meta.scope === "variant" ? (
-            <span className="guide-scope guide-scope-variant">Подвид</span>
-          ) : (
-            <span className="guide-scope guide-scope-overview">Обзор</span>
-          )}
-        </div>
-        {guide.excerpt ? <p>{guide.excerpt}</p> : null}
-        {meta.terms.length > 0 ? (
-          <ul className="guide-taxonomy guide-taxonomy-compact">
-            {meta.terms.map(term => (
-              <li key={term.key}>
-                <span className="guide-taxonomy-chip">{term.label}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </Link>
-    </li>
-  );
-}
-
-export default async function CultureHubPage({ params }: PageProps) {
+export default async function CultureHubPage({ params, searchParams }: PageProps) {
   const { crop } = await params;
+  const { label: activeLabelKey } = await searchParams;
   const cropKind = cropKindFromSlug(crop);
 
   if (!cropKind) {
     notFound();
   }
 
+  let allGuides: CropGuide[] = [];
   let guides: CropGuide[] = [];
   try {
-    guides = await fetchPublishedCropGuides(cropKind);
+    allGuides = sortPublishedGuides(await fetchPublishedCropGuides(cropKind));
+    guides = activeLabelKey
+      ? sortPublishedGuides(await fetchPublishedCropGuides(cropKind, activeLabelKey))
+      : allGuides;
   } catch {
+    allGuides = [];
     guides = [];
   }
 
-  const overview = guides.filter(g => parseGuideMeta(g.body).scope === "overview");
-  const variants = guides.filter(g => parseGuideMeta(g.body).scope === "variant");
+  const labelFilters = collectCultureLabelFilters(allGuides);
+
+  const overview = guides.filter(g => parseGuideMeta(g).scope === "overview");
+  const variants = guides.filter(g => parseGuideMeta(g).scope === "variant");
   const other = guides.filter(g => {
-    const scope = parseGuideMeta(g.body).scope;
+    const scope = parseGuideMeta(g).scope;
     return scope !== "overview" && scope !== "variant";
   });
 
@@ -95,6 +79,12 @@ export default async function CultureHubPage({ params }: PageProps) {
         Обзорные материалы и узкие статьи по подвидам и способам выращивания.
       </p>
 
+      <GuideCultureFilters
+        cultureSlug={crop}
+        filters={labelFilters}
+        activeKey={activeLabelKey}
+      />
+
       {guides.length === 0 ? (
         <p className="page-empty">Пока нет опубликованных материалов.</p>
       ) : (
@@ -102,9 +92,11 @@ export default async function CultureHubPage({ params }: PageProps) {
           {overview.length > 0 ? (
             <section>
               <h2 className="section-title">Обзор</h2>
-              <ul className="guide-hub-list">
+              <ul className="guide-preview-list">
                 {overview.map(guide => (
-                  <GuideListItem key={guide.id} guide={guide} />
+                  <li key={guide.id}>
+                    <GuidePreviewCard guide={guide} showCulture={false} />
+                  </li>
                 ))}
               </ul>
             </section>
@@ -113,9 +105,11 @@ export default async function CultureHubPage({ params }: PageProps) {
           {variants.length > 0 ? (
             <section>
               <h2 className="section-title">Подвиды и типы</h2>
-              <ul className="guide-hub-list">
+              <ul className="guide-preview-list">
                 {variants.map(guide => (
-                  <GuideListItem key={guide.id} guide={guide} />
+                  <li key={guide.id}>
+                    <GuidePreviewCard guide={guide} showCulture={false} />
+                  </li>
                 ))}
               </ul>
             </section>
@@ -124,9 +118,11 @@ export default async function CultureHubPage({ params }: PageProps) {
           {other.length > 0 ? (
             <section>
               <h2 className="section-title">Дополнительно</h2>
-              <ul className="guide-hub-list">
+              <ul className="guide-preview-list">
                 {other.map(guide => (
-                  <GuideListItem key={guide.id} guide={guide} />
+                  <li key={guide.id}>
+                    <GuidePreviewCard guide={guide} showCulture={false} />
+                  </li>
                 ))}
               </ul>
             </section>

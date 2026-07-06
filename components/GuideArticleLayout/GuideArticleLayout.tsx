@@ -1,9 +1,11 @@
 import Link from "next/link";
 
 import { GuideBlocks, GuideCover } from "@/components/GuideBlocks";
+import { GuideMarkdown } from "@/components/GuideMarkdown";
 import {
   CROP_KIND_LABELS,
   CROP_KIND_SLUGS,
+  getGuideMarkdownContent,
   type CropGuide,
   type CropKind,
   type GuideScope,
@@ -46,6 +48,9 @@ function ScopeBadge({ scope }: { scope: GuideScope }) {
   if (scope === "variant") {
     return <span className="guide-scope guide-scope-variant">Подвид / тип</span>;
   }
+  if (scope === "howto") {
+    return <span className="guide-scope guide-scope-howto">Интересное</span>;
+  }
   return null;
 }
 
@@ -80,7 +85,7 @@ function RelatedGuides({
       <h2 className="guide-related-title">Ещё по этой культуре</h2>
       <ul className="guide-related-list">
         {items.map(item => {
-          const meta = parseGuideMeta(item.body);
+          const meta = parseGuideMeta(item);
           return (
             <li key={item.id}>
               <Link href={`/guides/${item.slug}`} className="guide-related-link">
@@ -101,7 +106,8 @@ export function GuideArticleLayout({
   guide,
   relatedGuides = [],
 }: GuideArticleLayoutProps) {
-  const meta = parseGuideMeta(guide.body);
+  const meta = parseGuideMeta(guide);
+  const markdownContent = getGuideMarkdownContent(guide);
   const bodyWithoutMeta = Array.isArray(guide.body)
     ? guide.body.filter(
         block =>
@@ -116,17 +122,21 @@ export function GuideArticleLayout({
       <Breadcrumbs cropKind={guide.cropKind} title={guide.title} />
 
       <header className="guide-header">
+        <h1 className="page-title">{guide.title}</h1>
         <div className="guide-header-badges">
           <ScopeBadge scope={meta.scope} />
           <p className="guide-kind">{CROP_KIND_LABELS[guide.cropKind]}</p>
         </div>
-        <h1 className="page-title">{guide.title}</h1>
         {guide.excerpt ? <p className="page-lead">{guide.excerpt}</p> : null}
         <TaxonomyChips terms={meta.terms} />
       </header>
 
       <GuideCover cover={guide.cover} />
-      <GuideBlocks body={bodyWithoutMeta} />
+      {markdownContent ? (
+        <GuideMarkdown markdown={markdownContent} />
+      ) : (
+        <GuideBlocks body={bodyWithoutMeta} />
+      )}
 
       <RelatedGuides guides={relatedGuides} currentSlug={guide.slug} />
 

@@ -1,152 +1,93 @@
 import Link from "next/link";
 
-import {
-  CROP_KIND_LABELS,
-  fetchPublishedCropGuides,
-  fetchPublishedSitePage,
-  type CropGuide,
-  type CropKind,
-} from "@/lib/content-api";
+import { HomeCultureChips } from "@/components/HomeCultureChips";
+import { HomeGrowReports } from "@/components/HomeGrowReports";
+import { HomeHero } from "@/components/HomeHero";
+import { HomeKnowledge } from "@/components/HomeKnowledge";
+import { HomeTelegramBlock } from "@/components/HomeTelegramBlock";
+import { MaterialIcon } from "@/components/MaterialIcon";
+import { fetchPublishedSitePage } from "@/lib/content-api";
 import { siteEnv } from "@/lib/env";
+import {
+  HOME_GROW_REPORTS,
+  HOME_KNOWLEDGE_CHAPTERS,
+} from "@/lib/site-content";
+import {
+  parseHomeSections,
+  resolveCultureChipsSection,
+  resolveTelegramBlockSection,
+  type CtaSection,
+} from "@/lib/site-sections";
 
 export const revalidate = 3600;
 
-type THeroSection = {
-  type: "hero";
-  title?: string;
-  subtitle?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
-};
-
-type TFeaturedSection = {
-  type: "featuredGuides";
-  cropKinds?: string[];
-};
-
-type TCtaSection = {
-  type: "ctaBlock";
-  title?: string;
-  text?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
-};
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
-
-function renderHero(section: THeroSection) {
+function renderCtaBlock(section: CtaSection) {
   return (
-    <section className="hero">
-      <h1>{section.title ?? "Growing App"}</h1>
-      {section.subtitle ? <p className="hero-lead">{section.subtitle}</p> : null}
-      <div className="hero-actions">
-        {section.ctaHref ? (
-          <Link href={section.ctaHref} className="button button-primary">
-            {section.ctaLabel ?? "Подробнее"}
-          </Link>
+    <section className="mx-auto max-w-container-max px-gutter py-16">
+      <div className="glass-effect rounded-2xl p-8 text-center md:p-12">
+        {section.title ? (
+          <h2 className="mb-3 font-headline text-headline text-white">{section.title}</h2>
         ) : null}
-        <Link href={siteEnv.appBasePath} className="button button-secondary">
-          Открыть приложение
-        </Link>
+        {section.text ? (
+          <p className="mx-auto mb-6 max-w-2xl text-on-surface-variant">{section.text}</p>
+        ) : null}
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href={siteEnv.telegramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary-container px-8 py-3 font-bold text-on-primary-container"
+          >
+            <MaterialIcon name="send" />
+            {section.ctaLabel ?? "Telegram-канал"}
+          </a>
+          {section.ctaHref ? (
+            <Link
+              href={section.ctaHref}
+              className="inline-flex items-center gap-2 rounded-xl border border-outline-variant px-8 py-3 font-bold text-primary-fixed-dim"
+            >
+              {section.ctaLabel ?? "Подробнее"}
+            </Link>
+          ) : null}
+        </div>
       </div>
-    </section>
-  );
-}
-
-function renderFeatured(guides: CropGuide[], section: TFeaturedSection) {
-  const kinds = (section.cropKinds ?? []) as CropKind[];
-  const filtered =
-    kinds.length > 0
-      ? guides.filter(guide => kinds.includes(guide.cropKind))
-      : guides;
-
-  return (
-    <section className="featured-guides">
-      <h2 className="section-title">Популярные культуры</h2>
-      <div className="guides-grid">
-        {filtered.map(guide => (
-          <Link key={guide.id} href={`/guides/${guide.slug}`} className="guide-card">
-            <div className="guide-card-body">
-              <span className="guide-card-kind">
-                {CROP_KIND_LABELS[guide.cropKind]}
-              </span>
-              <h3>{guide.title}</h3>
-              {guide.excerpt ? <p>{guide.excerpt}</p> : null}
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function renderCta(section: TCtaSection) {
-  return (
-    <section className="cta-block">
-      {section.title ? <h2>{section.title}</h2> : null}
-      {section.text ? <p>{section.text}</p> : null}
-      {section.ctaHref ? (
-        <Link href={section.ctaHref} className="button button-primary">
-          {section.ctaLabel ?? "Перейти"}
-        </Link>
-      ) : null}
     </section>
   );
 }
 
 export default async function HomePage() {
-  let page = null;
-  let guides: CropGuide[] = [];
+  let sections = parseHomeSections(null);
 
   try {
-    [page, guides] = await Promise.all([
-      fetchPublishedSitePage("home"),
-      fetchPublishedCropGuides(),
-    ]);
+    const page = await fetchPublishedSitePage("home");
+    sections = parseHomeSections(page?.sections);
   } catch {
-    page = null;
-    guides = [];
+    /* fallback to defaults */
   }
 
-  const sections = Array.isArray(page?.sections) ? page.sections : [];
-
-  if (sections.length === 0) {
-    return (
-      <section className="hero">
-        <p className="hero-kicker">Выращивание с умом</p>
-        <h1>Советы по культурам и дневник вашего сада</h1>
-        <p className="hero-lead">
-          Запустите seed контента или опубликуйте главную страницу в админке.
-        </p>
-        <div className="hero-actions">
-          <Link href="/guides" className="button button-primary">
-            Смотреть руководства
-          </Link>
-        </div>
-      </section>
-    );
-  }
+  const cultureChips = resolveCultureChipsSection(sections.cultureChips);
+  const telegramBlock = resolveTelegramBlockSection(
+    sections.telegramBlock,
+    siteEnv.telegramUrl,
+  );
 
   return (
     <div className="home-sections">
-      {sections.filter(isRecord).map((section, index) => {
-        switch (section.type) {
-          case "hero":
-            return <div key={`hero-${index}`}>{renderHero(section as THeroSection)}</div>;
-          case "featuredGuides":
-            return (
-              <div key={`featured-${index}`}>
-                {renderFeatured(guides, section as TFeaturedSection)}
-              </div>
-            );
-          case "ctaBlock":
-            return <div key={`cta-${index}`}>{renderCta(section as TCtaSection)}</div>;
-          default:
-            return null;
-        }
-      })}
+      <HomeHero
+        title={sections.hero.title}
+        subtitle={sections.hero.subtitle}
+        ctaLabel={sections.hero.ctaLabel ?? "Смотреть гайды"}
+        ctaHref={sections.hero.ctaHref ?? "/guides"}
+      />
+      <HomeTelegramBlock {...telegramBlock} />
+      <HomeCultureChips
+        title={cultureChips.title}
+        subtitle={cultureChips.subtitle}
+        cropKinds={cultureChips.cropKinds}
+      />
+      <HomeGrowReports reports={HOME_GROW_REPORTS} />
+      <HomeKnowledge chapters={HOME_KNOWLEDGE_CHAPTERS} />
+      {sections.ctaBlock ? renderCtaBlock(sections.ctaBlock) : null}
     </div>
   );
 }
