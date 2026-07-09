@@ -38,7 +38,7 @@ export function HomeKnowledge({ chapters }: HomeKnowledgeProps) {
     <section className="border-y border-outline-variant/10 bg-surface-container-low px-gutter py-20">
       <div className="mx-auto max-w-container-max">
         <div className="mb-12 text-center">
-          <h2 className="mb-2 font-headline text-headline text-white">База знаний</h2>
+          <h2 className="mb-2 font-headline text-headline text-on-surface">База знаний</h2>
           <p className="font-body text-on-surface-variant opacity-70">
             Гайды, закрутки, репорты и подборки — всё для вашего цикла от семени до банки.
           </p>
@@ -51,19 +51,25 @@ export function HomeKnowledge({ chapters }: HomeKnowledgeProps) {
               <Link
                 key={chapter.id}
                 href={chapter.href}
-                className="glass-effect group flex flex-col items-center gap-6 rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] md:flex-row md:items-start"
+                className="glass-effect group flex flex-col items-center gap-6 rounded-2xl p-8 transition-all duration-300 hover:shadow-card-hover md:flex-row md:items-start"
               >
                 <div
                   className={`flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl border ${accent.iconBg} ${accent.iconBorder}`}
                 >
-                  <MaterialIcon
-                    name={chapter.icon}
-                    className={`text-4xl ${accent.iconColor}`}
-                    filled
-                  />
+                  {/^[a-z0-9_]+$/.test(chapter.icon) ? (
+                    <MaterialIcon
+                      name={chapter.icon}
+                      className={`text-4xl ${accent.iconColor}`}
+                      filled
+                    />
+                  ) : (
+                    <span className="text-4xl leading-none" aria-hidden>
+                      {chapter.icon}
+                    </span>
+                  )}
                 </div>
                 <div className="space-y-3 text-center md:text-left">
-                  <h3 className="font-headline text-headline-mobile text-white">
+                  <h3 className="font-headline text-headline-mobile text-on-surface">
                     {chapter.title}
                   </h3>
                   <p className="text-sm text-on-surface-variant opacity-80">
