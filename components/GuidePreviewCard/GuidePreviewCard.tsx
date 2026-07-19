@@ -7,6 +7,7 @@ import {
   type CropGuide,
   type GuideScope,
 } from "@/lib/content-api";
+import { guideArticleHref, type GuideLinkVariant } from "@/lib/guide-view-paths";
 
 function ScopeBadge({ scope }: { scope: GuideScope }) {
   if (scope === "overview") {
@@ -24,14 +25,19 @@ function ScopeBadge({ scope }: { scope: GuideScope }) {
 type GuidePreviewCardProps = {
   guide: CropGuide;
   showCulture?: boolean;
+  linkVariant?: GuideLinkVariant;
 };
 
-export function GuidePreviewCard({ guide, showCulture = true }: GuidePreviewCardProps) {
+export function GuidePreviewCard({
+  guide,
+  showCulture = true,
+  linkVariant = "default",
+}: GuidePreviewCardProps) {
   const meta = parseGuideMeta(guide);
   const preview = getGuidePreviewImage(guide);
 
   return (
-    <Link href={`/guides/${guide.slug}`} className="guide-preview-card">
+    <Link href={guideArticleHref(guide.slug, linkVariant)} className="guide-preview-card">
       <div className="guide-preview-card-media">
         {preview?.url ? (
           // eslint-disable-next-line @next/next/no-img-element

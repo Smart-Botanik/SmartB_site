@@ -6,35 +6,49 @@ import {
   CROP_KIND_LABELS,
   CROP_KIND_SLUGS,
   getGuideMarkdownContent,
+  parseGuideMeta,
   type CropGuide,
   type CropKind,
   type GuideScope,
   type TaxonomyChip,
-  parseGuideMeta,
 } from "@/lib/content-api";
+import {
+  guideArticleHref,
+  guideCultureHubHref,
+  guidesCatalogHref,
+  type GuideLinkVariant,
+} from "@/lib/guide-view-paths";
 
 type GuideArticleLayoutProps = {
   guide: CropGuide;
   relatedGuides?: CropGuide[];
+  variant?: "default" | "view";
 };
 
 function Breadcrumbs({
   cropKind,
   title,
+  linkVariant = "default",
 }: {
   cropKind: CropKind;
   title: string;
+  linkVariant?: GuideLinkVariant;
 }) {
   const cultureSlug = CROP_KIND_SLUGS[cropKind];
   const cultureLabel = CROP_KIND_LABELS[cropKind];
+  const showHome = linkVariant !== "view";
 
   return (
     <nav className="guide-breadcrumbs" aria-label="Навигация">
-      <Link href="/">Главная</Link>
+      {showHome ? (
+        <>
+          <Link href="/">Главная</Link>
+          <span aria-hidden="true">/</span>
+        </>
+      ) : null}
+      <Link href={guidesCatalogHref(linkVariant)}>Руководства</Link>
       <span aria-hidden="true">/</span>
-      <Link href="/guides">Руководства</Link>
-      <span aria-hidden="true">/</span>
-      <Link href={`/guides/kultury/${cultureSlug}`}>{cultureLabel}</Link>
+      <Link href={guideCultureHubHref(cultureSlug, linkVariant)}>{cultureLabel}</Link>
       <span aria-hidden="true">/</span>
       <span className="guide-breadcrumbs-current">{title}</span>
     </nav>
@@ -73,9 +87,11 @@ function TaxonomyChips({ terms }: { terms: TaxonomyChip[] }) {
 function RelatedGuides({
   guides,
   currentSlug,
+  linkVariant = "default",
 }: {
   guides: CropGuide[];
   currentSlug: string;
+  linkVariant?: GuideLinkVariant;
 }) {
   const items = guides.filter(guide => guide.slug !== currentSlug);
   if (items.length === 0) return null;
@@ -88,7 +104,10 @@ function RelatedGuides({
           const meta = parseGuideMeta(item);
           return (
             <li key={item.id}>
-              <Link href={`/guides/${item.slug}`} className="guide-related-link">
+              <Link
+                href={guideArticleHref(item.slug, linkVariant)}
+                className="guide-related-link"
+              >
                 <span className="guide-related-link-title">{item.title}</span>
                 {meta.scope === "variant" ? (
                   <span className="guide-related-link-meta">Подвид</span>
@@ -105,7 +124,9 @@ function RelatedGuides({
 export function GuideArticleLayout({
   guide,
   relatedGuides = [],
+  variant = "default",
 }: GuideArticleLayoutProps) {
+  const isView = variant === "view";
   const meta = parseGuideMeta(guide);
   const markdownContent = getGuideMarkdownContent(guide);
   const bodyWithoutMeta = Array.isArray(guide.body)
@@ -118,8 +139,8 @@ export function GuideArticleLayout({
     : guide.body;
 
   return (
-    <article className="guide-article">
-      <Breadcrumbs cropKind={guide.cropKind} title={guide.title} />
+    <article className={`guide-article${isView ? " guide-article-view" : ""}`}>
+      <Breadcrumbs cropKind={guide.cropKind} title={guide.title} linkVariant={variant} />
 
       <header className="guide-header">
         <h1 className="page-title">{guide.title}</h1>
@@ -138,13 +159,19 @@ export function GuideArticleLayout({
         <GuideBlocks body={bodyWithoutMeta} />
       )}
 
-      <RelatedGuides guides={relatedGuides} currentSlug={guide.slug} />
+      <RelatedGuides
+        guides={relatedGuides}
+        currentSlug={guide.slug}
+        linkVariant={variant}
+      />
 
-      <footer className="guide-footer">
-        <Link href={`/guides/kultury/${CROP_KIND_SLUGS[guide.cropKind]}`}>
-          ← Все материалы: {CROP_KIND_LABELS[guide.cropKind]}
-        </Link>
-      </footer>
+      {!isView ? (
+        <footer className="guide-footer">
+          <Link href={guideCultureHubHref(CROP_KIND_SLUGS[guide.cropKind], variant)}>
+            ← Все материалы: {CROP_KIND_LABELS[guide.cropKind]}
+          </Link>
+        </footer>
+      ) : null}
     </article>
   );
 }

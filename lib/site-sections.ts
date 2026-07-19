@@ -1,5 +1,6 @@
 import type { CropKind } from "./content-api";
 import { DEFAULT_CROP_ORDER } from "./content-api";
+import { DEFAULT_CULTURE_TAG_KEYS } from "./default-cultures";
 
 export type HeroSection = {
   type: "hero";
@@ -13,7 +14,10 @@ export type CultureChipsSection = {
   type: "cultureChips";
   title?: string;
   subtitle?: string;
+  /** Legacy CMS field — mapped to tag keys when present. */
   cropKinds?: CropKind[];
+  /** Preferred culture tag keys for sidebar / selector. */
+  cultureTagKeys?: string[];
 };
 
 export type CtaSection = {
@@ -57,6 +61,18 @@ function parseCropKinds(value: unknown): CropKind[] | undefined {
   return kinds.length > 0 ? kinds : undefined;
 }
 
+function parseCultureTagKeys(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  const keys = value.filter(
+    (item): item is string => typeof item === "string" && item.startsWith("crop."),
+  );
+
+  return keys.length > 0 ? keys : undefined;
+}
+
 export function parseHomeSections(sections: unknown): ParsedHomeSections {
   const result: ParsedHomeSections = {
     hero: {},
@@ -80,6 +96,7 @@ export function parseHomeSections(sections: unknown): ParsedHomeSections {
           title: typeof section.title === "string" ? section.title : undefined,
           subtitle: typeof section.subtitle === "string" ? section.subtitle : undefined,
           cropKinds: parseCropKinds(section.cropKinds),
+          cultureTagKeys: parseCultureTagKeys(section.cultureTagKeys),
         };
         break;
       case "ctaBlock":
@@ -102,16 +119,33 @@ export function parseHomeSections(sections: unknown): ParsedHomeSections {
   return result;
 }
 
+/**
+ * CMS may reorder/extend the list, but must not drop site defaults
+ * (stale home cultureTagKeys often had only 4 crops).
+ */
+export function resolveCultureTagKeys(fromCms?: string[]): string[] {
+  if (!fromCms?.length) {
+    return DEFAULT_CULTURE_TAG_KEYS;
+  }
+
+  const seen = new Set(fromCms);
+  const missingDefaults = DEFAULT_CULTURE_TAG_KEYS.filter(key => !seen.has(key));
+  return [...fromCms, ...missingDefaults];
+}
+
 export function resolveCultureChipsSection(
   section: CultureChipsSection | null,
 ): CultureChipsSection {
-  return (
-    section ?? {
-      type: "cultureChips",
-      title: "Культуры",
-      subtitle: "Гайды и материалы по основным культурам — от рассады до урожая.",
-    }
-  );
+  const base = section ?? {
+    type: "cultureChips" as const,
+    title: "Культуры",
+    subtitle: "Гайды и материалы по основным культурам — от рассады до урожая.",
+  };
+
+  return {
+    ...base,
+    cultureTagKeys: resolveCultureTagKeys(base.cultureTagKeys),
+  };
 }
 
 export function resolveTelegramBlockSection(
@@ -120,7 +154,7 @@ export function resolveTelegramBlockSection(
 ): TelegramBlockSection {
   return {
     type: "telegramBlock",
-    title: section?.title ?? "Telegram-канал SmartБотanik",
+    title: section?.title ?? "Telegram-канал SmartБотаник",
     text:
       section?.text ??
       "Короткие советы, анонсы новых статей и ссылки на полные руководства на сайте.",

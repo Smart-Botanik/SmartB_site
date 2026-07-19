@@ -1,75 +1,62 @@
-import Link from "next/link";
-
-import { HomeCultureChips } from "@/components/HomeCultureChips";
-import { HomeGrowReports } from "@/components/HomeGrowReports";
+import { GuidesKnowledgeSections } from "@/components/GuidesKnowledgeSections";
+import { HomeDiaryCta } from "@/components/HomeDiaryCta";
 import { HomeHero } from "@/components/HomeHero";
 import { HomeKnowledge } from "@/components/HomeKnowledge";
-import { HomeTelegramBlock } from "@/components/HomeTelegramBlock";
-import { MaterialIcon } from "@/components/MaterialIcon";
-import { fetchPublishedSitePage } from "@/lib/content-api";
-import { siteEnv } from "@/lib/env";
+import { HomeLatest } from "@/components/HomeLatest";
+import { HomeSidebarCultures } from "@/components/HomeSidebarCultures";
 import {
-  HOME_GROW_REPORTS,
-  HOME_KNOWLEDGE_CHAPTERS,
-} from "@/lib/site-content";
+  fetchPublishedCropGuides,
+  fetchPublishedSitePage,
+  sortPublishedGuides,
+} from "@/lib/content-api";
 import {
-  parseHomeSections,
-  resolveCultureChipsSection,
-  resolveTelegramBlockSection,
-  type CtaSection,
-} from "@/lib/site-sections";
+  fetchPublishedCultureOptions,
+  resolveDefaultCultureOptions,
+} from "@/lib/culture-options";
+import { partitionGuidesByKnowledgeSection } from "@/lib/guide-sections";
+import { HOME_KNOWLEDGE_CHAPTERS } from "@/lib/site-content";
+import { parseHomeSections, resolveCultureChipsSection } from "@/lib/site-sections";
 
 export const revalidate = 3600;
-
-function renderCtaBlock(section: CtaSection) {
-  return (
-    <section className="mx-auto max-w-container-max px-gutter py-16">
-      <div className="glass-effect rounded-2xl p-8 text-center md:p-12">
-        {section.title ? (
-          <h2 className="mb-3 font-headline text-headline text-white">{section.title}</h2>
-        ) : null}
-        {section.text ? (
-          <p className="mx-auto mb-6 max-w-2xl text-on-surface-variant">{section.text}</p>
-        ) : null}
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href={siteEnv.telegramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary-container px-8 py-3 font-bold text-on-primary-container"
-          >
-            <MaterialIcon name="send" />
-            {section.ctaLabel ?? "Telegram-канал"}
-          </a>
-          {section.ctaHref ? (
-            <Link
-              href={section.ctaHref}
-              className="inline-flex items-center gap-2 rounded-xl border border-outline-variant px-8 py-3 font-bold text-primary-fixed-dim"
-            >
-              {section.ctaLabel ?? "Подробнее"}
-            </Link>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default async function HomePage() {
   let sections = parseHomeSections(null);
 
   try {
     const page = await fetchPublishedSitePage("home");
+
     sections = parseHomeSections(page?.sections);
   } catch {
     /* fallback to defaults */
   }
 
   const cultureChips = resolveCultureChipsSection(sections.cultureChips);
-  const telegramBlock = resolveTelegramBlockSection(
-    sections.telegramBlock,
-    siteEnv.telegramUrl,
+
+  let latestGuides = sortPublishedGuides([]);
+  let guidesBySection = partitionGuidesByKnowledgeSection([]);
+
+  try {
+    const guides = sortPublishedGuides(await fetchPublishedCropGuides());
+    latestGuides = guides;
+    guidesBySection = partitionGuidesByKnowledgeSection(guides);
+  } catch {
+    /* empty latest / useful blocks */
+  }
+
+  let cultureOptions = resolveDefaultCultureOptions(
+    [],
+    cultureChips.cultureTagKeys,
   );
+
+  try {
+    const catalog = await fetchPublishedCultureOptions();
+    cultureOptions = resolveDefaultCultureOptions(
+      catalog.options,
+      cultureChips.cultureTagKeys,
+    );
+  } catch {
+    /* keep DEFAULT_CULTURES merge without API enrichment */
+  }
 
   return (
     <div className="home-sections">
@@ -79,15 +66,28 @@ export default async function HomePage() {
         ctaLabel={sections.hero.ctaLabel ?? "Смотреть гайды"}
         ctaHref={sections.hero.ctaHref ?? "/guides"}
       />
-      <HomeTelegramBlock {...telegramBlock} />
-      <HomeCultureChips
-        title={cultureChips.title}
-        subtitle={cultureChips.subtitle}
-        cropKinds={cultureChips.cropKinds}
-      />
-      <HomeGrowReports reports={HOME_GROW_REPORTS} />
+
+      <section
+        id="latest"
+        className="mx-auto max-w-container-max scroll-mt-28 px-gutter py-16"
+      >
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+          <HomeLatest guides={latestGuides} limit={6} />
+
+          <HomeSidebarCultures cultures={cultureOptions} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-container-max scroll-mt-28 px-gutter pb-16">
+        <GuidesKnowledgeSections
+          guidesBySection={guidesBySection}
+          sectionIds={["interesting"]}
+        />
+      </section>
+
       <HomeKnowledge chapters={HOME_KNOWLEDGE_CHAPTERS} />
-      {sections.ctaBlock ? renderCtaBlock(sections.ctaBlock) : null}
+
+      <HomeDiaryCta />
     </div>
   );
 }

@@ -196,7 +196,7 @@ export const DEFAULT_CROP_ORDER: CropKind[] = [
 ];
 
 export const CROP_KIND_LABELS: Record<CropKind, string> = {
-  TOMATO: "Помидоры",
+  TOMATO: "Томаты",
   ZUCCHINI: "Кабачки",
   EGGPLANT: "Баклажаны",
   CUCUMBER: "Огурцы",

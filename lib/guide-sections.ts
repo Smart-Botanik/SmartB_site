@@ -12,12 +12,14 @@ export const GUIDE_SECTION_TOPIC_KEYS: Record<
   interesting: ["topic.interesting"],
 };
 
-const SECTION_ORDER: GuideKnowledgeSection[] = [
+export const GUIDE_SECTION_ORDER: GuideKnowledgeSection[] = [
   "growing",
   "preserving",
   "reports",
   "interesting",
 ];
+
+const SECTION_ORDER = GUIDE_SECTION_ORDER;
 
 export const GUIDE_SECTION_META: Record<
   GuideKnowledgeSection,
@@ -39,7 +41,7 @@ export const GUIDE_SECTION_META: Record<
     accentClass: "bg-secondary-fixed-dim",
   },
   interesting: {
-    title: "Интересное",
+    title: "Полезное",
     subtitle: "Подборки, эксперименты и истории из сообщества.",
     accentClass: "bg-tertiary-container",
   },
@@ -63,6 +65,20 @@ export function resolveGuideKnowledgeSection(guide: CropGuide): GuideKnowledgeSe
   }
 
   return "growing";
+}
+
+export type GuideSectionNavLink = {
+  href: string;
+  label: string;
+  sectionId: GuideKnowledgeSection;
+};
+
+export function getGuideSectionNavLinks(): GuideSectionNavLink[] {
+  return GUIDE_SECTION_ORDER.map(sectionId => ({
+    sectionId,
+    href: `/guides#${sectionId}`,
+    label: GUIDE_SECTION_META[sectionId].title,
+  }));
 }
 
 export function partitionGuidesByKnowledgeSection(

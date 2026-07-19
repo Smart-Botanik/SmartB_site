@@ -30,7 +30,7 @@ export function HomeCultureChips({
           <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
             База знаний
           </span>
-          <h2 className="mt-1 font-headline text-headline text-white">{title}</h2>
+          <h2 className="mt-1 font-headline text-headline text-on-surface">{title}</h2>
           {subtitle ? (
             <p className="mt-2 max-w-2xl font-body text-on-surface-variant opacity-80">
               {subtitle}
@@ -55,7 +55,7 @@ export function HomeCultureChips({
             <Link
               key={kind}
               href={href}
-              className="group glass-effect overflow-hidden rounded-2xl border border-outline-variant/10 transition-all duration-300 hover:border-primary-container/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+              className="group glass-effect overflow-hidden rounded-2xl border border-outline-variant/10 transition-all duration-300 hover:border-primary-container/30 hover:shadow-card-hover"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
@@ -68,7 +68,7 @@ export function HomeCultureChips({
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
               </div>
               <div className="flex items-center justify-between gap-2 p-4">
-                <span className="font-headline text-headline-mobile text-white">
+                <span className="font-headline text-headline-mobile text-on-surface">
                   {CROP_KIND_LABELS[kind]}
                 </span>
                 <MaterialIcon

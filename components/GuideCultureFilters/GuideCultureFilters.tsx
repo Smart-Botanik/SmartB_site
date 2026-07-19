@@ -1,23 +1,26 @@
 import Link from "next/link";
 
 import type { ContentLabel } from "@/lib/content-api";
+import { guideCultureHubHref, type GuideLinkVariant } from "@/lib/guide-view-paths";
 
 type GuideCultureFiltersProps = {
   cultureSlug: string;
   filters: ContentLabel[];
   activeKey?: string;
+  linkVariant?: GuideLinkVariant;
 };
 
 export function GuideCultureFilters({
   cultureSlug,
   filters,
   activeKey,
+  linkVariant = "default",
 }: GuideCultureFiltersProps) {
   if (filters.length === 0) {
     return null;
   }
 
-  const baseHref = `/guides/kultury/${cultureSlug}`;
+  const baseHref = guideCultureHubHref(cultureSlug, linkVariant);
 
   return (
     <nav className="guide-culture-filters" aria-label="Фильтр по меткам">

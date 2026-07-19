@@ -1,5 +1,6 @@
 import { GuidePreviewCard } from "@/components/GuidePreviewCard";
 import type { CropGuide } from "@/lib/content-api";
+import type { GuideLinkVariant } from "@/lib/guide-view-paths";
 import {
   GUIDE_SECTION_META,
   type GuideKnowledgeSection,
@@ -7,6 +8,9 @@ import {
 
 type GuidesKnowledgeSectionsProps = {
   guidesBySection: Record<GuideKnowledgeSection, CropGuide[]>;
+  linkVariant?: GuideLinkVariant;
+  /** Какие разделы показать; по умолчанию все */
+  sectionIds?: GuideKnowledgeSection[];
 };
 
 function SectionHeader({
@@ -34,9 +38,11 @@ function SectionHeader({
 function GuideSectionGrid({
   sectionId,
   guides,
+  linkVariant = "default",
 }: {
   sectionId: GuideKnowledgeSection;
   guides: CropGuide[];
+  linkVariant?: GuideLinkVariant;
 }) {
   const meta = GUIDE_SECTION_META[sectionId];
 
@@ -53,7 +59,7 @@ function GuideSectionGrid({
         <ul className="guide-preview-list grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {guides.map(guide => (
             <li key={guide.id}>
-              <GuidePreviewCard guide={guide} />
+              <GuidePreviewCard guide={guide} linkVariant={linkVariant} />
             </li>
           ))}
         </ul>
@@ -66,13 +72,28 @@ function GuideSectionGrid({
   );
 }
 
-export function GuidesKnowledgeSections({ guidesBySection }: GuidesKnowledgeSectionsProps) {
+const DEFAULT_SECTION_IDS: GuideKnowledgeSection[] = [
+  "growing",
+  "preserving",
+  "reports",
+  "interesting",
+];
+
+export function GuidesKnowledgeSections({
+  guidesBySection,
+  linkVariant = "default",
+  sectionIds = DEFAULT_SECTION_IDS,
+}: GuidesKnowledgeSectionsProps) {
   return (
     <div className="space-y-20">
-      <GuideSectionGrid sectionId="growing" guides={guidesBySection.growing} />
-      <GuideSectionGrid sectionId="preserving" guides={guidesBySection.preserving} />
-      <GuideSectionGrid sectionId="reports" guides={guidesBySection.reports} />
-      <GuideSectionGrid sectionId="interesting" guides={guidesBySection.interesting} />
+      {sectionIds.map(sectionId => (
+        <GuideSectionGrid
+          key={sectionId}
+          sectionId={sectionId}
+          guides={guidesBySection[sectionId]}
+          linkVariant={linkVariant}
+        />
+      ))}
     </div>
   );
 }

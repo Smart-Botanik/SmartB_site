@@ -1,66 +1,63 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { BrandWordmark } from "@/components/BrandWordmark";
 import { MaterialIcon } from "@/components/MaterialIcon";
-import { siteEnv } from "@/lib/env";
+import { SiteHeaderAuth } from "@/components/SiteHeaderAuth";
+import { SiteThemeToggle } from "@/components/SiteThemeToggle";
+import { SITE_HEADER_NAV_LINKS, isSiteNavLinkActive } from "@/lib/site-nav";
 
-const NAV_LINKS = [
-  { href: "/guides", label: "Гайды", match: (path: string) => path.startsWith("/guides") },
-  { href: "/journal", label: "Журнал", match: (path: string) => path.startsWith("/journal") },
-  { href: "/guides#reports", label: "Репорты", match: (path: string) => false },
-];
+function navLinkClassName(active: boolean): string {
+  return `whitespace-nowrap font-label text-label uppercase transition-colors ${
+    active
+      ? "border-b-2 border-primary-container pb-1 font-bold text-primary-container"
+      : "text-outline hover:text-on-surface"
+  }`;
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const [hash, setHash] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const syncHash = () => setHash(window.location.hash);
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, [pathname]);
+
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-surface/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-container-max items-center justify-between px-gutter">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <Image
-            src="/smart-botanik-logo-full.png"
-            alt="SmartБотаник"
-            width={160}
-            height={48}
-            className="h-10 w-auto"
-            priority
-          />
+    <header className="fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl">
+      <div className="mx-auto grid h-16 max-w-container-max grid-cols-[auto_1fr_auto] items-center px-gutter md:grid-cols-[1fr_auto_1fr]">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center justify-self-start"
+          aria-label="SmartБотanik — на главную"
+        >
+          <BrandWordmark className="h-8 w-auto sm:h-9" />
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Основная навигация">
-          {NAV_LINKS.map(link => {
-            const active = link.match(pathname);
+        <nav
+          className="hidden items-center justify-center gap-5 md:flex md:justify-self-center lg:gap-6"
+          aria-label="Основная навигация"
+        >
+          {SITE_HEADER_NAV_LINKS.map(link => {
+            const active = isSiteNavLinkActive(link, pathname, hash);
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-label text-label uppercase transition-colors ${
-                  active
-                    ? "border-b-2 border-primary-container pb-1 font-bold text-primary-container"
-                    : "text-outline hover:text-on-surface"
-                }`}
-              >
+              <Link key={link.href} href={link.href} className={navLinkClassName(active)}>
                 {link.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <a
-            href={siteEnv.telegramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-1 rounded-full bg-primary-container px-6 py-2 font-label text-label font-bold text-on-primary-container transition-all hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] active:scale-95 md:inline-flex"
-          >
-            <MaterialIcon name="send" className="text-[20px]" />
-            Telegram
-          </a>
+        <div className="flex items-center justify-self-end gap-3">
+          <SiteThemeToggle />
+          <SiteHeaderAuth />
 
           <button
             type="button"
@@ -75,11 +72,11 @@ export function SiteHeader() {
 
       {menuOpen ? (
         <nav
-          className="border-t border-white/10 bg-surface-container-low px-gutter py-4 md:hidden"
+          className="border-t border-outline-variant/40 bg-surface-container-low px-gutter py-4 md:hidden"
           aria-label="Мобильная навигация"
         >
           <div className="flex flex-col gap-3">
-            {NAV_LINKS.map(link => (
+            {SITE_HEADER_NAV_LINKS.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -89,15 +86,7 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <a
-              href={siteEnv.telegramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-label text-label text-primary-container"
-            >
-              <MaterialIcon name="send" className="text-[18px]" />
-              Telegram
-            </a>
+            <SiteHeaderAuth variant="mobile" />
           </div>
         </nav>
       ) : null}

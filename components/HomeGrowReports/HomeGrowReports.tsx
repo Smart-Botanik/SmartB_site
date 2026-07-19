@@ -14,7 +14,7 @@ export function HomeGrowReports({ reports }: HomeGrowReportsProps) {
     <section className="mx-auto max-w-container-max px-gutter py-20">
       <div className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <h2 className="mb-1 font-headline text-headline text-white">Выращивание</h2>
+          <h2 className="mb-1 font-headline text-headline text-on-surface">Выращивание</h2>
           <p className="font-body text-on-surface-variant opacity-70">
             Публичные гроу-репорты — циклы, заметки и метрики из реальных дневников.
           </p>
@@ -47,7 +47,7 @@ export function HomeGrowReports({ reports }: HomeGrowReportsProps) {
               </div>
             </div>
             <div className="space-y-3 p-6">
-              <h3 className="font-headline text-headline-mobile text-white">{report.title}</h3>
+              <h3 className="font-headline text-headline-mobile text-on-surface">{report.title}</h3>
               <p className="line-clamp-2 text-sm text-on-surface-variant">{report.excerpt}</p>
               <div className="space-y-3">
                 <div className="rounded-lg border border-primary-container/10 bg-surface-container-high p-3">
@@ -75,7 +75,7 @@ export function HomeGrowReports({ reports }: HomeGrowReportsProps) {
           <div className="mb-1 flex h-16 w-16 items-center justify-center rounded-full bg-primary-container/20">
             <MaterialIcon name="dataset" className="text-3xl text-primary-container" filled />
           </div>
-          <h3 className="font-headline text-headline-mobile text-white">Гровер как учёный</h3>
+          <h3 className="font-headline text-headline-mobile text-on-surface">Гровер как учёный</h3>
           <p className="text-sm text-on-surface-variant">
             Ведите дневник с метриками, фото и заметками — как в лаборатории, только про ваш
             урожай.

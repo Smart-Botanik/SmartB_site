@@ -1,0 +1,13 @@
+<svg viewBox="0 0 260 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SmartБотаник">
+  <text
+    x="0"
+    y="28"
+    font-family="Hanken Grotesk, system-ui, sans-serif"
+    font-size="30"
+    font-weight="700"
+    letter-spacing="-0.02em"
+  >
+    <tspan fill="#00ff9d">Smart</tspan>
+    <tspan fill="#dde2f3">Ботаник</tspan>
+  </text>
+</svg>

@@ -1,0 +1,1 @@
+export { CultureThumbnail } from "./CultureThumbnail";

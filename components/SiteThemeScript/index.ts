@@ -1,0 +1,1 @@
+export { SiteThemeScript } from "./SiteThemeScript";

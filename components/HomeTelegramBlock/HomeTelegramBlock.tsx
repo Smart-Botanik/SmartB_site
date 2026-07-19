@@ -22,7 +22,7 @@ export function HomeTelegramBlock({
               <MaterialIcon name="forum" className="text-3xl" filled />
             </div>
             <div>
-              <h2 className="font-headline text-headline-mobile text-white md:text-headline">
+              <h2 className="font-headline text-headline-mobile text-on-surface md:text-headline">
                 {title}
               </h2>
               {text ? (
@@ -34,7 +34,7 @@ export function HomeTelegramBlock({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-primary-container px-8 py-3 font-bold text-on-primary-container transition-all hover:shadow-[0_0_30px_rgba(0,255,157,0.3)] md:w-auto"
+            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-primary-container px-8 py-3 font-bold text-on-primary-container transition-all hover:shadow-accent-md md:w-auto"
           >
             <MaterialIcon name="send" />
             {buttonLabel}

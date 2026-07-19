@@ -1,0 +1,1 @@
+export { HomeLatest } from "./HomeLatest";

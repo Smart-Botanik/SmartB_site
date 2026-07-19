@@ -1,0 +1,20 @@
+---
+description: Site project memory — start here, cards not kanban
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# Site memory
+
+Before work in `site/`:
+
+1. Read `site/.memory/hub.md`
+2. Read `site/.memory/tasks/active.md`
+3. Open the relevant card under `site/.memory/tasks/cards/`
+
+Todos live in **active + cards** only. Do not update Obsidian `memory/tasks/kanban.md` for site tasks.
+
+Do not load the full monorepo `memory/` tree. Platform ADR/history only when needed (single files under `memory/docs/adr/` or `memory/hub.md`).
+
+After a meaningful step: update the card, `active.md` if WIP changed, and append `site/.memory/history.md`.

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
+import { SiteChrome } from "@/components/SiteChrome";
+import { SiteThemeScript } from "@/components/SiteThemeScript";
 
 import "./globals.css";
 
@@ -37,11 +37,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${hanken.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html
+      lang="ru"
+      className={`${hanken.variable} ${inter.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <SiteThemeScript />
+      </head>
       <body className="min-h-screen bg-background font-body text-on-background antialiased">
-        <SiteHeader />
-        <main className="pt-16">{children}</main>
-        <SiteFooter />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

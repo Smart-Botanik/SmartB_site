@@ -17,7 +17,7 @@ npm run dev
 
 | Команда | Описание |
 |---------|----------|
-| `npm run dev` | Dev-сервер (:3000) |
+| `npm run dev` | Dev-сервер (:3012) |
 | `npm run build` | Production build |
 | `npm run start` | Production server |
 

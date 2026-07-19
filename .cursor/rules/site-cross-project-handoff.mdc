@@ -1,0 +1,16 @@
+---
+description: Outbound blockers — create task cards, delegate to owner project
+alwaysApply: true
+---
+
+# Cross-project handoff (site)
+
+When site work needs a fix **outside** `site/` (taxonomy-service, content-service, BFF, contracts, admin, etc.):
+
+1. **Do not implement** in the other project's code from a site-only session.
+2. **Persist** an outbound blocker on the current site card (symptom, expected vs actual, owner domain). Optionally one line in `site/.memory/history.md`.
+3. **Create a task card** for the owner project (`memory/tasks/cards/` or that repo's `.memory/tasks/cards/`), with a bidirectional link to the site card.
+4. **Ask the user** before putting the new card on platform hub WIP (≤5 slots). Drafting the card is OK; silent enqueue is not.
+5. **Delegate** — user opens another project/window/agent on the owner card. Site waits and retests after the contract/service is fixed.
+
+Chat alone is not enough — the card is the handoff.
