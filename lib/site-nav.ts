@@ -12,6 +12,8 @@ export const SITE_HEADER_NAV_LINKS: SiteNavLink[] = [
   { href: "/#latest", label: "Последнее", homeSectionId: "latest" },
   { href: "/guides", label: "Гайды" },
   { href: "/guides", label: "Выращивание", guideSectionId: "growing" },
+  { href: "/useful", label: "Полезное" },
+  { href: "/calendar", label: "Календарь" },
   { href: "/journal", label: "Журнал" },
 ];
 
@@ -50,6 +52,10 @@ export function isSiteNavLinkActive(
 
   if (link.href === "/journal") {
     return pathname.startsWith("/journal");
+  }
+
+  if (link.href === "/calendar") {
+    return pathname.startsWith("/calendar");
   }
 
   if (link.href === "/useful") {

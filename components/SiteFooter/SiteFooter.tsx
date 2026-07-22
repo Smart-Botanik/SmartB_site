@@ -22,6 +22,18 @@ export function SiteFooter() {
             Гайды
           </Link>
           <Link
+            href="/useful"
+            className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
+          >
+            Полезное
+          </Link>
+          <Link
+            href="/calendar"
+            className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
+          >
+            Календарь
+          </Link>
+          <Link
             href="/journal"
             className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
           >

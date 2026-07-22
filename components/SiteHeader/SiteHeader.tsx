@@ -48,7 +48,11 @@ export function SiteHeader() {
           {SITE_HEADER_NAV_LINKS.map(link => {
             const active = isSiteNavLinkActive(link, pathname, hash);
             return (
-              <Link key={link.href} href={link.href} className={navLinkClassName(active)}>
+              <Link
+                key={`${link.href}:${link.label}`}
+                href={link.href}
+                className={navLinkClassName(active)}
+              >
                 {link.label}
               </Link>
             );
@@ -78,7 +82,7 @@ export function SiteHeader() {
           <div className="flex flex-col gap-3">
             {SITE_HEADER_NAV_LINKS.map(link => (
               <Link
-                key={link.href}
+                key={`${link.href}:${link.label}`}
                 href={link.href}
                 className="font-label text-label uppercase text-on-surface-variant"
                 onClick={() => setMenuOpen(false)}
