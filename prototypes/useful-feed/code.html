@@ -1,0 +1,349 @@
+<!DOCTYPE html><html lang="en" class="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9faf2",
+                        "primary-fixed-dim": "#a1d494",
+                        "surface-container-highest": "#e2e3dc",
+                        "on-primary-fixed": "#002201",
+                        "surface-container": "#edefe7",
+                        "primary": "#154212",
+                        "inverse-primary": "#a1d494",
+                        "on-background": "#191c18",
+                        "secondary-container": "#cae9bc",
+                        "primary-container": "#2d5a27",
+                        "outline-variant": "#c2c9bb",
+                        "inverse-on-surface": "#f0f1ea",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#363b31",
+                        "surface-bright": "#f9faf2",
+                        "surface-dim": "#d9dbd3",
+                        "secondary": "#4b6542",
+                        "surface-variant": "#e2e3dc",
+                        "on-secondary-fixed-variant": "#344d2c",
+                        "on-tertiary-container": "#bfc5b7",
+                        "surface": "#f9faf2",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#4c5247",
+                        "on-surface-variant": "#42493e",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#23501e",
+                        "secondary-fixed": "#cdebbe",
+                        "inverse-surface": "#2e312c",
+                        "secondary-fixed-dim": "#b1cfa4",
+                        "on-tertiary-fixed": "#181d15",
+                        "on-secondary-fixed": "#092005",
+                        "on-tertiary-fixed-variant": "#43483e",
+                        "surface-tint": "#3b6934",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#c3c8bb",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c18",
+                        "on-secondary-container": "#4f6a46",
+                        "surface-container-high": "#e7e9e1",
+                        "surface-container-low": "#f3f4ed",
+                        "outline": "#72796e",
+                        "on-primary-container": "#9dd090",
+                        "primary-fixed": "#bcf0ae",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#dfe4d7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "lg": "24px",
+                        "margin-desktop": "32px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "xl": "40px",
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "title-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "title-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-background font-body-lg overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md max-w-container-max mx-auto bg-background dark:bg-inverse-surface shadow-sm shadow-primary/5 transition-all">
+<div class="flex items-center gap-xl">
+<h1 class="font-plus-jakarta-sans text-headline-lg text-primary dark:text-inverse-primary font-bold tracking-tight">Digital Conservatory</h1>
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-lg py-sm w-80">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">search</span>
+<input type="text" placeholder="Explore flora..." class="bg-transparent border-none focus:ring-0 text-body-sm w-full">
+</div>
+</div>
+<nav class="flex items-center gap-lg">
+<button class="hidden md:flex items-center gap-xs bg-primary text-on-primary px-lg py-sm rounded-full font-semibold hover:bg-primary-container transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-original-icon="add_circle">add_circle</span>
+                New Post
+            </button>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-original-icon="notifications">notifications</span>
+</button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-original-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- SideNavBar (Left) -->
+<aside class="hidden lg:flex lg:col-span-3 flex-col sticky top-24 h-[calc(100vh-120px)] p-md bg-surface-container-low dark:bg-surface-dim rounded-r-xl">
+<div class="mb-xl px-sm"><div class="flex items-center justify-between mb-sm"><h4 class="font-plus-jakarta-sans text-title-md text-primary font-bold">Plant of the Week</h4><span class="material-symbols-outlined text-primary-container">star</span></div><div class="flex items-center justify-between gap-md"><div class="space-y-xs"><p class="font-bold text-on-surface">Fiddle Leaf Fig</p><p class="text-on-surface-variant text-label-md">Ficus lyrata • High Maintenance</p></div><button class="px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold text-label-md hover:opacity-80 transition-all">CARE GUIDE</button></div></div>
+<nav class="space-y-sm flex-grow">
+<a href="#" class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-semibold transition-all">
+<span class="material-symbols-outlined" data-icon="grid_view" data-original-icon="grid_view">grid_view</span>
+<span class="">All Posts</span>
+</a>
+<a href="#" class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="menu_book" data-original-icon="menu_book">menu_book</span>
+<span class="">Guides &amp; Tips</span>
+</a>
+<a href="#" class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="timelapse" data-original-icon="timelapse">timelapse</span>
+<span class="">Timelapses</span>
+</a>
+<a href="#" class="flex items-center gap-md p-md text-on-surface-variant/60 hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="volunteer_activism" data-original-icon="volunteer_activism">volunteer_activism</span>
+<span class="">Growth Support</span>
+</a>
+</nav>
+<div class="mt-auto space-y-sm">
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold hover:opacity-90 active:scale-[0.98] transition-all">Join Community</button>
+<div class="pt-md border-t border-outline-variant space-y-xs">
+<a href="#" class="flex items-center gap-md p-sm text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-label-md uppercase tracking-wider font-bold">Settings</span>
+</a>
+<a href="#" class="flex items-center gap-md p-sm text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-original-icon="help_outline">help_outline</span>
+<span class="text-label-md uppercase tracking-wider font-bold">Help</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Feed (Center) -->
+<section class="lg:col-span-6 space-y-xl">
+<!-- Filter Bar Mobile Only -->
+<div class="lg:hidden flex gap-sm overflow-x-auto hide-scrollbar pb-sm">
+<span class="bg-secondary-container text-on-secondary-container px-lg py-xs rounded-full text-label-md whitespace-nowrap">All Posts</span>
+<span class="bg-surface-container-high text-on-surface-variant px-lg py-xs rounded-full text-label-md whitespace-nowrap">Guides</span>
+<span class="bg-surface-container-high text-on-surface-variant px-lg py-xs rounded-full text-label-md whitespace-nowrap">Timelapses</span>
+<span class="bg-surface-container-high text-on-surface-variant px-lg py-xs rounded-full text-label-md whitespace-nowrap">Support</span>
+</div>
+<!-- Post Card 1: Monstera Carousel -->
+<article class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_0px_rgba(21,66,18,0.04)] overflow-hidden group">
+<div class="p-lg flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a young woman with botanical tattoos on her arms, smiling warmly, with a soft blurred greenhouse background, light mode aesthetic, soft daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNY-jmxpTxFOOjz94aWQBaVtjfnRuvX_xVY8wu1bMQMaqNZwGZeMb2iCbO5VzOp8eYzgFYWNSDTNfp0zT_hUTHDXrxC3Lk3Dlt704LD6PJrHdTdZwidgKYKSRdSRMp0W-vwOaWL57ct8juWeXpJj56Lrj8IPg9GVCI4RLgY9yX1nyKL1w0KCpDUlY_LeBTfpBsUL_KIkKVZoCdqM6e1G-H175hqaaeZ1rImyVAd3Oc0S25f89-j3iV">
+</div>
+<div>
+<p class="font-bold text-on-surface text-body-lg leading-tight">Elena Green</p>
+<p class="text-on-surface-variant text-label-md">2 hours ago • Urban Jungle</p>
+</div>
+</div>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="relative aspect-square">
+<img class="w-full h-full object-cover" data-alt="A lush, vibrant Monstera Deliciosa plant growing in a modern ceramic pot in a bright, sunlit conservatory. Large fenestrated leaves catching the morning light with deep green tones and high contrast shadows. The aesthetic is clean, professional plant photography with a nurturing and expert feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXWCPoNucecHJKSLGjJFkGEaTxDXLZlZnh7teC8FIvA-JzcFKXqL1iiw-nLimvjBuD_q_NB6gor9w2LiFDV_DiAqSOvFDIJ3eQAUmLRcBuYrUITfEq-kV9yci0vnwuCS1wVbVOmUJngnLHPufCiwzWkSUGUk1KoDTtub7oPYYxOiSXcqTf_cnCCe3XKEBOY5MDcqrLuS3R6EnILiguettm7Podolhj1fP_F3yTgb_gMEyC4FNahR3v">
+<div class="absolute top-md left-md">
+<span class="bg-primary/90 text-white px-lg py-xs rounded-full text-label-md font-bold glass-effect">Day 42 - Veg Stage</span>
+</div>
+<div class="absolute bottom-md right-md flex gap-xs">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+<div class="w-2 h-2 rounded-full bg-white/40"></div>
+</div>
+</div>
+<div class="p-lg space-y-md">
+<h3 class="font-plus-jakarta-sans text-title-md text-on-surface">My Monstera is thriving in the new conservatory setup!</h3>
+<p class="text-on-surface-variant text-body-sm">Finally seeing some massive fenestrations. The humidity control has been a game changer this month. #monstera #houseplants #urbanjungle #hydroponics</p>
+<div class="flex items-center justify-between pt-sm">
+<div class="flex items-center gap-xl">
+<button class="flex items-center gap-xs text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span class="font-bold text-label-md">1.2k</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-bold text-label-md">84</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">bookmark</span>
+</div>
+<div class="flex items-center gap-md pt-md border-t border-surface-container">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small circular profile photo of a person with short hair in a light-filled garden setting, soft bokeh, expert gardener vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABKGyFkc0B2dQgElajfq_J8EFOdk4r44uS9Gl0GwftlJQAS2Q-wO5gKPcXz3oE34Vfm-ySIwJ_DGTHuRykRu40NFlpn1iY14WI7KpQLaLSON7l-65LRqAorC_5go5dLkPNdwRCNNdmu3FxYrzSV5BPTpSonLT1fsWp9ay0i0dz7RlaRWw7PsjQHZUdie2oEm-brGLgw4GoCLOqF4bXXi9U3FZXBUUBnDYUpyRvjicThDTlEhxp4aTC">
+</div>
+<div class="flex-grow bg-surface-container rounded-full px-lg py-xs">
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-sm py-0" placeholder="Add a comment..." type="text">
+</div>
+</div>
+</div>
+</article>
+<!-- Post Card 2: Basil Timelapse -->
+<article class="bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_0px_rgba(21,66,18,0.04)] overflow-hidden">
+<div class="p-lg flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Profile icon for a professional hydroponics lab, clean modern branding with a subtle leaf logo, botanical green tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKFaFskG0BaAHNXDpMRNtjgagfR7wI_OP2sObUHs8uURQyqqh0zeCzRoll8w3OVrVy7Rs9c2inS2k0G05Nk35cwn1mfztASIFAH39Slzs5dVyjdmd0wfTbDhkGFVoYWTnkiDCRWDoBKflio3c3Fu2wyQ4gT_rXb7gaDqkJVIRx1zdrQWBL0s1y9jK4S-qwkZFmJ8rdnx2oAO8OXkTe5famQuw41MbcnQjlo9tvfdfzbP8LwxW9gLU2">
+</div>
+<div>
+<p class="font-bold text-on-surface text-body-lg leading-tight">HydroLab Pro</p>
+<p class="text-on-surface-variant text-label-md">5 hours ago • Timelapses</p>
+</div>
+</div>
+<button class="text-on-surface-variant"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="relative aspect-video bg-inverse-surface flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-60" data-alt="A cinematic, high-definition timelapse still of fresh Genovese Basil growing in a minimalist white hydroponic system. Bright clinical lighting, vibrant green leaves against a sterile white background, modern indoor agriculture aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbKbhCFO0fm9_s47_AtMJtKnbk6no8uZesSBfXpflLulKESoEATv_GgjATs_AKGqbQds897mcVOnpTEUcFudIVeO1YxwbBcfOFzCCygKrJCsOl0BuoUo1Lkaf83tFozgsPgDBalFrrLwb89B372A3OlgSc84CgNSSuf9gIw8ZA6coUSUBIg798qzY_tm2QhcFwboHIjH7frBuqLdfyWtwATKSS8XFTTQv4nYCoJFXKT2eqnKfPvlTu">
+<button class="absolute z-10 bg-white/20 hover:bg-white/40 backdrop-blur-xl p-xl rounded-full text-white transition-all scale-110 active:scale-95 group">
+<span class="material-symbols-outlined text-[48px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="absolute bottom-md left-md">
+<span class="bg-error/80 text-white px-md py-xs rounded text-label-md font-bold uppercase tracking-widest">LIVE TIMELAPSE</span>
+</div>
+</div>
+<div class="p-lg space-y-md">
+<h3 class="font-plus-jakarta-sans text-title-md text-on-surface">14-Day Basil Growth: Nutrients vs Tap Water</h3>
+<p class="text-on-surface-variant text-body-sm">Witness the incredible difference a calibrated nutrient solution makes in just two weeks. #hydroponics #basil #growthtimelapse #indoorfarming</p>
+<div class="flex items-center justify-between pt-sm">
+<div class="flex items-center gap-xl">
+<button class="flex items-center gap-xs text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span class="font-bold text-label-md">3.4k</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-bold text-label-md">215</span>
+</button>
+</div>
+<button class="text-primary font-bold text-label-md flex items-center gap-xs">
+                            VIEW GUIDE <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</section>
+<!-- Sidebar (Right) -->
+<aside class="hidden lg:flex lg:col-span-3 flex-col gap-xl">
+<!-- -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm"><div class="flex items-center justify-between mb-sm"><h4 class="font-plus-jakarta-sans text-title-md text-primary font-bold">Plant of the Week</h4><span class="material-symbols-outlined text-primary-container">star</span></div><div class="flex items-center justify-between gap-md"><div class="space-y-xs"><p class="font-bold text-on-surface">Fiddle Leaf Fig</p><p class="text-on-surface-variant text-label-md">Ficus lyrata • High Maintenance</p></div><button class="px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold text-label-md hover:opacity-80 transition-all">CARE GUIDE</button></div></div>
+<!-- Trending Guides -->
+<div class="space-y-md">
+<h4 class="font-plus-jakarta-sans text-title-md text-on-surface font-bold px-sm">Trending Guides</h4>
+<div class="space-y-sm">
+<div class="flex items-center gap-md p-sm hover:bg-surface-container rounded-xl transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-body-sm group-hover:text-primary">Hydroponics 101</p>
+<p class="text-on-surface-variant text-label-md">15k readers this week</p>
+</div>
+</div>
+<div class="flex items-center gap-md p-sm hover:bg-surface-container rounded-xl transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">light_mode</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-body-sm group-hover:text-primary">Mastering LED Specs</p>
+<p class="text-on-surface-variant text-label-md">8k readers this week</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Growth Stage Pills -->
+<div class="space-y-md">
+<h4 class="font-plus-jakarta-sans text-title-md text-on-surface font-bold px-sm">Filter by Stage</h4>
+<div class="flex flex-wrap gap-sm">
+<span class="px-md py-xs bg-primary-fixed text-on-primary-fixed rounded-full text-label-md font-bold cursor-pointer hover:opacity-80">Germination</span>
+<span class="px-md py-xs bg-secondary-fixed text-on-secondary-fixed rounded-full text-label-md font-bold cursor-pointer hover:opacity-80">Vegetative</span>
+<span class="px-md py-xs bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-label-md font-bold cursor-pointer hover:opacity-80">Flowering</span>
+<span class="px-md py-xs bg-surface-container-highest text-on-surface-variant rounded-full text-label-md font-bold cursor-pointer hover:opacity-80">Propagation</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-background dark:bg-inverse-surface shadow-lg rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-be-vietnam-pro text-label-md">Feed</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-be-vietnam-pro text-label-md">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-be-vietnam-pro text-label-md">Post</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-be-vietnam-pro text-label-md">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.98)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple scroll behavior for TopBar
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const topBar = document.querySelector('header');
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                topBar.style.transform = 'translateY(-100%)';
+            } else {
+                topBar.style.transform = 'translateY(0)';
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+
+</body></html>

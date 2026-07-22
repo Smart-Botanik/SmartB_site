@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { KnowledgeSectionPage } from "@/components/KnowledgeSectionPage";
+import { UsefulPageContent } from "@/components/UsefulPageContent";
 import { GUIDE_SECTION_META } from "@/lib/guide-sections";
 
 export const revalidate = 3600;
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function UsefulPage() {
-  return <KnowledgeSectionPage sectionId="interesting" />;
+  return <UsefulPageContent />;
 }

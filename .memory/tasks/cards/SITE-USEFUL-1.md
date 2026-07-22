@@ -33,3 +33,10 @@
 ## Out of scope
 
 Закрутка / Репорты — [`SITE-PRESERVE-1`](./SITE-PRESERVE-1.md) / [`SITE-REPORTS-1`](./SITE-REPORTS-1.md).
+
+---
+
+## Follow-up
+
+- [x] Rich sections (видео / фото / гайды) — [`SITE-USEFUL-2`](./SITE-USEFUL-2.md)
+- Platform: Media+taxonomy+caption talk [`ARCH-MEDIA-TAX-1`](../../../../memory/tasks/cards/ARCH-MEDIA-TAX-1.md) · admin upload [`FR-VUE-MEDIA-1`](../../../../memory/tasks/cards/FR-VUE-MEDIA-1.md)

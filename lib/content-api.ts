@@ -139,6 +139,122 @@ export async function fetchPublishedCropGuides(
   return data.publishedCropGuides;
 }
 
+export type MediaKind = "IMAGE" | "VIDEO";
+
+export type GalleryMedia = {
+  id: string;
+  url: string;
+  mime?: string | null;
+  width?: number | null;
+  height?: number | null;
+  kind?: MediaKind | null;
+  posterMediaId?: string | null;
+};
+
+export type MediaGalleryItem = {
+  id: string;
+  galleryId: string;
+  mediaId: string;
+  caption?: string | null;
+  alt?: string | null;
+  sortOrder: number;
+  posterMediaId?: string | null;
+  tagIds: string[];
+  media?: GalleryMedia | null;
+  poster?: GalleryMedia | null;
+};
+
+export type MediaGallery = {
+  id: string;
+  title?: string | null;
+  status: string;
+  tagIds: string[];
+  items: MediaGalleryItem[];
+};
+
+const GALLERY_FIELDS = `
+  id
+  title
+  status
+  tagIds
+  items {
+    id
+    galleryId
+    mediaId
+    caption
+    alt
+    sortOrder
+    posterMediaId
+    tagIds
+    media {
+      id
+      url
+      mime
+      width
+      height
+      kind
+      posterMediaId
+    }
+    poster {
+      id
+      url
+      mime
+      width
+      height
+      kind
+    }
+  }
+`;
+
+/** ADR-0019 — published gallery by id (BFF → content → media when cutover). */
+export async function fetchPublishedGallery(id: string) {
+  if (!id.trim()) return null;
+  try {
+    const data = await graphqlRequest<{ publishedGallery: MediaGallery | null }>(
+      `query PublishedGallery($id: ID!) {
+        publishedGallery(id: $id) { ${GALLERY_FIELDS} }
+      }`,
+      { id },
+    );
+    return data.publishedGallery;
+  } catch {
+    return null;
+  }
+}
+
+export type UsefulGalleries = {
+  imageGalleryId?: string | null;
+  videoGalleryId?: string | null;
+  image?: MediaGallery | null;
+  video?: MediaGallery | null;
+};
+
+/** «Полезное» galleries from content-service env ids (preferred). */
+export async function fetchPublishedUsefulGalleries() {
+  try {
+    const data = await graphqlRequest<{
+      publishedUsefulGalleries: UsefulGalleries;
+    }>(
+      `query PublishedUsefulGalleries {
+        publishedUsefulGalleries {
+          imageGalleryId
+          videoGalleryId
+          image { ${GALLERY_FIELDS} }
+          video { ${GALLERY_FIELDS} }
+        }
+      }`,
+    );
+    return data.publishedUsefulGalleries;
+  } catch {
+    return {
+      imageGalleryId: null,
+      videoGalleryId: null,
+      image: null,
+      video: null,
+    } satisfies UsefulGalleries;
+  }
+}
+
 export function sortPublishedGuides(guides: CropGuide[]): CropGuide[] {
   return [...guides].sort((a, b) => {
     const orderDiff = (a.sortOrder ?? 0) - (b.sortOrder ?? 0);

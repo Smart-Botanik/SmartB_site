@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CommentsList } from "@/components/CommentsList";
+import { EngagementBar } from "@/components/EngagementBar";
 import { GuideBlocks, GuideCover } from "@/components/GuideBlocks";
 import { GuideMarkdown } from "@/components/GuideMarkdown";
 import {
@@ -12,6 +14,7 @@ import {
   type GuideScope,
   type TaxonomyChip,
 } from "@/lib/content-api";
+import { getHardcodedEngagement, type EngagementBundle } from "@/lib/engagement";
 import {
   guideArticleHref,
   guideCultureHubHref,
@@ -23,6 +26,8 @@ type GuideArticleLayoutProps = {
   guide: CropGuide;
   relatedGuides?: CropGuide[];
   variant?: "default" | "view";
+  /** Prefetched engagement; defaults to hardcoded mock until BK-ENGAGE-1. */
+  engagement?: EngagementBundle;
 };
 
 function Breadcrumbs({
@@ -125,10 +130,13 @@ export function GuideArticleLayout({
   guide,
   relatedGuides = [],
   variant = "default",
+  engagement: engagementProp,
 }: GuideArticleLayoutProps) {
   const isView = variant === "view";
   const meta = parseGuideMeta(guide);
   const markdownContent = getGuideMarkdownContent(guide);
+  const engagement =
+    engagementProp ?? getHardcodedEngagement("GUIDE", guide.id);
   const bodyWithoutMeta = Array.isArray(guide.body)
     ? guide.body.filter(
         block =>
@@ -150,6 +158,11 @@ export function GuideArticleLayout({
         </div>
         {guide.excerpt ? <p className="page-lead">{guide.excerpt}</p> : null}
         <TaxonomyChips terms={meta.terms} />
+        <EngagementBar
+          stats={engagement.stats}
+          size="full"
+          className="guide-header-engagement"
+        />
       </header>
 
       <GuideCover cover={guide.cover} />
@@ -158,6 +171,12 @@ export function GuideArticleLayout({
       ) : (
         <GuideBlocks body={bodyWithoutMeta} />
       )}
+
+      <CommentsList
+        comments={engagement.comments}
+        title="Обсуждение"
+        className="guide-article-comments"
+      />
 
       <RelatedGuides
         guides={relatedGuides}
