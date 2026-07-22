@@ -56,7 +56,7 @@ export function CommentsList({
           <input
             type="text"
             disabled
-            placeholder="Комментарии скоро — ждём API (BK-ENGAGE-1)"
+            placeholder="Комментарии скоро — ждём social-service API"
             aria-label="Написать комментарий (скоро)"
           />
           <button type="button" disabled>

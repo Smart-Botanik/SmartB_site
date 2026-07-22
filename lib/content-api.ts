@@ -59,6 +59,8 @@ export type CropGuide = {
   bodySiteMdResolved?: string | null;
   bodyTelegramMd?: string | null;
   cover?: ContentMedia | null;
+  /** Opaque social Discussion id (ADR-0020); null until publish mint. */
+  discussionId?: string | null;
   taxonomyTags?: TaxonomyTag[];
   sortOrder?: number;
   publishedAt?: string | null;
@@ -97,6 +99,7 @@ const GUIDE_FIELDS = `
   bodySiteMdResolved
   bodyTelegramMd
   cover { id url width height }
+  discussionId
   taxonomyTags { ${TAXONOMY_TAG_FIELDS} }
   sortOrder
   publishedAt
@@ -339,19 +342,19 @@ export function cropKindFromSlug(slug: string): CropKind | null {
 
 const CROP_PREVIEW_IMAGES: Record<CropKind, { url: string; alt: string }> = {
   TOMATO: {
-    url: "https://images.unsplash.com/photo-1592924357224-548917444334?auto=format&fit=crop&w=800&q=80",
+    url: "/previews/tomato.jpg",
     alt: "Спелые помидоры",
   },
   ZUCCHINI: {
-    url: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=800&q=80",
+    url: "/previews/zucchini.jpg",
     alt: "Кабачки на грядке",
   },
   EGGPLANT: {
-    url: "https://images.unsplash.com/photo-1659261205536-6c2f4c8b6b0a?auto=format&fit=crop&w=800&q=80",
+    url: "/previews/eggplant.jpg",
     alt: "Баклажаны",
   },
   CUCUMBER: {
-    url: "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=800&q=80",
+    url: "/previews/cucumber.jpg",
     alt: "Огурцы",
   },
 };

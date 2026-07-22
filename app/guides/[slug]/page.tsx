@@ -8,6 +8,7 @@ import {
   sortPublishedGuides,
   type CropGuide,
 } from "@/lib/content-api";
+import { resolveEngagement } from "@/lib/social-api";
 
 export const revalidate = 3600;
 
@@ -48,7 +49,19 @@ export default async function GuideDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  return <GuideArticleLayout guide={guide} relatedGuides={relatedGuides} />;
+  const engagement = await resolveEngagement({
+    discussionId: guide.discussionId,
+    subjectType: "GUIDE",
+    subjectId: guide.id,
+  });
+
+  return (
+    <GuideArticleLayout
+      guide={guide}
+      relatedGuides={relatedGuides}
+      engagement={engagement}
+    />
+  );
 }
 
 export async function generateStaticParams() {

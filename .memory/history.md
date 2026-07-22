@@ -3,6 +3,104 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-07-23 — SITE-USEFUL-3: social-api + mock fallback (Frontend)
+
+**Role**: Frontend  
+**Change**: `lib/social-api.ts` → social-service :3014; guide + `/useful` resolve live engagement with hardcoded mock fallback; env `SOCIAL_GRAPHQL_URL`.  
+**Impact**: Direct site→social path per ADR-0020; UI works offline social / without discussionId.  
+**Reason**: Connect points; keep mocks until full mint + auth write.
+
+## 2026-07-23 — SITE-USEFUL-3: discussionId mocks (Frontend)
+
+**Role**: Frontend  
+**Change**: `lib/engagement.ts` → discussion-centric DTOs + mocks; guide/`useful` feed use `discussionId` when present (still hardcoded until BFF live).  
+**Impact**: UI contract matches ADR-0020; ready to swap mocks → BFF GraphQL later.  
+**Reason**: Social for site first; nest SocialModule is proxy only.
+
+## 2026-07-23 — Lunar howto guide on `/calendar` (Frontend)
+
+**Role**: Frontend  
+**Change**: Section `calendarLunarGuide` — compact RU phases/tips/zodiac (with ♈…♓); SVGs `public/calendar/moon-phase-*.svg`; `LunarGuide` below grid; Nest seed + admin preserve extras.  
+**Impact**: `/calendar` shows how-to guide even without CMS; seed republish updates content_db.  
+**Reason**: User asked for compact lunar howto + phase images + zodiac symbols.
+
+## 2026-07-22 — Soft borders: theme opacity + dark (Frontend)
+
+**Role**: Frontend  
+**Change**: Tailwind theme colors use `color-mix` + `<alpha-value>` so `/opacity` works; dark `outline-variant` cooler; culture tags + chrome/chips use softer `dark:border-*`.  
+**Impact**: Borders/tags no longer fall back to harsh `currentColor`; dark theme edges match glass-panel softness site-wide.  
+**Reason**: `/15` etc. were ignored on CSS-var colors; culture tags and list cards looked high-contrast in dark.
+
+## 2026-07-22 — SITE-CAL-2: moonlit header trial (Frontend)
+
+**Role**: Frontend  
+**Change**: Active `/calendar` header → `moon-calendar-header-moonlit.png`; previous garden kept as `moon-calendar-header-garden-saved.png`.  
+**Impact**: New moon+garden look to compare; prior art preserved for swap-back.  
+**Reason**: User liked previous image — save for next; try another similar theme.
+
+## 2026-07-22 — Home news/guides: local previews (Frontend)
+
+**Role**: Frontend  
+**Change**: `HomeNewsUpdates` title → «Новости и обновления» (nav «Последнее» unchanged); `HomeLatest` uses `getGuidePreviewImage`; crop + journal thumbs → `public/previews/*.jpg` (no Unsplash).  
+**Impact**: Home news and latest guides show real thumbnails even when CMS covers are null / remote CDNs fail.  
+**Reason**: User asked to fix missing previews and restore news block title.
+
+## 2026-07-22 — Item media gallery + lightbox (Frontend)
+
+**Role**: Frontend  
+**Change**: `ItemMediaGallery` — transparent dashed placeholder with icon when no cover; click opens full-size lightbox. Wired in `HomeLatest` (real cover only) and useful feed image/guide media.  
+**Impact**: List thumbs no longer use solid empty boxes; covers expand without leaving the page.  
+**Reason**: User asked for item gallery with placeholder icon and full view on click.
+
+## 2026-07-22 — Soft borders site-wide (Frontend)
+
+**Role**: Frontend  
+**Change**: Tailwind theme colors via `color-mix` + `<alpha-value>` so `/opacity` works; cooler dark `outline-variant`; soft `dark:` borders on culture tags, home cards, header/chrome, chips, guides.  
+**Impact**: Dark theme borders no longer fall back to harsh `currentColor`; culture tags and similar UI match softer panel edges.  
+**Reason**: Opacity modifiers on CSS-var colors were ignored; user asked to adapt culture-tag softness site-wide.
+
+## 2026-07-22 — SITE-HOME-NEWS-1: label «Последнее» (Frontend)
+
+**Role**: Frontend  
+**Change**: Nav + home news block title: «Новости и обновления» → «Последнее» (`site-nav`, `HomeNewsUpdates`).  
+**Impact**: Header and home section share the shorter label again.  
+**Reason**: User rename request.
+
+## 2026-07-22 — SITE-1: `/app` placeholder (Frontend)
+
+**Role**: Frontend  
+**Change**: Added coming-soon page at `/app` (`app/app/page.tsx`) — glass card with Telegram and guides CTAs.  
+**Impact**: Footer/home «Приложение — скоро» links resolve instead of 404.  
+**Reason**: User asked for an `/app` placeholder while full app routing stays paused.
+
+## 2026-07-22 — SITE-HOME-NEWS-1: news on home + nav (Frontend)
+
+**Role**: Frontend  
+**Change**: Home — `#news-updates` + «Последние гайды» stacked left; cultures sidebar right (`lg` 2-col). Nav «Новости и обновления» → `/#news-updates`.  
+**Impact**: Menu lands on news; guides + cultures share one home grid.  
+**Reason**: User asked for news & updates on main page; later for two-column split with cultures on the right.
+
+## 2026-07-22 — SITE-CAL-2: moon header gradient polish (Frontend)
+
+**Role**: Frontend  
+**Change**: Replaced milky stacked beige overlays with mask dissolve + light title-zone veil.  
+**Impact**: Garden stays clear; text still readable.  
+**Reason**: User said previous gradient looked bad.
+
+## 2026-07-22 — SITE-CAL-2: moon header full-bleed garden fade (Frontend)
+
+**Role**: Frontend  
+**Change**: `/calendar` header — new garden image full container under titles; vertical+horizontal page-bg gradients fade art beneath text; extra bottom padding to reveal shovel/plants.  
+**Impact**: Softer branded header; text stays readable.  
+**Reason**: User asked under-title full-bleed image with fade and more bottom show.
+
+## 2026-07-22 — SITE-CAL-2: moon calendar header caricature (Frontend)
+
+**Role**: Frontend  
+**Change**: `/calendar` header — decorative caricature (plants + shovel + crescent) via `public/moon-calendar-plants-shovel.png`; flex layout with copy + art.  
+**Impact**: Garden personality on moon calendar page without changing grid UX.  
+**Reason**: User asked to add plants-with-shovel caricature for moon calendar.
+
 ## 2026-07-22 — SITE-CAL-2: seasons calendar UI disabled (Frontend)
 
 **Role**: Frontend  

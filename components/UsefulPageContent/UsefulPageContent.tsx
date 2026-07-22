@@ -5,6 +5,7 @@ import {
   sortPublishedGuides,
 } from "@/lib/content-api";
 import { GUIDE_SECTION_META, partitionGuidesByKnowledgeSection } from "@/lib/guide-sections";
+import { resolveEngagement } from "@/lib/social-api";
 
 import { UsefulFeedClient } from "./UsefulFeedClient";
 import { buildUsefulFeedPosts, galleryItemsToFeed } from "./useful-feed";
@@ -46,6 +47,23 @@ export async function UsefulPageContent() {
     guides: guidesBySection.interesting,
   });
 
+  const postsWithEngagement = await Promise.all(
+    posts.map(async post => {
+      const subjectId =
+        post.type === "guide"
+          ? post.id.replace(/^guide\./, "")
+          : post.id.replace(/^(video|image)\./, "");
+      const subjectType =
+        post.type === "guide" ? ("GUIDE" as const) : ("MEDIA_GALLERY_ITEM" as const);
+      const engagement = await resolveEngagement({
+        discussionId: post.discussionId,
+        subjectType,
+        subjectId,
+      });
+      return { ...post, engagement };
+    }),
+  );
+
   return (
     <div className="mx-auto max-w-container-max px-gutter pb-20 pt-16">
       <div className="relative mb-10 px-[12px] py-[24px]">
@@ -64,7 +82,7 @@ export async function UsefulPageContent() {
         </p>
       </div>
 
-      <UsefulFeedClient posts={posts} />
+      <UsefulFeedClient posts={postsWithEngagement} />
     </div>
   );
 }

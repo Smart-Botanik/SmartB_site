@@ -5,8 +5,13 @@ import { useState } from "react";
 
 import { CommentsList } from "@/components/CommentsList";
 import { EngagementBar } from "@/components/EngagementBar";
+import { ItemMediaGallery } from "@/components/ItemMediaGallery";
 import { MaterialIcon } from "@/components/MaterialIcon";
-import { getHardcodedEngagement } from "@/lib/engagement";
+import {
+  getHardcodedEngagement,
+  getHardcodedEngagementByDiscussionId,
+  type EngagementBundle,
+} from "@/lib/engagement";
 
 import type { UsefulFeedPost } from "./useful-feed";
 
@@ -14,22 +19,22 @@ type UsefulFeedPostCardProps = {
   post: UsefulFeedPost;
 };
 
-function engagementTarget(post: UsefulFeedPost) {
-  if (post.type === "guide") {
-    return {
-      type: "GUIDE" as const,
-      id: post.id.replace(/^guide\./, ""),
-    };
+function engagementForPost(post: UsefulFeedPost): EngagementBundle {
+  if (post.engagement) return post.engagement;
+  if (post.discussionId) {
+    return getHardcodedEngagementByDiscussionId(post.discussionId);
   }
-  return {
-    type: "MEDIA_GALLERY_ITEM" as const,
-    id: post.id.replace(/^(video|image)\./, ""),
-  };
+  if (post.type === "guide") {
+    return getHardcodedEngagement("GUIDE", post.id.replace(/^guide\./, ""));
+  }
+  return getHardcodedEngagement(
+    "MEDIA_GALLERY_ITEM",
+    post.id.replace(/^(video|image)\./, ""),
+  );
 }
 
 export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
-  const target = engagementTarget(post);
-  const engagement = getHardcodedEngagement(target.type, target.id);
+  const engagement = engagementForPost(post);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const initial = post.authorName.slice(0, 1).toUpperCase();
 
@@ -77,12 +82,11 @@ export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
             </div>
           )
         ) : post.mediaSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            className="useful-feed-card-media-el"
+          <ItemMediaGallery
             src={post.mediaSrc}
             alt={post.alt?.trim() || post.title}
-            loading="lazy"
+            className="h-full min-h-[220px] w-full border-0"
+            imageClassName="useful-feed-card-media-el"
           />
         ) : (
           <div className="useful-feed-card-video-placeholder" aria-hidden>

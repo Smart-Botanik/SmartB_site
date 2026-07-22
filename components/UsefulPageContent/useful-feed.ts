@@ -3,6 +3,7 @@ import {
   CROP_KIND_LABELS,
   getGuidePreviewImage,
 } from "@/lib/content-api";
+import type { EngagementBundle } from "@/lib/engagement";
 import { guideArticleHref } from "@/lib/guide-view-paths";
 
 /** Post kinds in the unified «Полезное» feed. */
@@ -24,6 +25,10 @@ export type UsefulFeedPost = {
   metaLabel: string;
   badge?: string | null;
   isDemo?: boolean;
+  /** Opaque social discussion id when known (guides after publish mint). */
+  discussionId?: string | null;
+  /** Prefetched engagement (live or mock); filled on server. */
+  engagement?: EngagementBundle;
   sortAt: number;
 };
 
@@ -103,6 +108,7 @@ export function mediaItemsToPosts(
             : "Фото",
       badge: type === "video" ? "Таймлапс" : null,
       isDemo: item.isDemo,
+      discussionId: null,
       sortAt: gallerySortAt(index, index),
     };
   });
@@ -126,6 +132,7 @@ export function guidesToPosts(guides: CropGuide[]): UsefulFeedPost[] {
         ? `${formatRelativeRu(published)} · ${culture}`
         : `Гайды и советы · ${culture}`,
       badge: "Гайд",
+      discussionId: guide.discussionId ?? null,
       sortAt: Number.isFinite(published)
         ? published
         : Date.now() - (guide.sortOrder ?? index) * 86_400_000,

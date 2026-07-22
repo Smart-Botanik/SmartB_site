@@ -14,7 +14,11 @@ import {
   type GuideScope,
   type TaxonomyChip,
 } from "@/lib/content-api";
-import { getHardcodedEngagement, type EngagementBundle } from "@/lib/engagement";
+import {
+  getHardcodedEngagement,
+  getHardcodedEngagementByDiscussionId,
+  type EngagementBundle,
+} from "@/lib/engagement";
 import {
   guideArticleHref,
   guideCultureHubHref,
@@ -26,7 +30,7 @@ type GuideArticleLayoutProps = {
   guide: CropGuide;
   relatedGuides?: CropGuide[];
   variant?: "default" | "view";
-  /** Prefetched engagement; defaults to hardcoded mock until BK-ENGAGE-1. */
+  /** Prefetched engagement (live social or mock). */
   engagement?: EngagementBundle;
 };
 
@@ -136,7 +140,10 @@ export function GuideArticleLayout({
   const meta = parseGuideMeta(guide);
   const markdownContent = getGuideMarkdownContent(guide);
   const engagement =
-    engagementProp ?? getHardcodedEngagement("GUIDE", guide.id);
+    engagementProp ??
+    (guide.discussionId
+      ? getHardcodedEngagementByDiscussionId(guide.discussionId)
+      : getHardcodedEngagement("GUIDE", guide.id));
   const bodyWithoutMeta = Array.isArray(guide.body)
     ? guide.body.filter(
         block =>
