@@ -50,7 +50,7 @@ export const JOURNAL_NEWS: JournalNewsArticle[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1534723452862-4c874995d966?auto=format&fit=crop&w=800&q=80",
     imageAlt: "Вертикальная ферма с LED-освещением",
-    href: "/guides#interesting",
+    href: "/useful",
   },
   {
     id: "soil-probe",
@@ -62,7 +62,7 @@ export const JOURNAL_NEWS: JournalNewsArticle[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80",
     imageAlt: "Датчик в почве на грядке",
-    href: "/guides#growing",
+    href: "/guides",
   },
 ];
 

@@ -23,7 +23,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hub) {
     return { title: "Культура не найдена" };
   }
-  const seo = tagSurfaceSeo({ cultureLabel: hub.cultureLabel });
+  const seo = tagSurfaceSeo({
+    cultureLabel: hub.cultureLabel,
+    seoDescription: hub.seoDescription,
+  });
   return {
     title: seo.title,
     description: seo.description,
@@ -54,6 +57,7 @@ export default async function CultureHubViewPage({ params, searchParams }: PageP
         activeLabelKey={activeLabelKey}
         variant="view"
         hubLead={hub.hubLead}
+        aboutShort={hub.aboutShort}
         heroPreviewUrl={resolveTagSurfaceMediaUrl(hub.heroPreview)}
         labelFilters={hub.labelFilters}
       />

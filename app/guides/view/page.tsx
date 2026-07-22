@@ -12,11 +12,16 @@ export const metadata: Metadata = {
 };
 
 export default async function GuidesViewPage() {
-  const guidesBySection = await loadGuidesCatalogData();
+  const { allGuides, guidesBySection, presentations } = await loadGuidesCatalogData();
 
   return (
     <GuideViewShell>
-      <GuidesCatalog guidesBySection={guidesBySection} variant="view" />
+      <GuidesCatalog
+        allGuides={allGuides}
+        guidesBySection={guidesBySection}
+        presentations={presentations}
+        variant="view"
+      />
     </GuideViewShell>
   );
 }

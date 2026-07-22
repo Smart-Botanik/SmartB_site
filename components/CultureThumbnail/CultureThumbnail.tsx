@@ -1,41 +1,76 @@
-import Image from "next/image";
-
-import type { CultureOption } from "@/lib/culture-options";
+import type { CultureChipIcon, CultureOption } from "@/lib/culture-options";
 import { resolveMediaUrl } from "@/lib/culture-options";
 
+type CultureIconSource = Pick<CultureOption, "label" | "icon">;
+
 type CultureThumbnailProps = {
-  option: CultureOption;
+  option: CultureIconSource;
   size?: number;
+  /** `tile` — sidebar list; `inline` — compact glyph in pills/tabs. */
+  variant?: "tile" | "inline";
 };
 
-function pickThumbnailUrl(option: CultureOption): string | null {
-  if (option.preview?.url) {
-    return resolveMediaUrl(option.preview.url);
+/**
+ * Culture list icon priority: LOGO PNG → chip emoji.
+ * Never PREVIEW / IMAGE_M (option.preview).
+ */
+function pickLogoUrl(icon: CultureChipIcon): string | null {
+  if (icon.kind !== "MEDIA" || !icon.image?.url) {
+    return null;
   }
-
-  if (option.icon.kind === "MEDIA" && option.icon.image?.url) {
-    return resolveMediaUrl(option.icon.image.url);
-  }
-
-  return null;
+  return resolveMediaUrl(icon.image.url);
 }
 
-export function CultureThumbnail({ option, size = 48 }: CultureThumbnailProps) {
-  const imageUrl = pickThumbnailUrl(option);
-  const emoji = option.icon.emoji?.trim() || "🌱";
+function chipEmoji(icon: CultureChipIcon): string {
+  return icon.emoji?.trim() || "🌱";
+}
 
-  if (imageUrl) {
+export function CultureThumbnail({
+  option,
+  size = 48,
+  variant = "tile",
+}: CultureThumbnailProps) {
+  const logoUrl = pickLogoUrl(option.icon);
+  const emoji = chipEmoji(option.icon);
+
+  if (variant === "inline") {
+    if (logoUrl) {
+      return (
+        // next/image does not optimize SVG; keep crisp vector/PNG for chip LOGO.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={logoUrl}
+          alt=""
+          width={size}
+          height={size}
+          aria-hidden
+          className="shrink-0 object-contain"
+          style={{ width: size, height: size }}
+        />
+      );
+    }
+
+    return (
+      <span className="shrink-0 text-base leading-none" aria-hidden>
+        {emoji}
+      </span>
+    );
+  }
+
+  if (logoUrl) {
     return (
       <div
-        className="relative shrink-0 overflow-hidden rounded-lg"
+        className="relative shrink-0 overflow-hidden rounded-lg bg-surface-container-high p-2"
         style={{ width: size, height: size }}
       >
-        <Image
-          src={imageUrl}
+        {/* next/image does not optimize SVG; keep crisp vector for chip LOGO. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={logoUrl}
           alt={option.label}
-          fill
-          sizes={`${size}px`}
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          width={size}
+          height={size}
+          className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
     );

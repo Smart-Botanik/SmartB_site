@@ -20,6 +20,7 @@ type GuideCultureHubProps = {
   activeLabelKey?: string;
   variant?: GuideLinkVariant;
   hubLead?: string;
+  aboutShort?: string;
   heroPreviewUrl?: string | null;
   labelFilters?: ContentLabel[];
 };
@@ -33,6 +34,7 @@ export function GuideCultureHub({
   activeLabelKey,
   variant = "default",
   hubLead,
+  aboutShort,
   heroPreviewUrl,
   labelFilters,
 }: GuideCultureHubProps) {
@@ -42,6 +44,7 @@ export function GuideCultureHub({
   const lead =
     hubLead?.trim() ||
     "Обзорные материалы и узкие статьи по подвидам и способам выращивания.";
+  const about = aboutShort?.trim();
 
   const overview = guides.filter(g => parseGuideMeta(g).scope === "overview");
   const variants = guides.filter(g => parseGuideMeta(g).scope === "variant");
@@ -76,9 +79,11 @@ export function GuideCultureHub({
         </div>
       ) : null}
       <p className="page-lead">{lead}</p>
+      {about ? <p className="guide-hub-about">{about}</p> : null}
 
       <GuideCultureFilters
         cultureSlug={cultureSlug}
+        cultureLabel={title}
         filters={resolvedLabelFilters}
         activeKey={activeLabelKey}
         linkVariant={variant}

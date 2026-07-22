@@ -40,7 +40,7 @@ export function HomeKnowledge({ chapters }: HomeKnowledgeProps) {
         <div className="mb-12 text-center">
           <h2 className="mb-2 font-headline text-headline text-on-surface">База знаний</h2>
           <p className="font-body text-on-surface-variant opacity-70">
-            Гайды, закрутки, репорты и подборки — всё для вашего цикла от семени до банки.
+            Гайды, закрутки, репорты и подборки — отдельные разделы базы знаний.
           </p>
         </div>
 

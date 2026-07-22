@@ -1,3 +1,5 @@
+import { GUIDE_SECTION_PAGE_HREF, type GuideKnowledgeSection } from "./guide-sections";
+
 /** Маршруты standalone view-режима (QR, визитки). */
 
 export function isGuideStandaloneView(pathname: string): boolean {
@@ -36,5 +38,12 @@ export function guideSectionNavHref(
   sectionId: string,
   variant: GuideLinkVariant = "default",
 ): string {
-  return `${guidesCatalogHref(variant)}#${sectionId}`;
+  if (sectionId === "growing") {
+    return guidesCatalogHref(variant);
+  }
+
+  return (
+    GUIDE_SECTION_PAGE_HREF[sectionId as GuideKnowledgeSection] ??
+    GUIDE_SECTION_PAGE_HREF.growing
+  );
 }

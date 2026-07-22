@@ -11,7 +11,7 @@ import {
   DEFAULT_CULTURES,
   type DefaultCulture,
 } from "@/lib/default-cultures";
-import { MAX_POPULAR_TAXONOMY_LABELS } from "@/lib/popular-taxonomy-labels";
+import { MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS } from "@/lib/popular-taxonomy-labels";
 
 type HomeSidebarCulturesProps = {
   cultures?: CultureOption[];
@@ -24,7 +24,7 @@ function PopularTaxonomyTags({
   hubSlug: string;
   tags: ContentLabel[];
 }) {
-  const visible = tags.slice(0, MAX_POPULAR_TAXONOMY_LABELS);
+  const visible = tags.slice(0, MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS);
   if (visible.length === 0) {
     return null;
   }
@@ -32,12 +32,12 @@ function PopularTaxonomyTags({
   const baseHref = cultureHubHref(hubSlug);
 
   return (
-    <ul className="mt-1 flex flex-wrap gap-1" aria-label="Популярные метки">
+    <ul className="mt-1 flex flex-wrap gap-x-[0.3rem] gap-y-[0.05rem]" aria-label="Метки культуры">
       {visible.map(tag => (
         <li key={tag.key}>
           <Link
             href={`${baseHref}?label=${encodeURIComponent(tag.key)}`}
-            className="inline-flex rounded-md border border-outline-variant/25 bg-surface-container-high px-1.5 py-0.5 text-[11px] leading-tight text-on-surface-variant transition-colors hover:border-primary-container/40 hover:text-primary-container"
+            className="inline-flex rounded-md border border-outline-variant/25 bg-surface-container-high px-1.5 py-1 text-[11px] leading-none text-on-surface-variant transition-colors hover:border-primary-container/40 hover:text-primary-container"
           >
             {tag.label}
           </Link>

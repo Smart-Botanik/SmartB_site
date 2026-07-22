@@ -3,7 +3,13 @@ import { GuidesCatalog, loadGuidesCatalogData } from "@/components/GuidesCatalog
 export const revalidate = 3600;
 
 export default async function GuidesPage() {
-  const guidesBySection = await loadGuidesCatalogData();
+  const { allGuides, guidesBySection, presentations } = await loadGuidesCatalogData();
 
-  return <GuidesCatalog guidesBySection={guidesBySection} />;
+  return (
+    <GuidesCatalog
+      allGuides={allGuides}
+      guidesBySection={guidesBySection}
+      presentations={presentations}
+    />
+  );
 }

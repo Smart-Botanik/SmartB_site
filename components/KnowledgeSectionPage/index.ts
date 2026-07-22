@@ -1,0 +1,1 @@
+export { KnowledgeSectionPage } from "./KnowledgeSectionPage";

@@ -1,10 +1,10 @@
 import type { ContentLabel } from "./content-api";
-import { POPULAR_TAXONOMY_LABELS } from "./popular-taxonomy-labels";
+import { getPopularTaxonomyLabelsForCulture } from "./popular-taxonomy-labels";
 
 /**
  * Дефолтный набор культур для sidebar / selector на site.
  * Не завязан на legacy CropKind enum — только taxonomy tag keys / labels.
- * Popular taxonomy labels are shared across every culture (max 3).
+ * Popular taxonomy labels are culture-specific (max 5; sidebar shows max 2).
  */
 
 type DefaultCultureSeed = {
@@ -15,7 +15,7 @@ type DefaultCultureSeed = {
 };
 
 export type DefaultCulture = DefaultCultureSeed & {
-  /** Shared popular taxonomy labels — same set for every culture. */
+  /** Culture-specific popular taxonomy labels (sidebar-capped). */
   popularTags: ContentLabel[];
 };
 
@@ -31,7 +31,7 @@ const DEFAULT_CULTURE_SEEDS: DefaultCultureSeed[] = [
 export const DEFAULT_CULTURES: DefaultCulture[] = DEFAULT_CULTURE_SEEDS.map(
   culture => ({
     ...culture,
-    popularTags: POPULAR_TAXONOMY_LABELS,
+    popularTags: getPopularTaxonomyLabelsForCulture(culture.tagKey),
   }),
 );
 

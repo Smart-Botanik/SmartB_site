@@ -11,7 +11,7 @@ import {
 import { cultureFromHubSlug } from "./default-cultures";
 import { graphqlRequest } from "./graphql";
 import { resolveMediaUrl, type ContentMedia } from "./culture-options";
-import { POPULAR_TAXONOMY_LABELS } from "./popular-taxonomy-labels";
+import { getPopularTaxonomyLabelsForCulture } from "./popular-taxonomy-labels";
 
 export type ContentFacetWords = {
   hubTitle?: string | null;
@@ -141,7 +141,11 @@ export type CultureHubPageData = {
   cultureLabel: string;
   cropKind: CropKind | null;
   hubLead: string;
+  aboutShort?: string;
+  seoDescription?: string;
   heroPreview?: ContentMedia | null;
+  /** Hero + facet previews for presentation gallery. */
+  presentationPhotos: ContentMedia[];
   revision?: string;
   allGuides: CropGuide[];
   guides: CropGuide[];
@@ -177,11 +181,16 @@ export async function loadCultureHubPageData(params: {
     params.cultureSlug;
 
   const hubLead = facets?.words.hubLead?.trim() || DEFAULT_HUB_LEAD;
+  const aboutShort = facets?.words.aboutShort?.trim() || undefined;
+  const seoDescription = facets?.words.seoDescription?.trim() || undefined;
   const heroPreview =
     facets?.imageM ?? facets?.previews[0] ?? null;
+  const presentationPhotos = collectPresentationPhotos(facets);
 
   const allGuides = sortPublishedGuides(surface?.guides ?? []);
   const guides = filterGuidesByLabelKey(allGuides, params.activeLabelKey);
+  const cultureTagKey =
+    surface?.tag.key ?? fallbackCulture?.tagKey ?? tagKey;
 
   return {
     cultureSlug: params.cultureSlug,
@@ -191,18 +200,37 @@ export async function loadCultureHubPageData(params: {
       cropKindFromSlug(params.cultureSlug) ??
       null,
     hubLead,
+    aboutShort,
+    seoDescription,
     heroPreview,
+    presentationPhotos,
     revision: surface?.revision,
     allGuides,
     guides,
     labelFilters: mergeCultureLabelFilters(
-      POPULAR_TAXONOMY_LABELS,
+      getPopularTaxonomyLabelsForCulture(cultureTagKey),
       collectCultureLabelFilters(allGuides),
     ),
   };
 }
 
-/** Popular taxonomy labels first (shared), then culture-specific variants. */
+function collectPresentationPhotos(
+  facets?: TagSurfaceFacets | null,
+): ContentMedia[] {
+  const byKey = new Map<string, ContentMedia>();
+  for (const media of [facets?.imageM, ...(facets?.previews ?? [])]) {
+    if (!media?.url) {
+      continue;
+    }
+    const key = media.id || media.url;
+    if (!byKey.has(key)) {
+      byKey.set(key, media);
+    }
+  }
+  return [...byKey.values()];
+}
+
+/** Culture popular tags first, then other labels collected from guides. */
 function mergeCultureLabelFilters(
   popular: ContentLabel[],
   collected: ContentLabel[],
@@ -218,10 +246,12 @@ function mergeCultureLabelFilters(
 
 export function tagSurfaceSeo(params: {
   cultureLabel: string;
+  seoDescription?: string | null;
   facets?: TagSurfaceFacets | null;
 }): { title: string; description: string } {
   const label = params.cultureLabel;
   const description =
+    params.seoDescription?.trim() ||
     params.facets?.words.seoDescription?.trim() ||
     `Материалы по выращиванию: ${label.toLowerCase()}.`;
   return {

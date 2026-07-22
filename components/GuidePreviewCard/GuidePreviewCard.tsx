@@ -9,6 +9,9 @@ import {
 } from "@/lib/content-api";
 import { guideArticleHref, type GuideLinkVariant } from "@/lib/guide-view-paths";
 
+export type GuidePreviewCardSize = "small" | "middle" | "big";
+export type GuidePreviewLayout = "card" | "list";
+
 function ScopeBadge({ scope }: { scope: GuideScope }) {
   if (scope === "overview") {
     return <span className="guide-scope guide-scope-overview">Обзор</span>;
@@ -22,22 +25,55 @@ function ScopeBadge({ scope }: { scope: GuideScope }) {
   return null;
 }
 
+/** Pick a discrete card size from content density (tags + excerpt length). */
+export function resolveGuidePreviewCardSize(guide: CropGuide): GuidePreviewCardSize {
+  const meta = parseGuideMeta(guide);
+  const excerptLen = guide.excerpt?.trim().length ?? 0;
+  const hasTerms = meta.terms.length > 0;
+
+  if (hasTerms && excerptLen >= 110) {
+    return "big";
+  }
+  if (!hasTerms && excerptLen <= 90) {
+    return "small";
+  }
+  return "middle";
+}
+
 type GuidePreviewCardProps = {
   guide: CropGuide;
   showCulture?: boolean;
   linkVariant?: GuideLinkVariant;
+  /** Card size ladder (card layout only). Default `middle`. */
+  size?: GuidePreviewCardSize | "auto";
+  /** `card` = fixed-height media card; `list` = compact full-width row. */
+  layout?: GuidePreviewLayout;
 };
 
 export function GuidePreviewCard({
   guide,
   showCulture = true,
   linkVariant = "default",
+  size = "middle",
+  layout = "card",
 }: GuidePreviewCardProps) {
   const meta = parseGuideMeta(guide);
   const preview = getGuidePreviewImage(guide);
+  const resolvedSize = size === "auto" ? resolveGuidePreviewCardSize(guide) : size;
+  const isList = layout === "list";
+  const showTerms = !isList && resolvedSize !== "small" && meta.terms.length > 0;
+
+  const className = isList
+    ? "guide-preview-card guide-preview-card--list"
+    : `guide-preview-card guide-preview-card--${resolvedSize}`;
 
   return (
-    <Link href={guideArticleHref(guide.slug, linkVariant)} className="guide-preview-card">
+    <Link
+      href={guideArticleHref(guide.slug, linkVariant)}
+      className={className}
+      data-layout={layout}
+      data-size={isList ? undefined : resolvedSize}
+    >
       <div className="guide-preview-card-media">
         {preview?.url ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -67,7 +103,7 @@ export function GuidePreviewCard({
 
         {guide.excerpt ? <p className="guide-preview-card-excerpt">{guide.excerpt}</p> : null}
 
-        {meta.terms.length > 0 ? (
+        {showTerms ? (
           <ul className="guide-taxonomy guide-taxonomy-compact">
             {meta.terms.map(term => (
               <li key={term.key}>

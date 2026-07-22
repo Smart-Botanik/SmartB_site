@@ -31,25 +31,19 @@ export function HomeLatest({ guides, limit = 6 }: HomeLatestProps) {
   const items = guides.slice(0, limit);
 
   return (
-    <div>
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
-            Свежие материалы
-          </span>
-          <h2 className="mt-1 font-headline text-headline text-on-surface">Последнее</h2>
-          <p className="mt-2 max-w-2xl text-sm text-on-surface-variant opacity-80">
-            Недавно опубликованные гайды и статьи из базы знаний.
-          </p>
-        </div>
+    <div className="glass-effect rounded-2xl border border-outline-variant/10 p-5">
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <h2 className="font-headline text-headline-mobile text-on-surface">Последнее</h2>
         <Link
           href="/guides"
-          className="inline-flex items-center gap-1 font-label text-label text-primary-container transition-colors hover:underline"
+          className="font-label text-[10px] uppercase tracking-wide text-primary-container hover:underline"
         >
-          Все материалы
-          <MaterialIcon name="arrow_forward" className="text-[16px]" />
+          Все
         </Link>
       </div>
+      <p className="mb-4 text-sm text-on-surface-variant opacity-80">
+        Недавно опубликованные гайды и статьи из базы знаний.
+      </p>
 
       {items.length > 0 ? (
         <ul className="space-y-4">
@@ -100,13 +94,13 @@ export function HomeLatest({ guides, limit = 6 }: HomeLatestProps) {
           })}
         </ul>
       ) : (
-        <div className="rounded-xl border border-dashed border-outline-variant/40 bg-surface-container-low px-6 py-12 text-center">
-          <p className="text-on-surface-variant">
+        <div className="rounded-xl border border-dashed border-outline-variant/40 bg-surface-container-low/40 px-4 py-8 text-center">
+          <p className="text-sm text-on-surface-variant">
             Пока нет опубликованных материалов. Скоро появятся первые гайды.
           </p>
           <Link
             href="/guides"
-            className="mt-4 inline-flex items-center gap-1 font-label text-label text-primary-container hover:underline"
+            className="mt-3 inline-flex items-center gap-1 font-label text-label text-primary-container hover:underline"
           >
             Перейти в базу знаний
             <MaterialIcon name="arrow_forward" className="text-[16px]" />

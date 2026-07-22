@@ -39,7 +39,7 @@ export const HOME_GROW_REPORTS: GrowReportCard[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1592924357224-548917444334?auto=format&fit=crop&w=900&q=80",
     imageAlt: "Спелые помидоры в теплице",
-    href: "/guides#reports",
+    href: "/reports",
   },
   {
     id: "cucumber-report",
@@ -51,7 +51,7 @@ export const HOME_GROW_REPORTS: GrowReportCard[] = [
     imageUrl:
       "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=900&q=80",
     imageAlt: "Свежие огурцы на грядке",
-    href: "/guides#reports",
+    href: "/reports",
   },
 ];
 
@@ -64,7 +64,7 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     icon: "🌱",
     accent: "mint",
     tags: ["Гидропоника", "Освещение", "Почвы"],
-    href: "/guides#growing",
+    href: "/guides",
   },
   {
     id: "preserving",
@@ -74,7 +74,7 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     icon: "🫙",
     accent: "gold",
     tags: ["Маринование", "Сушка", "Хранение"],
-    href: "/guides#preserving",
+    href: "/preserving",
   },
   {
     id: "reports",
@@ -84,7 +84,7 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     icon: "📊",
     accent: "emerald",
     tags: ["Дневник", "Метрики", "Фото"],
-    href: "/guides#reports",
+    href: "/reports",
   },
   {
     id: "interesting",
@@ -94,7 +94,7 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     icon: "💡",
     accent: "neutral",
     tags: ["Сообщество", "Эксперименты", "Обзоры"],
-    href: "/guides#interesting",
+    href: "/useful",
   },
 ];
 
@@ -162,7 +162,7 @@ export const GUIDES_PRESERVING_ARTICLES: GuideArticlePreview[] = [
     excerpt:
       "Как выбрать ёмкости и подготовить их для длительного хранения без потери питательности.",
     icon: "kitchen",
-    href: "/guides#preserving",
+    href: "/preserving",
     section: "preserving",
   },
   {
@@ -170,7 +170,7 @@ export const GUIDES_PRESERVING_ARTICLES: GuideArticlePreview[] = [
     title: "Маринованные огурцы",
     excerpt: "Классический рассол, укроп и перец — пошаговый протокол ферментации.",
     icon: "lunch_dining",
-    href: "/guides#preserving",
+    href: "/preserving",
     section: "preserving",
   },
   {
@@ -179,7 +179,7 @@ export const GUIDES_PRESERVING_ARTICLES: GuideArticlePreview[] = [
     excerpt:
       "Массовая заготовка после урожая: от бланширования до автоклавирования.",
     icon: "soup_kitchen",
-    href: "/guides#preserving",
+    href: "/preserving",
     section: "preserving",
   },
   {
@@ -187,7 +187,7 @@ export const GUIDES_PRESERVING_ARTICLES: GuideArticlePreview[] = [
     title: "Сушка зелени",
     excerpt: "Базилик, петрушка и укроп — сушка при низкой температуре без потери аромата.",
     icon: "dehydrate",
-    href: "/guides#preserving",
+    href: "/preserving",
     section: "preserving",
   },
 ];
@@ -198,7 +198,7 @@ export const GUIDES_REPORTS_ARTICLES: GuideArticlePreview[] = [
     title: "Cherry indoor — 8 недель",
     excerpt: "Полный цикл на кокосе с еженедельными замерами EC и температуры.",
     icon: "monitoring",
-    href: "/guides#reports",
+    href: "/reports",
     section: "reports",
   },
   {
@@ -206,7 +206,7 @@ export const GUIDES_REPORTS_ARTICLES: GuideArticlePreview[] = [
     title: "Огурцы на вертикали",
     excerpt: "Вертикальная грядка, капельный полив, фото каждую неделю.",
     icon: "photo_camera",
-    href: "/guides#reports",
+    href: "/reports",
     section: "reports",
   },
   {
@@ -214,7 +214,7 @@ export const GUIDES_REPORTS_ARTICLES: GuideArticlePreview[] = [
     title: "Перец в тенте",
     excerpt: "Первый опыт с LED 240W: ошибки, исправления и итоговый урожай.",
     icon: "local_fire_department",
-    href: "/guides#reports",
+    href: "/reports",
     section: "reports",
   },
 ];
@@ -225,7 +225,7 @@ export const GUIDES_INTERESTING_ARTICLES: GuideArticlePreview[] = [
     title: "Лучшее из Telegram",
     excerpt: "Еженедельная подборка вопросов и находок из нашего канала.",
     icon: "forum",
-    href: "/guides#interesting",
+    href: "/useful",
     section: "interesting",
   },
   {
@@ -233,7 +233,7 @@ export const GUIDES_INTERESTING_ARTICLES: GuideArticlePreview[] = [
     title: "Эксперимент: CO₂-буст",
     excerpt: "Что изменилось в скорости роста при +400 ppm CO₂ в закрытом боксе.",
     icon: "biotech",
-    href: "/guides#interesting",
+    href: "/useful",
     section: "interesting",
   },
   {
@@ -241,7 +241,7 @@ export const GUIDES_INTERESTING_ARTICLES: GuideArticlePreview[] = [
     title: "Обзор pH-метра",
     excerpt: "Три бюджетных прибора — точность, калибровка и удобство в поле.",
     icon: "build",
-    href: "/guides#interesting",
+    href: "/useful",
     section: "interesting",
   },
   {
@@ -249,7 +249,7 @@ export const GUIDES_INTERESTING_ARTICLES: GuideArticlePreview[] = [
     title: "План сезона 2026",
     excerpt: "Как распределить культуры по месяцам в средней полосе.",
     icon: "calendar_month",
-    href: "/guides#interesting",
+    href: "/useful",
     section: "interesting",
   },
 ];

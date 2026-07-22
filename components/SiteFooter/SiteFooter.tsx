@@ -28,7 +28,7 @@ export function SiteFooter() {
             Журнал
           </Link>
           <Link
-            href="/guides#reports"
+            href="/reports"
             className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
           >
             Репорты

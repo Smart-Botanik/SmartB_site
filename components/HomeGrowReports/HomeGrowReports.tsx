@@ -20,7 +20,7 @@ export function HomeGrowReports({ reports }: HomeGrowReportsProps) {
           </p>
         </div>
         <Link
-          href="/guides#reports"
+          href="/reports"
           className="flex items-center gap-1 font-label text-label text-primary-container hover:underline"
         >
           Все репорты

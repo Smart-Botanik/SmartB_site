@@ -9,8 +9,8 @@ import {
 import { graphqlRequest } from "./graphql";
 import { siteEnv } from "./env";
 import {
-  MAX_POPULAR_TAXONOMY_LABELS,
-  POPULAR_TAXONOMY_LABELS,
+  getPopularTaxonomyLabelsForCulture,
+  MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS,
 } from "./popular-taxonomy-labels";
 
 export type ContentMedia = {
@@ -34,7 +34,7 @@ export type CultureOption = {
   sortOrder: number;
   icon: CultureChipIcon;
   preview?: ContentMedia | null;
-  /** Shared popular taxonomy labels (same set for every culture, max 3). */
+  /** Culture-specific popular taxonomy labels (sidebar-capped). */
   popularTags?: ContentLabel[];
 };
 
@@ -110,23 +110,28 @@ export function filterCultureOptionsByTagKeys(
 
 function attachPopularTags(
   option: CultureOption,
-  popularTags: ContentLabel[] = POPULAR_TAXONOMY_LABELS,
+  popularTags?: ContentLabel[],
 ): CultureOption {
+  const tags =
+    popularTags ?? getPopularTaxonomyLabelsForCulture(option.tagKey);
   return {
     ...option,
-    popularTags: popularTags.slice(0, MAX_POPULAR_TAXONOMY_LABELS),
+    popularTags: tags.slice(0, MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS),
   };
 }
 
 function cultureOptionFromDefault(culture: DefaultCulture, sortOrder: number): CultureOption {
-  return attachPopularTags({
-    tagKey: culture.tagKey,
-    tagId: culture.tagKey,
-    label: culture.label,
-    hubSlug: culture.hubSlug,
-    sortOrder,
-    icon: { kind: "EMOJI", emoji: culture.emoji },
-  }, culture.popularTags);
+  return attachPopularTags(
+    {
+      tagKey: culture.tagKey,
+      tagId: culture.tagKey,
+      label: culture.label,
+      hubSlug: culture.hubSlug,
+      sortOrder,
+      icon: { kind: "EMOJI", emoji: culture.emoji },
+    },
+    culture.popularTags,
+  );
 }
 
 /**
@@ -155,7 +160,7 @@ export function resolveDefaultCultureOptions(
         label: key.replace(/^crop\./, ""),
         hubSlug: key.replace(/^crop\./, ""),
         emoji: "🌱",
-        popularTags: POPULAR_TAXONOMY_LABELS,
+        popularTags: getPopularTaxonomyLabelsForCulture(key),
       },
       index,
     );

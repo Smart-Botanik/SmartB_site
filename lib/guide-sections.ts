@@ -2,7 +2,7 @@ import type { CropGuide } from "./content-api";
 
 export type GuideKnowledgeSection = "growing" | "preserving" | "reports" | "interesting";
 
-/** TOPIC keys → раздел на `/guides` (канон для редакторов). */
+/** TOPIC keys → раздел знаний (канон для редакторов). */
 export const GUIDE_SECTION_TOPIC_KEYS: Record<
   Exclude<GuideKnowledgeSection, "growing">,
   string[]
@@ -18,6 +18,17 @@ export const GUIDE_SECTION_ORDER: GuideKnowledgeSection[] = [
   "reports",
   "interesting",
 ];
+
+/** Канонические маршруты разделов (не якоря на `/guides`). */
+export const GUIDE_SECTION_PAGE_HREF: Record<GuideKnowledgeSection, string> = {
+  growing: "/guides",
+  preserving: "/preserving",
+  reports: "/reports",
+  interesting: "/useful",
+};
+
+/** На `/guides` остаётся только выращивание. */
+export const GUIDES_CATALOG_SECTION_IDS: GuideKnowledgeSection[] = ["growing"];
 
 const SECTION_ORDER = GUIDE_SECTION_ORDER;
 
@@ -76,7 +87,7 @@ export type GuideSectionNavLink = {
 export function getGuideSectionNavLinks(): GuideSectionNavLink[] {
   return GUIDE_SECTION_ORDER.map(sectionId => ({
     sectionId,
-    href: `/guides#${sectionId}`,
+    href: GUIDE_SECTION_PAGE_HREF[sectionId],
     label: GUIDE_SECTION_META[sectionId].title,
   }));
 }

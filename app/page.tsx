@@ -1,4 +1,3 @@
-import { GuidesKnowledgeSections } from "@/components/GuidesKnowledgeSections";
 import { HomeDiaryCta } from "@/components/HomeDiaryCta";
 import { HomeHero } from "@/components/HomeHero";
 import { HomeKnowledge } from "@/components/HomeKnowledge";
@@ -13,7 +12,6 @@ import {
   fetchPublishedCultureOptions,
   resolveDefaultCultureOptions,
 } from "@/lib/culture-options";
-import { partitionGuidesByKnowledgeSection } from "@/lib/guide-sections";
 import { HOME_KNOWLEDGE_CHAPTERS } from "@/lib/site-content";
 import { parseHomeSections, resolveCultureChipsSection } from "@/lib/site-sections";
 
@@ -33,14 +31,11 @@ export default async function HomePage() {
   const cultureChips = resolveCultureChipsSection(sections.cultureChips);
 
   let latestGuides = sortPublishedGuides([]);
-  let guidesBySection = partitionGuidesByKnowledgeSection([]);
 
   try {
-    const guides = sortPublishedGuides(await fetchPublishedCropGuides());
-    latestGuides = guides;
-    guidesBySection = partitionGuidesByKnowledgeSection(guides);
+    latestGuides = sortPublishedGuides(await fetchPublishedCropGuides());
   } catch {
-    /* empty latest / useful blocks */
+    /* empty latest block */
   }
 
   let cultureOptions = resolveDefaultCultureOptions(
@@ -76,13 +71,6 @@ export default async function HomePage() {
 
           <HomeSidebarCultures cultures={cultureOptions} />
         </div>
-      </section>
-
-      <section className="mx-auto max-w-container-max scroll-mt-28 px-gutter pb-16">
-        <GuidesKnowledgeSections
-          guidesBySection={guidesBySection}
-          sectionIds={["interesting"]}
-        />
       </section>
 
       <HomeKnowledge chapters={HOME_KNOWLEDGE_CHAPTERS} />

@@ -1,10 +1,13 @@
 import type { ContentLabel, TaxonomyTagNamespace } from "./content-api";
 
 /**
- * Shared popular taxonomy labels for the culture list.
- * Same set is reused on every culture; UI must not show more than MAX.
+ * Culture-specific popular taxonomy labels for the culture list / hub filters.
+ * At most MAX tags are shown per culture (sidebar may use a smaller cap).
  */
-export const MAX_POPULAR_TAXONOMY_LABELS = 3;
+export const MAX_POPULAR_TAXONOMY_LABELS = 5;
+
+/** Sidebar culture list — keep compact. */
+export const MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS = 2;
 
 type PopularTaxonomyLabelSeed = {
   key: string;
@@ -13,32 +16,137 @@ type PopularTaxonomyLabelSeed = {
   sortOrder: number;
 };
 
-/** Canonical popular tags (taxonomy keys) — environment placements used across crops. */
-export const POPULAR_TAXONOMY_LABEL_SEEDS: PopularTaxonomyLabelSeed[] = [
-  {
-    key: "environment.type.outdoor.bed",
-    label: "Грядка",
-    namespace: "ENVIRONMENT_VARIANT",
-    sortOrder: 10,
-  },
-  {
-    key: "environment.type.indoor.growbox",
-    label: "Гроубокс",
-    namespace: "ENVIRONMENT_VARIANT",
-    sortOrder: 20,
-  },
-  {
-    key: "environment.type.greenhouse",
-    label: "Теплица",
-    namespace: "ENVIRONMENT_TYPE",
-    sortOrder: 30,
-  },
-];
+/**
+ * Canonical popular tags per crop root key (taxonomy keys).
+ * Keys not listed here get no popular chips.
+ */
+export const CULTURE_POPULAR_TAXONOMY_LABEL_SEEDS: Record<
+  string,
+  PopularTaxonomyLabelSeed[]
+> = {
+  "crop.tomato": [
+    {
+      key: "guides.feeding",
+      label: "Подкормка",
+      namespace: "TOPIC",
+      sortOrder: 10,
+    },
+    {
+      key: "guides.harvest",
+      label: "Уборка",
+      namespace: "TOPIC",
+      sortOrder: 20,
+    },
+    {
+      key: "guides.sowing",
+      label: "Засев",
+      namespace: "TOPIC",
+      sortOrder: 30,
+    },
+    {
+      key: "crop.tomato.pink",
+      label: "Розовые",
+      namespace: "CROP_VARIANT",
+      sortOrder: 40,
+    },
+    {
+      key: "crop.tomato.determinate",
+      label: "Детерминантные",
+      namespace: "CROP_VARIANT",
+      sortOrder: 50,
+    },
+  ],
+  "crop.cucumber": [
+    {
+      key: "crop.cucumber.gherkin",
+      label: "Корнишоны",
+      namespace: "CROP_VARIANT",
+      sortOrder: 10,
+    },
+    {
+      key: "crop.cucumber.chinese",
+      label: "Китайские",
+      namespace: "CROP_VARIANT",
+      sortOrder: 20,
+    },
+  ],
+  "crop.pepper": [
+    {
+      key: "crop.pepper.bell",
+      label: "Болгарский",
+      namespace: "CROP_VARIANT",
+      sortOrder: 10,
+    },
+    {
+      key: "crop.pepper.hot",
+      label: "Острый",
+      namespace: "CROP_VARIANT",
+      sortOrder: 20,
+    },
+  ],
+  "crop.cabbage": [
+    {
+      key: "crop.cabbage.whitecabbage",
+      label: "Белокочанная",
+      namespace: "CROP_VARIANT",
+      sortOrder: 10,
+    },
+    {
+      key: "crop.cabbage.whitecabbage.broccoli",
+      label: "Брокколи",
+      namespace: "CROP_VARIANT",
+      sortOrder: 20,
+    },
+  ],
+  "crop.zucchini": [
+    {
+      key: "crop.zucchini.zucchini",
+      label: "Кабачок",
+      namespace: "CROP_VARIANT",
+      sortOrder: 10,
+    },
+    {
+      key: "crop.zucchini.whitefruited",
+      label: "Белоплодный",
+      namespace: "CROP_VARIANT",
+      sortOrder: 20,
+    },
+  ],
+  "crop.potato": [
+    {
+      key: "guides.spraying",
+      label: "Опрыскивание",
+      namespace: "TOPIC",
+      sortOrder: 10,
+    },
+    {
+      key: "guides.landing",
+      label: "Посадка",
+      namespace: "TOPIC",
+      sortOrder: 20,
+    },
+  ],
+  "crop.pumpkin": [
+    {
+      key: "crop.pumpkin.butternut",
+      label: "Баттернат",
+      namespace: "CROP_VARIANT",
+      sortOrder: 10,
+    },
+    {
+      key: "crop.pumpkin.muscat",
+      label: "Мускатная",
+      namespace: "CROP_VARIANT",
+      sortOrder: 20,
+    },
+  ],
+};
 
-export function getPopularTaxonomyLabels(
-  limit: number = MAX_POPULAR_TAXONOMY_LABELS,
+function seedsToLabels(
+  seeds: PopularTaxonomyLabelSeed[],
+  limit: number,
 ): ContentLabel[] {
-  return POPULAR_TAXONOMY_LABEL_SEEDS.slice(0, Math.max(0, limit)).map(seed => ({
+  return seeds.slice(0, Math.max(0, limit)).map(seed => ({
     id: seed.key,
     key: seed.key,
     label: seed.label,
@@ -47,5 +155,11 @@ export function getPopularTaxonomyLabels(
   }));
 }
 
-/** Popular labels attached to every culture option (capped). */
-export const POPULAR_TAXONOMY_LABELS = getPopularTaxonomyLabels();
+/** Popular labels for one culture (capped). Unknown culture → empty. */
+export function getPopularTaxonomyLabelsForCulture(
+  cultureTagKey: string,
+  limit: number = MAX_POPULAR_TAXONOMY_LABELS,
+): ContentLabel[] {
+  const seeds = CULTURE_POPULAR_TAXONOMY_LABEL_SEEDS[cultureTagKey] ?? [];
+  return seedsToLabels(seeds, limit);
+}

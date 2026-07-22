@@ -1,31 +1,38 @@
-import Link from "next/link";
+import { Suspense } from "react";
 
+import { GuidesCatalogClient } from "@/components/GuidesCatalog/GuidesCatalogClient";
 import { GuidesKnowledgeSections } from "@/components/GuidesKnowledgeSections";
-import { DEFAULT_CULTURES } from "@/lib/default-cultures";
 import {
   fetchPublishedCropGuides,
   sortPublishedGuides,
   type CropGuide,
 } from "@/lib/content-api";
 import {
-  getGuideSectionNavLinks,
+  fallbackCulturePresentations,
+  loadCulturePresentations,
+  type CulturePresentation,
+} from "@/lib/culture-presentation";
+import {
   partitionGuidesByKnowledgeSection,
   type GuideKnowledgeSection,
 } from "@/lib/guide-sections";
-import {
-  guideCultureHubHref,
-  guideSectionNavHref,
-  type GuideLinkVariant,
-} from "@/lib/guide-view-paths";
+import type { GuideLinkVariant } from "@/lib/guide-view-paths";
 
 type GuidesCatalogProps = {
+  allGuides: CropGuide[];
   guidesBySection: Record<GuideKnowledgeSection, CropGuide[]>;
+  presentations: CulturePresentation[];
   variant?: GuideLinkVariant;
 };
 
-export function GuidesCatalog({ guidesBySection, variant = "default" }: GuidesCatalogProps) {
+function GuidesCatalogFallback({
+  guidesBySection,
+  variant = "default",
+}: {
+  guidesBySection: Record<GuideKnowledgeSection, CropGuide[]>;
+  variant?: GuideLinkVariant;
+}) {
   const isView = variant === "view";
-
   return (
     <div
       className={
@@ -34,7 +41,7 @@ export function GuidesCatalog({ guidesBySection, variant = "default" }: GuidesCa
           : "mx-auto max-w-container-max px-gutter pb-20 pt-16"
       }
     >
-      <div className="relative mb-12">
+      <div className="relative mb-12 px-[12px] py-[24px]">
         <div className="hero-gradient absolute inset-0 -z-10" />
         <div className="mb-2 flex flex-col gap-1">
           <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
@@ -44,53 +51,59 @@ export function GuidesCatalog({ guidesBySection, variant = "default" }: GuidesCa
             Гайды и материалы
           </h1>
         </div>
-        <p className="max-w-2xl font-body text-on-surface-variant">
-          Выращивание, закрутка, репорты и подборки — всё для цикла от семени до банки.
-          Выберите раздел или культуру ниже.
-        </p>
       </div>
-
-      <nav className="mb-12 flex flex-wrap gap-2" aria-label="Разделы базы знаний">
-        {getGuideSectionNavLinks().map(item => (
-          <a
-            key={item.href}
-            href={guideSectionNavHref(item.sectionId, variant)}
-            className="rounded-full border border-outline-variant/30 bg-surface-container-low px-4 py-2 text-sm text-on-surface-variant transition-colors hover:border-primary-container hover:text-primary-container"
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
-
-      <nav className="mb-12 flex flex-wrap gap-2" aria-label="Культуры">
-        {DEFAULT_CULTURES.map(culture => (
-          <Link
-            key={culture.tagKey}
-            href={guideCultureHubHref(culture.hubSlug, variant)}
-            className="inline-flex items-center gap-2 rounded-full border border-outline-variant/30 bg-surface-container px-4 py-2 text-sm font-medium text-on-surface-variant transition-colors hover:border-primary-container hover:text-primary-container"
-          >
-            <span className="text-base leading-none" aria-hidden>
-              {culture.emoji}
-            </span>
-            {culture.label}
-          </Link>
-        ))}
-      </nav>
-
-      <GuidesKnowledgeSections guidesBySection={guidesBySection} linkVariant={variant} />
+      <GuidesKnowledgeSections
+        guidesBySection={guidesBySection}
+        linkVariant={variant}
+        sectionIds={["growing"]}
+      />
     </div>
   );
 }
 
+export function GuidesCatalog({
+  allGuides,
+  guidesBySection,
+  presentations,
+  variant = "default",
+}: GuidesCatalogProps) {
+  return (
+    <Suspense
+      fallback={
+        <GuidesCatalogFallback guidesBySection={guidesBySection} variant={variant} />
+      }
+    >
+      <GuidesCatalogClient
+        allGuides={allGuides}
+        guidesBySection={guidesBySection}
+        presentations={presentations}
+        variant={variant}
+      />
+    </Suspense>
+  );
+}
+
 export async function loadGuidesCatalogData() {
+  let allGuides: CropGuide[] = [];
   let guidesBySection = partitionGuidesByKnowledgeSection([]);
+  let presentations: CulturePresentation[] = [];
 
   try {
-    const guides = sortPublishedGuides(await fetchPublishedCropGuides());
-    guidesBySection = partitionGuidesByKnowledgeSection(guides);
+    allGuides = sortPublishedGuides(await fetchPublishedCropGuides());
+    guidesBySection = partitionGuidesByKnowledgeSection(allGuides);
   } catch {
     /* пустые разделы — placeholder в UI */
   }
 
-  return guidesBySection;
+  try {
+    presentations = await loadCulturePresentations();
+  } catch {
+    presentations = fallbackCulturePresentations();
+  }
+
+  if (presentations.length === 0) {
+    presentations = fallbackCulturePresentations();
+  }
+
+  return { allGuides, guidesBySection, presentations };
 }

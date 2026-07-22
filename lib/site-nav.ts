@@ -10,9 +10,8 @@ export type SiteNavLink = {
 export const SITE_HEADER_NAV_LINKS: SiteNavLink[] = [
   { href: "/", label: "Главная" },
   { href: "/#latest", label: "Последнее", homeSectionId: "latest" },
-  { href: "/#interesting", label: "Полезное", homeSectionId: "interesting" },
   { href: "/guides", label: "Гайды" },
-  { href: "/guides#growing", label: "Выращивание", guideSectionId: "growing" },
+  { href: "/guides", label: "Выращивание", guideSectionId: "growing" },
   { href: "/journal", label: "Журнал" },
 ];
 
@@ -29,8 +28,20 @@ export function isSiteNavLinkActive(
     return pathname === "/" && hash === "";
   }
 
+  if (link.guideSectionId === "growing") {
+    return pathname === "/guides" || pathname === "/guides/view";
+  }
+
   if (link.guideSectionId) {
     return pathname.startsWith("/guides") && hash === `#${link.guideSectionId}`;
+  }
+
+  if (link.href === "/guides" && link.label === "Гайды") {
+    return (
+      pathname.startsWith("/guides/") &&
+      pathname !== "/guides/view" &&
+      !pathname.endsWith("/view")
+    );
   }
 
   if (link.href === "/guides") {
@@ -39,6 +50,18 @@ export function isSiteNavLinkActive(
 
   if (link.href === "/journal") {
     return pathname.startsWith("/journal");
+  }
+
+  if (link.href === "/useful") {
+    return pathname.startsWith("/useful");
+  }
+
+  if (link.href === "/preserving") {
+    return pathname.startsWith("/preserving");
+  }
+
+  if (link.href === "/reports") {
+    return pathname.startsWith("/reports");
   }
 
   return pathname === link.href || pathname.startsWith(`${link.href}/`);
