@@ -1,0 +1,308 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#07006c",
+            "inverse-primary": "#494bd6",
+            "outline-variant": "#464554",
+            "on-tertiary": "#472a00",
+            "inverse-on-surface": "#2c3039",
+            "error-container": "#93000a",
+            "surface-container-low": "#181c24",
+            "tertiary-fixed-dim": "#ffb95f",
+            "surface-variant": "#31353e",
+            "tertiary": "#ffb95f",
+            "primary-fixed-dim": "#c0c1ff",
+            "background": "#0f131c",
+            "secondary-container": "#03b5d3",
+            "on-background": "#dfe2ee",
+            "surface-container": "#1c2028",
+            "primary": "#c0c1ff",
+            "on-primary-container": "#0d0096",
+            "tertiary-fixed": "#ffddb8",
+            "on-surface": "#dfe2ee",
+            "on-secondary-container": "#00424e",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "primary-fixed": "#e1e0ff",
+            "secondary-fixed": "#acedff",
+            "on-secondary-fixed": "#001f26",
+            "on-tertiary-fixed-variant": "#653e00",
+            "tertiary-container": "#ca8100",
+            "secondary-fixed-dim": "#4cd7f6",
+            "on-tertiary-fixed": "#2a1700",
+            "on-secondary-fixed-variant": "#004e5c",
+            "on-error": "#690005",
+            "error": "#ffb4ab",
+            "surface-dim": "#0f131c",
+            "surface-bright": "#353942",
+            "surface-tint": "#c0c1ff",
+            "inverse-surface": "#dfe2ee",
+            "on-primary": "#1000a9",
+            "outline": "#908fa0",
+            "surface-container-highest": "#31353e",
+            "surface-container-lowest": "#0a0e16",
+            "surface": "#0f131c",
+            "secondary": "#4cd7f6",
+            "on-error-container": "#ffdad6",
+            "on-surface-variant": "#c7c4d7",
+            "primary-container": "#8083ff",
+            "surface-container-high": "#262a33",
+            "on-tertiary-container": "#3e2400",
+            "on-secondary": "#003640"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "container-padding": "24px",
+            "gutter": "16px",
+            "unit": "4px",
+            "grid-cell": "clamp(40px, 8vw, 64px)"
+          },
+          "fontFamily": {
+            "headline-xl": ["Inter"],
+            "label-sm": ["Geist"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "data-mono": ["Geist"]
+          },
+          "fontSize": {
+            "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}],
+            "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+            "data-mono": ["14px", {"lineHeight": "1.4", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  }catch(_e){}</script></head><body class="overflow-hidden">
+<!-- TopNavBar Implementation -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-container-padding h-16 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">Lunar Cycle</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="font-body-md text-body-md text-primary border-b-2 border-primary pb-1" href="#">Calendar</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Moon Map</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" href="#">Astrology</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="notifications" data-original-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="User Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYgLBwL2JI-Ls9sPEWcYLfzBNEJuBpxCruNb3hMSdBT-VH2VyDniltEOH-In1KRsNhGElPM7KMvDwiY7x7aAQHg2LG5ZvptMOzPffG99sUfazhX8EAkTzjwuktMULBWfqX9CkWBUgXNvLXx_lAsj6nI89xxmicSgFitfXmkbWE7s3Xs0rifSACAu18DVwL7cn4NwicdDY95EQNWraVX4cUlNMmJFjb4zKsffY44mUy7w2Lwk3EdQJ5uw">
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Details Sidebar) -->
+<aside class="fixed right-0 top-16 bottom-0 flex flex-col p-6 z-40 bg-surface-container/80 backdrop-blur-2xl border-l border-outline-variant/20 shadow-2xl w-80 overflow-y-auto">
+<div class="flex flex-col items-center text-center mb-8">
+<div class="w-32 h-32 relative mb-4">
+<span class="material-symbols-outlined text-[120px] text-primary moon-glow" data-icon="brightness_3" data-original-icon="brightness_3">brightness_3</span>
+</div>
+<div class="bg-secondary-container/20 text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm mb-2">
+        Highly Favorable Day
+      </div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-secondary">Waning Gibbous</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-1">Illumination: 88%</p>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-variant/20 p-3 rounded-lg text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Moonrise</p>
+<p class="font-data-mono text-data-mono text-primary">18:42</p>
+</div>
+<div class="bg-surface-variant/20 p-3 rounded-lg text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Moonset</p>
+<p class="font-data-mono text-data-mono text-primary">09:15</p>
+</div>
+</div>
+<!-- Sidebar Tabs -->
+<div class="flex gap-2 mb-6 p-1 bg-surface-container-lowest rounded-xl overflow-x-auto no-scrollbar">
+<button class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-label-sm text-label-sm font-bold whitespace-nowrap">General</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg font-label-sm text-label-sm whitespace-nowrap transition-all">Gardening</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg font-label-sm text-label-sm whitespace-nowrap transition-all">Beauty</button>
+<button class="px-4 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-lg font-label-sm text-label-sm whitespace-nowrap transition-all">Finance</button>
+</div>
+<div class="space-y-6">
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-3">Recommended Actions</h4>
+<ul class="space-y-2">
+<li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" data-original-icon="check_circle">check_circle</span>
+            Plant root vegetables
+          </li>
+<li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" data-original-icon="check_circle">check_circle</span>
+            Meditation &amp; Reflection
+          </li>
+<li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" data-original-icon="check_circle">check_circle</span>
+            Business negotiations
+          </li>
+</ul>
+</div>
+<div class="">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-3">Things to Avoid</h4>
+<ul class="space-y-2">
+<li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-error text-sm" data-icon="cancel">cancel</span>
+            Major hair cuts
+          </li>
+<li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-error text-sm" data-icon="cancel">cancel</span>
+            Large financial risks
+          </li>
+</ul>
+</div>
+<div class="pt-6 border-t border-outline-variant/20">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-3">Symbol of the Day</h4>
+<div class="flex gap-4 items-start bg-surface-variant/10 p-4 rounded-xl">
+<span class="material-symbols-outlined text-4xl text-tertiary" data-icon="scuba_diving">scuba_diving</span>
+<div>
+<p class="font-label-sm text-label-sm font-bold text-on-surface">The Crane</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 leading-relaxed">Focus on spiritual heights, grace, and focused longevity. A day for inner poise.</p>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-auto w-full py-3 bg-inverse-primary text-on-primary-fixed rounded-xl font-bold hover:glow-primary transition-all active:scale-95">
+      Set Reminder
+    </button>
+</aside>
+<!-- Main Content Area -->
+<main class="mt-16 mr-80 p-container-padding h-[calc(100vh-64px)] overflow-y-auto">
+<!-- Control Header -->
+<header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-variant/30 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg text-on-surface whitespace-nowrap">November 2024</h1>
+<button class="p-2 hover:bg-surface-variant/30 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="flex p-1 bg-surface-container-low rounded-lg">
+<button class="px-4 py-1 bg-surface-variant text-on-surface rounded-md font-label-sm text-label-sm">Grid</button>
+<button class="px-4 py-1 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">List</button>
+</div>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0">
+<button class="px-5 py-2 bg-primary text-on-primary-container rounded-full font-label-sm text-label-sm font-bold">All</button>
+<button class="px-5 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-variant rounded-full font-label-sm text-label-sm transition-all whitespace-nowrap">Gardening</button>
+<button class="px-5 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-variant rounded-full font-label-sm text-label-sm transition-all whitespace-nowrap">Wellness</button>
+<button class="px-5 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-variant rounded-full font-label-sm text-label-sm transition-all whitespace-nowrap">Business</button>
+<button class="px-5 py-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-variant rounded-full font-label-sm text-label-sm transition-all whitespace-nowrap">Health</button>
+</div>
+</header>
+<!-- Calendar Grid -->
+<div class="grid grid-cols-7 gap-[1px] bg-outline-variant/20 rounded-xl overflow-hidden border border-outline-variant/30 shadow-2xl mb-8">
+<!-- Days Header -->
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Mon</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Tue</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Wed</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Thu</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Fri</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Sat</div>
+<div class="bg-surface-container-low py-4 text-center font-label-sm text-label-sm text-on-surface-variant border-b border-outline-variant/20">Sun</div>
+<!-- Offset cells for November 2024 (starts on Friday) -->
+<div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group opacity-20">
+<div class="flex justify-end items-start"><span class="font-data-mono text-data-mono">28</span></div>
+</div>
+<div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group opacity-20">
+<div class="flex justify-end items-start"><span class="font-data-mono text-data-mono">29</span></div>
+</div>
+<div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group opacity-20">
+<div class="flex justify-end items-start"><span class="font-data-mono text-data-mono">30</span></div>
+</div>
+<div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group opacity-20">
+<div class="flex justify-end items-start"><span class="font-data-mono text-data-mono">31</span></div>
+</div>
+<!-- Real Calendar Data Container -->
+<div class="contents" id="calendar-body"><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">01</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">30 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♎</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 1 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">02</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_1</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">1 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♏</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 2 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">03</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">2 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♏</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 3 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">04</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">3 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♐</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 4 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">05</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">4 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♐</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 5 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">06</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">5 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♑</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 6 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-secondary">auto_awesome</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">07</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_3</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">6 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♑</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 7 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">08</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_3</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">7 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♒</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 8 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">09</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">8 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♒</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 9 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">10</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">9 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♓</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 10 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">11</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">10 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♓</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 11 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">12</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">11 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♈</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 12 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">13</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">12 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♈</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 13 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300 border-2 border-primary ring-4 ring-primary/20 z-10"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-secondary">auto_awesome</span></div><span class="font-data-mono text-data-mono text-primary font-bold">14</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-primary moon-glow">brightness_4</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">13 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♉</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 14 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">15</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_5</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">14 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♉</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 15 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">16</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_5</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">15 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♊</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 16 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">17</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">16 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♊</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 17 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">18</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">17 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♋</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 18 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">19</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">18 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♋</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 19 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">20</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">19 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♌</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 20 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-secondary">auto_awesome</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">21</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_6</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">20 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♌</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 21 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">22</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_7</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">21 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♍</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 22 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">23</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_7</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">22 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♍</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 23 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">24</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">23 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♎</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 24 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">25</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">24 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♎</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 25 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">26</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">25 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♏</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 26 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">27</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">26 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♏</span><div class="w-1 h-1 rounded-full bg-outline-variant"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 27 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-secondary">auto_awesome</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">28</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">27 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♐</span><div class="w-1 h-1 rounded-full bg-secondary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 28 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div></div><span class="font-data-mono text-data-mono text-on-surface-variant">29</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">28 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♐</span><div class="w-1 h-1 rounded-full bg-tertiary"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 29 of 29</div></div></div><div class="aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300"><div class="flex justify-between items-start"><div class="flex gap-1"><span class="material-symbols-outlined text-xs text-tertiary">eco</span></div><span class="font-data-mono text-data-mono text-on-surface-variant">30</span></div><div class="flex justify-center items-center"><span class="material-symbols-outlined text-4xl text-on-surface/40 moon-glow">brightness_2</span></div><div class="flex flex-col gap-1"><div class="flex justify-between items-end"><span class="font-label-sm text-[10px] text-on-surface-variant/80">29 Lunar Day</span><div class="flex items-center gap-1"><span class="text-[12px] opacity-70 leading-none">♑</span><div class="w-1 h-1 rounded-full bg-error"></div></div></div><div class="font-label-sm text-[9px] text-primary/60 uppercase tracking-tighter">Step 30 of 29</div></div></div></div>
+</div>
+</main>
+<!-- Mobile Navigation Bar (Bottom) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-highest/90 backdrop-blur-xl border-t border-outline-variant/20 flex justify-around items-center px-4 z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-label-sm text-[10px]">Calendar</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-[10px]">Moon Map</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-sm text-[10px]">Astrology</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-sm text-[10px]">Profile</span>
+</button>
+</div>
+<footer class="fixed bottom-0 left-0 w-[calc(100%-320px)] hidden md:flex py-3 px-container-padding bg-surface-container-lowest/50 backdrop-blur-md justify-between items-center border-t border-outline-variant/10 text-on-surface-variant">
+<span class="font-label-sm text-label-sm">© 2024 Celestial Glass. Powered by Lunar Ephemeris.</span>
+<div class="flex gap-6">
+<a class="font-label-sm text-label-sm hover:text-tertiary transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-label-sm hover:text-tertiary transition-colors" href="#">Contact</a>
+<a class="font-label-sm text-label-sm hover:text-tertiary transition-colors" href="#">API Access</a>
+</div>
+</footer>
+<script>
+    const calendarBody = document.getElementById('calendar-body');
+    
+    // Simple mock data generator for November 2024
+    // Phase mapping: 0=New, 7=First Q, 15=Full, 22=Last Q, 29=Old
+    const getMoonPhaseIcon = (lunarDay) => {
+      if (lunarDay === 1) return 'brightness_1'; // New
+      if (lunarDay > 1 && lunarDay < 7) return 'brightness_2'; // Waxing Crescent
+      if (lunarDay >= 7 && lunarDay < 9) return 'brightness_3'; // First Quarter
+      if (lunarDay >= 9 && lunarDay < 15) return 'brightness_4'; // Waxing Gibbous
+      if (lunarDay >= 15 && lunarDay < 17) return 'brightness_5'; // Full
+      if (lunarDay >= 17 && lunarDay < 22) return 'brightness_6'; // Waning Gibbous
+      if (lunarDay >= 22 && lunarDay < 24) return 'brightness_7'; // Last Quarter
+      return 'brightness_2'; // Waning Crescent
+    };
+
+    const zodiacs = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+    const statusDots = ['bg-secondary', 'bg-tertiary', 'bg-error', 'bg-outline-variant'];
+
+    for (let day = 1; day <= 30; day++) {
+      const lunarDay = ((day + 28) % 30) + 1; // Roughly cycle starting around Nov 1
+      const cycleStep = day;
+      const zodiac = zodiacs[day % 12];
+      const status = statusDots[day % 4];
+      const icon = getMoonPhaseIcon(lunarDay);
+      const isToday = day === 14; // Highlight "Today"
+
+      const cell = document.createElement('div');
+      cell.className = `aspect-square glass-panel p-4 flex flex-col justify-between calendar-cell-hover group transition-all duration-300 ${isToday ? 'border-2 border-primary ring-4 ring-primary/20 z-10' : ''}`;
+      
+      cell.innerHTML = `
+        <div class="flex justify-between items-start">
+          <div class="flex gap-1">
+             ${day % 5 === 0 ? '<span class="material-symbols-outlined text-xs text-tertiary" data-icon="eco">eco</span>' : ''}
+             ${day % 7 === 0 ? '<span class="material-symbols-outlined text-xs text-secondary" data-icon="auto_awesome">auto_awesome</span>' : ''}
+          </div>
+          <span class="font-data-mono text-data-mono ${isToday ? 'text-primary font-bold' : 'text-on-surface-variant'}">${day.toString().padStart(2, '0')}</span>
+        </div>
+        
+        <div class="flex justify-center items-center">
+          <span class="material-symbols-outlined text-4xl ${isToday ? 'text-primary' : 'text-on-surface/40'} moon-glow" data-icon="${icon}">${icon}</span>
+        </div>
+        
+        <div class</script></body></html>
