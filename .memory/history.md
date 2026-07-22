@@ -3,6 +3,91 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-07-22 — SITE-CAL-2: seasons calendar UI disabled (Frontend)
+
+**Role**: Frontend  
+**Change**: `/calendar` — removed moon|seasons mode switch; page shows moon calendar only. Default intro/meta copy moon-only; seasons CMS parse kept in `lib/calendar-sections.ts`.  
+**Impact**: No seasons tab or list on public calendar.  
+**Reason**: User asked to disable season calendar on `/calendar`.
+
+## 2026-07-22 — SITE-USEFUL-4: unified feed from prototype (Frontend)
+
+**Role**: Frontend  
+**Change**: `/useful` — left sticky filters (Все / Гайды / Фото / Таймлапс) + central social cards combining video, image, guide; right prototype rail omitted; removed separate TikTok/photo/guides sections.  
+**Impact**: One readable community feed with type filters; demos when galleries empty.  
+**Reason**: User asked to port `prototypes/useful-feed` center + left filters, cut right sidebar.
+
+## 2026-07-22 — SITE-CAL-2: panel in-calendar + table expand (Frontend)
+
+**Role**: Frontend  
+**Change**: Grid day panel is `absolute` top-right inside calendar stage (not viewport-fixed). Table mode expands the clicked row for day info — no floating panel.  
+**Impact**: Detail UX matches mode.  
+**Reason**: User asked panel scoped to calendar; table uses expand, not float.
+
+## 2026-07-22 — SITE-CAL-2: moon table + floating day panel (Frontend)
+
+**Role**: Frontend  
+**Change**: Moon «Таблица» — full-month rows (day, weekday, phase, lunar day, illumination, note); click toggles day panel. Day info moved to fixed top-right floating glass panel (theme tokens).  
+**Impact**: List mode is data table; inspector no longer inline under grid.  
+**Reason**: User asked table view + fixed top-right day block with collapse on re-click.
+
+## 2026-07-22 — SITE-CAL-2: moon month grid from prototype (Frontend)
+
+**Role**: Frontend  
+**Change**: `/calendar` moon mode — month grid + Сетка/Список + day detail panel from `prototypes/moon-calendar` layout/styles; approximate phase icons via `lib/moon-phase.ts`; CMS entries overlay notes/phases. Skipped prototype app shell (top nav, fixed right inspector, bottom app nav).  
+**Impact**: Public calendar matches prototype grid look inside site chrome.  
+**Reason**: User asked to reuse calendar layout/styles, not app shell.
+
+## 2026-07-22 — SITE-USEFUL-3: social «Полезное» (Frontend)
+
+**Role**: Frontend  
+**Change**: `/useful` restructured — TikTok-like infinite video feed, photo gallery with comments, guides with tag filters + likes/comments (card/list); guide article EngagementBar + CommentsList; hardcoded contract-shaped mocks in `lib/engagement.ts`. Drafted platform [`ARCH-ENGAGE-1`](../../memory/tasks/cards/ARCH-ENGAGE-1.md) / [`BK-ENGAGE-1`](../../memory/tasks/cards/BK-ENGAGE-1.md) (not hub WIP). Removed knowledge-section chips from useful page.  
+**Impact**: Sociable useful chapter demoable; real API needs architect/backend confirm.  
+**Reason**: User asked for social feed + comments/likes UI prepared for backend.
+
+## 2026-07-22 — SITE-USEFUL-2: «Полезное» sections + nav (Frontend)
+
+**Role**: Frontend  
+**Change**: `/useful` — video + image galleries (`publishedUsefulGalleries`), tags chips with filter, guides «Полезное» with card/list toggle (`UsefulGuidesSection`); compact gallery cards; header + footer link «Полезное».  
+**Impact**: Public chapter complete for site UI; galleries fill via admin + content env ids.  
+**Reason**: Resume SITE-USEFUL-2 after calendar; user asked for galleries, tags, guides views, nav.
+
+## 2026-07-22 — Calendar slice shipped (Frontend / Backend)
+
+**Role**: Frontend / Backend  
+**Change**: SITE-CAL-1 — `/calendar` with moon|seasons switch, CMS parse, header+footer. BK-CONTENT-CAL-1 — seed `SitePage` key `calendar` in `seed-site-content.ts`. FR-VUE-CAL-1 — admin-vue Content → Календарь editor. Cards closed for this slice.  
+**Impact**: Public calendar live with CMS SoT; editors can publish copy + data without new GraphQL.  
+**Reason**: Parallel implement per user; independent of app / future Smart Botanik Seasons.
+
+## 2026-07-22 — Calendar track: SITE-CAL-1 focus (Lead / Architect)
+
+**Role**: Lead / Architect  
+**Change**: Drafted [`SITE-CAL-1`](./tasks/cards/SITE-CAL-1.md) (site `/calendar`, header+footer, CMS data); platform [`BK-CONTENT-CAL-1`](../../memory/tasks/cards/BK-CONTENT-CAL-1.md) (seed + sections contract) and [`FR-VUE-CAL-1`](../../memory/tasks/cards/FR-VUE-CAL-1.md) (Vue editor). SITE-CAL-1 → site active WIP; SITE-USEFUL-2 paused. Independent of app diary widgets; future merge = Smart Botanik Seasons.  
+**Impact**: Clear calendar workstream with CMS SoT and cross-project handoffs.  
+**Reason**: User chose calendar over galleries; CMS for data; nav in header+footer; keep independent of app.
+
+## 2026-07-22 — `/useful` photo/video sections (Frontend)
+
+**Role**: Frontend  
+**Change**: `UsefulPageContent` — sections Видео / Фото / гайды; `fetchPublishedGallery` via BFF; env `SITE_USEFUL_*_GALLERY_ID`.  
+**Impact**: SITE-USEFUL-2 layout live; empty states until galleries published.  
+**Reason**: ADR-0019 implementation.
+
+## 2026-07-22 — ARCH decided: useful galleries via content→media (Architect)
+
+**Role**: Architect  
+**Change**: [`SITE-USEFUL-2`](./tasks/cards/SITE-USEFUL-2.md) updated — one image + one video gallery **id**; site port → content hydrate from media; ARCH-MEDIA-TAX-1 / ADR-0019 locked. Stub sections still OK before BK-CONTENT-GALLERY-1.  
+**Impact**: Clear contract for `/useful` media sections without edges on gallery load.  
+**Reason**: ARCH talk close-out.
+
+## 2026-07-22 — Полезное: tasks for media sections (Lead / Frontend)
+
+
+**Role**: Lead / Frontend  
+**Change**: Drafted [`SITE-USEFUL-2`](./tasks/cards/SITE-USEFUL-2.md) (site sections: video / photo / guides); platform cards [`ARCH-MEDIA-TAX-1`](../../memory/tasks/cards/ARCH-MEDIA-TAX-1.md) (Media + taxonomy + caption talk) and [`FR-VUE-MEDIA-1`](../../memory/tasks/cards/FR-VUE-MEDIA-1.md) (admin-vue upload). Linked from SITE-USEFUL-1 / ADMIN-VUE-1 Phase 3. Not enqueued to hub WIP.  
+**Impact**: Clear handoff chain for richer `/useful` without blocking SITE-1.  
+**Reason**: User asked for Полезное (video/photo/guides) and tasks across admin-vue + architecture + site.
+
 ## 2026-07-22 — Latest: keep glass, restore guide cards (Frontend)
 
 **Role**: Frontend  
