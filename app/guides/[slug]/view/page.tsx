@@ -9,6 +9,7 @@ import {
   sortPublishedGuides,
   type CropGuide,
 } from "@/lib/content-api";
+import { guideStaticParams } from "@/lib/guide-static-params";
 import { resolveEngagement } from "@/lib/social-api";
 
 type PageProps = {
@@ -67,12 +68,7 @@ export default async function GuideViewPage({ params }: PageProps) {
 }
 
 export async function generateStaticParams() {
-  try {
-    const guides = await fetchPublishedCropGuides();
-    return guides.map(guide => ({ slug: guide.slug }));
-  } catch {
-    return [];
-  }
+  return guideStaticParams();
 }
 
 export const dynamicParams = false;
