@@ -33,7 +33,7 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 |-------|--------|
 | 1–2 Backend + admin | ✅ |
 | 3 Next MVP | ✅ (tail FE-SITE-6/7) |
-| 4 `/app` routing | paused (platform backlog) |
+| 4 /app routing | placeholder page (/app coming soon) |
 | 5 Home + brand | 🔴 active |
 
 ---
@@ -50,6 +50,12 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 | FE-SITE-LCH-4 | Header CTA «Скоро» | [ ] partial |
 | FR-SITE-LCH-1 / BK-TG-1 / FR-TG-1 | Admin + publish | [x] |
 
+### Done (2026-07-22) — `/app` placeholder
+
+- Route `app/app/page.tsx` — coming-soon glass card (Telegram + гайды CTAs)
+- Links from footer / home diary / grow reports (`siteEnv.appBasePath`) no longer 404
+- Full app shell still paused (platform backlog)
+
 ## Sprint B — Brand
 
 | ID | Задача | Статус |
@@ -63,9 +69,18 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 
 - [ ] **FR-SITE-HUB-1** — hub `/guides/kultury/[crop]` via TagSurface
 - [ ] FE-SITE-6 metadata / sitemap / OG
-- [ ] FE-SITE-7 ISR + webhook
+- [ ] FE-SITE-7 ISR + webhook (paused while `output: 'export'` — no Node server)
 - [ ] FE-SITE-TAX-* hub filters
 - [ ] BK-SITE-6 revalidate (platform)
+
+### Done (2026-07-23) — Static export pre-VPS
+
+- `next.config.ts`: `output: 'export'` by default (`SITE_STATIC_EXPORT=0` → Node/`next start` again)
+- `images.unoptimized` + `trailingSlash` for static hosts
+- Removed page `revalidate` (ISR incompatible with export)
+- Culture hub `?label=` → client filter (`GuideCultureHubStatic`)
+- Scripts: `npm run build:static` → `out/`; `npm run serve:static` → local preview on :3030
+- **Note:** rebuild after CMS content changes; no live revalidate until VPS
 
 ### Done (2026-07-22) — `/guides` culture tabs reuse LOGO PNG
 

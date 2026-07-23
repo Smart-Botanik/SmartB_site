@@ -31,6 +31,13 @@
 **Impact**: Quick scan of good/bad lunar days on home and `/calendar`.  
 **Reason**: User asked for red/green favorable coloring with soft opacity.
 
+## 2026-07-23 — SITE-CAL-2: moon-first header + mobile moon size (Frontend)
+
+**Role**: Frontend  
+**Change**: Regenerated `moon-calendar-header-moonlit.png` (1536×1024) — moon/sky dominant, garden as dark silhouette; mobile moon phase icon smaller (compact + full). Garden-heavy keep: `moon-calendar-header-garden-saved.png`.  
+**Impact**: `/calendar` header reads as lunar splash; cells less crowded on small screens.  
+**Reason**: User asked for horizontal moon-themed header (not crop) and smaller mobile moon icons.
+
 ## 2026-07-23 — SITE-1: static export pre-VPS (Frontend)
 
 **Role**: Frontend  

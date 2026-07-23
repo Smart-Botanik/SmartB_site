@@ -37,7 +37,7 @@ function PopularTaxonomyTags({
         <li key={tag.key}>
           <Link
             href={`${baseHref}?label=${encodeURIComponent(tag.key)}`}
-            className="inline-flex rounded-md border border-outline-variant/25 bg-surface-container-high px-1.5 py-1 text-[11px] leading-none text-on-surface-variant transition-colors hover:border-primary-container/40 hover:text-primary-container"
+            className="inline-flex rounded-md border border-outline-variant/20 bg-surface-container-high px-1.5 py-1 text-[11px] leading-none text-on-surface-variant transition-colors hover:border-primary-container/35 hover:text-primary-container dark:border-outline-variant/15 dark:hover:border-primary-container/25"
           >
             {tag.label}
           </Link>
@@ -52,7 +52,7 @@ function DefaultCultureList({ cultures }: { cultures: DefaultCulture[] }) {
     <>
       {cultures.map(culture => (
         <li key={culture.tagKey}>
-          <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high">
+          <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
             <Link
               href={cultureHubHref(culture.hubSlug)}
               className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-surface-container-high text-2xl leading-none"
@@ -91,7 +91,7 @@ function ApiCultureList({ cultures }: { cultures: CultureOption[] }) {
 
         return (
           <li key={option.tagKey}>
-            <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high">
+            <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
               <Link href={href} className="shrink-0" aria-label={option.label}>
                 <CultureThumbnail option={option} />
               </Link>
@@ -124,7 +124,7 @@ export function HomeSidebarCultures({ cultures }: HomeSidebarCulturesProps) {
 
   return (
     <aside className="lg:sticky lg:top-24 lg:self-start">
-      <div className="glass-effect rounded-2xl border border-outline-variant/10 p-5">
+      <div className="glass-effect rounded-2xl border border-outline-variant/10 p-5 dark:border-outline-variant/15">
         <div className="mb-4 flex items-center justify-between gap-2">
           <h2 className="font-headline text-headline-mobile text-on-surface">Культуры</h2>
           <Link

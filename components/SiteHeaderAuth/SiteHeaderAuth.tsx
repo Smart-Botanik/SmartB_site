@@ -32,7 +32,7 @@ export function SiteHeaderAuth({ variant = "desktop" }: SiteHeaderAuthProps) {
     return (
       <button
         type="button"
-        className="hidden items-center gap-2 rounded-full border border-outline-variant/50 bg-surface-container-high px-4 py-2 font-label text-label font-medium text-on-surface transition-all hover:border-primary-container/40 hover:bg-surface-container-highest active:scale-95 md:inline-flex"
+        className="hidden items-center gap-2 rounded-full border border-outline-variant/50 bg-surface-container-high px-4 py-2 font-label text-label font-medium text-on-surface transition-all hover:border-primary-container/40 hover:bg-surface-container-highest active:scale-95 md:inline-flex dark:border-outline-variant/25 dark:hover:border-primary-container/30"
         title="Личный кабинет — скоро"
         aria-label={`${user.displayName}, личный кабинет — скоро`}
       >

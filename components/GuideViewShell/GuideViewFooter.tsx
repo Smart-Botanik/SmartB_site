@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function GuideViewFooter() {
   return (
-    <footer className="guide-view-footer mt-auto w-full border-t border-outline-variant/40 bg-surface-container-low py-6">
+    <footer className="guide-view-footer mt-auto w-full border-t border-outline-variant/40 bg-surface-container-low py-6 dark:border-outline-variant/20">
       <div className="mx-auto flex max-w-[960px] flex-col items-center justify-between gap-4 px-6 sm:flex-row sm:gap-6">
         <div className="flex items-center gap-3">
           <Image

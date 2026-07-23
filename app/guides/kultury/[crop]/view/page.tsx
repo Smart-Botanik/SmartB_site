@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { GuideCultureHub } from "@/components/GuideCultureHub";
+import { GuideCultureHubStatic } from "@/components/GuideCultureHub";
 import { GuideViewShell } from "@/components/GuideViewShell";
 import { DEFAULT_CULTURES } from "@/lib/default-cultures";
 import {
@@ -10,11 +10,8 @@ import {
   tagSurfaceSeo,
 } from "@/lib/tag-surface";
 
-export const revalidate = 3600;
-
 type PageProps = {
   params: Promise<{ crop: string }>;
-  searchParams: Promise<{ label?: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -33,14 +30,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function CultureHubViewPage({ params, searchParams }: PageProps) {
+export default async function CultureHubViewPage({ params }: PageProps) {
   const { crop } = await params;
-  const { label: activeLabelKey } = await searchParams;
 
-  const hub = await loadCultureHubPageData({
-    cultureSlug: crop,
-    activeLabelKey,
-  });
+  const hub = await loadCultureHubPageData({ cultureSlug: crop });
 
   if (!hub) {
     notFound();
@@ -48,13 +41,11 @@ export default async function CultureHubViewPage({ params, searchParams }: PageP
 
   return (
     <GuideViewShell>
-      <GuideCultureHub
+      <GuideCultureHubStatic
         cropKind={hub.cropKind}
         cultureLabel={hub.cultureLabel}
         cultureSlug={hub.cultureSlug}
-        guides={hub.guides}
         allGuides={hub.allGuides}
-        activeLabelKey={activeLabelKey}
         variant="view"
         hubLead={hub.hubLead}
         aboutShort={hub.aboutShort}
@@ -68,3 +59,5 @@ export default async function CultureHubViewPage({ params, searchParams }: PageP
 export function generateStaticParams() {
   return DEFAULT_CULTURES.map(culture => ({ crop: culture.hubSlug }));
 }
+
+export const dynamicParams = false;

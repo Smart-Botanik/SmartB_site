@@ -11,9 +11,9 @@ import { SiteThemeToggle } from "@/components/SiteThemeToggle";
 import { SITE_HEADER_NAV_LINKS, isSiteNavLinkActive } from "@/lib/site-nav";
 
 function navLinkClassName(active: boolean): string {
-  return `whitespace-nowrap font-label text-label uppercase transition-colors ${
+  return `whitespace-nowrap border-b border-transparent pb-1 font-label text-label uppercase transition-[color,box-shadow,border-color] duration-200 ${
     active
-      ? "border-b-2 border-primary-container pb-1 font-bold text-primary-container"
+      ? "border-primary-container/80 text-on-surface shadow-[0_1px_0_0_var(--color-primary-container),0_4px_10px_-4px_var(--color-accent-glow)]"
       : "text-outline hover:text-on-surface"
   }`;
 }
@@ -31,7 +31,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl">
+    <header className="fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20">
       <div className="mx-auto grid h-16 max-w-container-max grid-cols-[auto_1fr_auto] items-center px-gutter md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
@@ -76,7 +76,7 @@ export function SiteHeader() {
 
       {menuOpen ? (
         <nav
-          className="border-t border-outline-variant/40 bg-surface-container-low px-gutter py-4 md:hidden"
+          className="border-t border-outline-variant/40 bg-surface-container-low px-gutter py-4 md:hidden dark:border-outline-variant/20"
           aria-label="Мобильная навигация"
         >
           <div className="flex flex-col gap-3">

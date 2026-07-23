@@ -11,8 +11,6 @@ import {
 } from "@/lib/content-api";
 import { resolveEngagement } from "@/lib/social-api";
 
-export const revalidate = 3600;
-
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
@@ -76,3 +74,6 @@ export async function generateStaticParams() {
     return [];
   }
 }
+
+export const dynamicParams = false;
+

@@ -72,7 +72,7 @@ export function JournalNewsSection({ featured, articles }: JournalNewsSectionPro
             href={article.href}
             className="glass-panel group rounded-xl p-6 transition-all hover:border-primary-fixed-dim/30"
           >
-            <div className="mb-6 aspect-video overflow-hidden rounded-lg border border-outline-variant/30">
+            <div className="mb-6 aspect-video overflow-hidden rounded-lg border border-outline-variant/30 dark:border-outline-variant/15">
               <Image
                 src={article.imageUrl}
                 alt={article.imageAlt}

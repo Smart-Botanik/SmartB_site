@@ -16,7 +16,7 @@ const OPTIONS: Array<{ value: GuidePreviewLayout; icon: string; label: string }>
 export function GuidesLayoutToggle({ layout, onChange }: GuidesLayoutToggleProps) {
   return (
     <div
-      className="guide-layout-toggle inline-flex rounded-full border border-outline-variant/30 bg-surface-container-low p-1"
+      className="guide-layout-toggle inline-flex rounded-full border border-outline-variant/30 bg-surface-container-low p-1 dark:border-outline-variant/15"
       role="group"
       aria-label="Вид списка гайдов"
     >

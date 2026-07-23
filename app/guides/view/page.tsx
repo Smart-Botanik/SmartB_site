@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { GuidesCatalog, loadGuidesCatalogData } from "@/components/GuidesCatalog";
 import { GuideViewShell } from "@/components/GuideViewShell";
 
-export const revalidate = 3600;
-
 export const metadata: Metadata = {
   title: "Гайды и материалы — SmartБотаник",
   description:

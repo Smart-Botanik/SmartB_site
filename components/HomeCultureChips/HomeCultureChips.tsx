@@ -55,7 +55,7 @@ export function HomeCultureChips({
             <Link
               key={kind}
               href={href}
-              className="group glass-effect overflow-hidden rounded-2xl border border-outline-variant/10 transition-all duration-300 hover:border-primary-container/30 hover:shadow-card-hover"
+              className="group glass-effect overflow-hidden rounded-2xl border border-outline-variant/10 transition-all duration-300 hover:border-primary-container/30 hover:shadow-card-hover dark:border-outline-variant/15 dark:hover:border-primary-container/25"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image

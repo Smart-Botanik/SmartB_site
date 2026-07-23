@@ -32,7 +32,7 @@ export function HomeGrowReports({ reports }: HomeGrowReportsProps) {
         {reports.map(report => (
           <article
             key={report.id}
-            className="group overflow-hidden rounded-xl border border-outline-variant/20 bg-surface-container-low shadow-xl transition-all duration-300 hover:border-primary-container/30"
+            className="group overflow-hidden rounded-xl border border-outline-variant/20 bg-surface-container-low shadow-xl transition-all duration-300 hover:border-primary-container/30 dark:border-outline-variant/10 dark:hover:border-primary-container/25"
           >
             <div className="relative h-64 overflow-hidden">
               <Image

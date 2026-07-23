@@ -62,7 +62,7 @@ export function JournalFeedSidebar({ feed, communityStats }: JournalFeedSidebarP
               <h5 className="mb-1 font-bold text-on-surface">{entry.title}</h5>
               <p className="line-clamp-2 text-on-surface-variant">{entry.excerpt}</p>
               {entry.verifiedBy?.length ? (
-                <div className="mt-4 flex items-center gap-2 border-t border-outline-variant/30 pt-4">
+                <div className="mt-4 flex items-center gap-2 border-t border-outline-variant/30 pt-4 dark:border-outline-variant/15">
                   <div className="flex -space-x-2">
                     {entry.verifiedBy.map(initials => (
                       <div
@@ -91,7 +91,7 @@ export function JournalFeedSidebar({ feed, communityStats }: JournalFeedSidebarP
         <MaterialIcon name="expand_more" />
       </Link>
 
-      <div className="rounded-xl border border-outline-variant/30 bg-gradient-to-br from-secondary-container/30 to-background p-6">
+      <div className="rounded-xl border border-outline-variant/30 bg-gradient-to-br from-secondary-container/30 to-background p-6 dark:border-outline-variant/15">
         <h6 className="mb-3 font-bold text-primary-fixed-dim">Пульс сообщества</h6>
         <div className="space-y-3">
           {communityStats.map(stat => (

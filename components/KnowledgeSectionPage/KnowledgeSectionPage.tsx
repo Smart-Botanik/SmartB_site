@@ -53,7 +53,7 @@ export async function KnowledgeSectionPage({ sectionId }: KnowledgeSectionPagePr
               className={`rounded-full border px-4 py-2 text-sm transition-colors ${
                 isActive
                   ? "border-primary-container bg-secondary-container text-primary"
-                  : "border-outline-variant/30 bg-surface-container-low text-on-surface-variant hover:border-primary-container hover:text-primary-container"
+                  : "border-outline-variant/30 bg-surface-container-low text-on-surface-variant hover:border-primary-container hover:text-primary-container dark:border-outline-variant/15"
               }`}
             >
               {item.label}

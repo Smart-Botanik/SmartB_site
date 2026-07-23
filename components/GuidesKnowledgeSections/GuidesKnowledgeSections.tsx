@@ -109,7 +109,7 @@ function GuideSectionGrid({
           ))}
         </ul>
       ) : (
-        <p className="rounded-xl border border-dashed border-outline-variant/40 bg-surface-container-low px-6 py-10 text-center text-on-surface-variant">
+        <p className="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low px-6 py-10 text-center text-on-surface-variant dark:border-outline-variant/20">
           Пока нет опубликованных материалов в этом разделе. Скоро добавим статьи.
         </p>
       )}

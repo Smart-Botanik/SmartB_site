@@ -9,9 +9,12 @@ export type SiteNavLink = {
 
 export const SITE_HEADER_NAV_LINKS: SiteNavLink[] = [
   { href: "/", label: "Главная" },
-  { href: "/#latest", label: "Последнее", homeSectionId: "latest" },
+  {
+    href: "/#news-updates",
+    label: "Последнее",
+    homeSectionId: "news-updates",
+  },
   { href: "/guides", label: "Гайды" },
-  { href: "/guides", label: "Выращивание", guideSectionId: "growing" },
   { href: "/useful", label: "Полезное" },
   { href: "/calendar", label: "Календарь" },
   { href: "/journal", label: "Журнал" },
@@ -30,24 +33,12 @@ export function isSiteNavLinkActive(
     return pathname === "/" && hash === "";
   }
 
-  if (link.guideSectionId === "growing") {
-    return pathname === "/guides" || pathname === "/guides/view";
-  }
-
   if (link.guideSectionId) {
     return pathname.startsWith("/guides") && hash === `#${link.guideSectionId}`;
   }
 
-  if (link.href === "/guides" && link.label === "Гайды") {
-    return (
-      pathname.startsWith("/guides/") &&
-      pathname !== "/guides/view" &&
-      !pathname.endsWith("/view")
-    );
-  }
-
   if (link.href === "/guides") {
-    return pathname.startsWith("/guides/") || (pathname === "/guides" && hash === "");
+    return pathname === "/guides" || pathname.startsWith("/guides/");
   }
 
   if (link.href === "/journal") {
