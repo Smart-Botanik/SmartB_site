@@ -1,0 +1,1 @@
+export { HomeNewsUpdates } from "./HomeNewsUpdates";

@@ -16,9 +16,39 @@ export type CalendarModeSection = {
   data?: unknown;
 };
 
+export type CalendarLunarGuidePhase = {
+  id: "new" | "waxing" | "full" | "waning" | string;
+  label: string;
+  body: string;
+  imageSrc: string;
+};
+
+export type CalendarLunarGuideZodiacSign = {
+  symbol: string;
+  name: string;
+};
+
+export type CalendarLunarGuideZodiacGroup = {
+  id: "fertile" | "neutral" | "barren" | string;
+  label: string;
+  signs: CalendarLunarGuideZodiacSign[];
+  body: string;
+};
+
+/** Simple «how to use lunar calendar» block on `/calendar`. */
+export type CalendarLunarGuideSection = {
+  type: "calendarLunarGuide";
+  title: string;
+  subtitle?: string;
+  phases: CalendarLunarGuidePhase[];
+  tips: string[];
+  zodiacGroups: CalendarLunarGuideZodiacGroup[];
+};
+
 export type ParsedCalendarSections = {
   intro: CalendarIntroSection;
   modes: Record<CalendarModeId, CalendarModeSection>;
+  lunarGuide: CalendarLunarGuideSection;
   defaultMode: CalendarModeId;
 };
 
@@ -62,6 +92,78 @@ const DEFAULT_MODES: Record<CalendarModeId, CalendarModeSection> = {
   },
 };
 
+/** Compact RU howto — phases + tips + zodiac (with symbols). */
+export const DEFAULT_LUNAR_GUIDE: CalendarLunarGuideSection = {
+  type: "calendarLunarGuide",
+  title: "Как пользоваться лунным календарём",
+  subtitle: "Кратко о фазах, подкормках и знаках зодиака для посева.",
+  phases: [
+    {
+      id: "new",
+      label: "Новолуние",
+      imageSrc: "/calendar/moon-phase-new.svg",
+      body: "Худшее время для посадок: не сажайте и не пересаживайте. Неблагоприятны три дня — день до, новолуние и день после.",
+    },
+    {
+      id: "waxing",
+      label: "Растущая Луна",
+      imageSrc: "/calendar/moon-phase-waxing.svg",
+      body: "Соки тянутся вверх — лучшее время для надземных культур (зелень, травы, фрукты, овощи, цветы): посадка, пересадка, прививка.",
+    },
+    {
+      id: "full",
+      label: "Полнолуние",
+      imageSrc: "/calendar/moon-phase-full.svg",
+      body: "Один день без посадок и пересадок. Можно полоть, подкармливать и обрабатывать от вредителей.",
+    },
+    {
+      id: "waning",
+      label: "Убывающая Луна",
+      imageSrc: "/calendar/moon-phase-waning.svg",
+      body: "Энергия к корням — работайте с корнеплодами и луковичными.",
+    },
+  ],
+  tips: [
+    "Сажайте на рассвете или до обеда.",
+    "На растущей Луне — минеральные подкормки; на убывающей — органические.",
+  ],
+  zodiacGroups: [
+    {
+      id: "fertile",
+      label: "Плодородные",
+      signs: [
+        { symbol: "♋", name: "Рак" },
+        { symbol: "♉", name: "Телец" },
+        { symbol: "♏", name: "Скорпион" },
+        { symbol: "♓", name: "Рыбы" },
+      ],
+      body: "Лучшие дни для посева и посадки — всходы сильнее, урожай выше.",
+    },
+    {
+      id: "neutral",
+      label: "Нейтральные",
+      signs: [
+        { symbol: "♍", name: "Дева" },
+        { symbol: "♐", name: "Стрелец" },
+        { symbol: "♎", name: "Весы" },
+        { symbol: "♑", name: "Козерог" },
+      ],
+      body: "Сеять и сажать можно, урожай скорее средний.",
+    },
+    {
+      id: "barren",
+      label: "Неплодородные",
+      signs: [
+        { symbol: "♊", name: "Близнецы" },
+        { symbol: "♒", name: "Водолей" },
+        { symbol: "♌", name: "Лев" },
+        { symbol: "♈", name: "Овен" },
+      ],
+      body: "От посева лучше отказаться — полоть и делать другие огородные работы.",
+    },
+  ],
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -77,6 +179,71 @@ function asOptionalString(value: unknown): string | undefined {
   return typeof value === "string" ? value : undefined;
 }
 
+function parsePhases(value: unknown): CalendarLunarGuidePhase[] {
+  if (!Array.isArray(value)) {
+    return structuredClone(DEFAULT_LUNAR_GUIDE.phases);
+  }
+  const phases = value.filter(isRecord).flatMap(item => {
+    const id = asOptionalString(item.id);
+    const label = asOptionalString(item.label);
+    const body = asOptionalString(item.body);
+    const imageSrc = asOptionalString(item.imageSrc);
+    if (!id || !label || !body || !imageSrc) {
+      return [];
+    }
+    return [{ id, label, body, imageSrc }];
+  });
+  return phases.length > 0 ? phases : structuredClone(DEFAULT_LUNAR_GUIDE.phases);
+}
+
+function parseTips(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [...DEFAULT_LUNAR_GUIDE.tips];
+  }
+  const tips = value.filter((tip): tip is string => typeof tip === "string" && tip.trim().length > 0);
+  return tips.length > 0 ? tips : [...DEFAULT_LUNAR_GUIDE.tips];
+}
+
+function parseZodiacGroups(value: unknown): CalendarLunarGuideZodiacGroup[] {
+  if (!Array.isArray(value)) {
+    return structuredClone(DEFAULT_LUNAR_GUIDE.zodiacGroups);
+  }
+  const groups = value.filter(isRecord).flatMap(group => {
+    const id = asOptionalString(group.id);
+    const label = asOptionalString(group.label);
+    const body = asOptionalString(group.body);
+    if (!id || !label || !body || !Array.isArray(group.signs)) {
+      return [];
+    }
+    const signs = group.signs.filter(isRecord).flatMap(sign => {
+      const symbol = asOptionalString(sign.symbol);
+      const name = asOptionalString(sign.name);
+      if (!symbol || !name) {
+        return [];
+      }
+      return [{ symbol, name }];
+    });
+    if (signs.length === 0) {
+      return [];
+    }
+    return [{ id, label, signs, body }];
+  });
+  return groups.length > 0 ? groups : structuredClone(DEFAULT_LUNAR_GUIDE.zodiacGroups);
+}
+
+function parseLunarGuide(section: Record<string, unknown>): CalendarLunarGuideSection {
+  return {
+    type: "calendarLunarGuide",
+    title:
+      asOptionalString(section.title) ?? DEFAULT_LUNAR_GUIDE.title,
+    subtitle:
+      asOptionalString(section.subtitle) ?? DEFAULT_LUNAR_GUIDE.subtitle,
+    phases: parsePhases(section.phases),
+    tips: parseTips(section.tips),
+    zodiacGroups: parseZodiacGroups(section.zodiacGroups),
+  };
+}
+
 export function getDefaultCalendarSections(): ParsedCalendarSections {
   return {
     intro: { ...DEFAULT_INTRO },
@@ -87,6 +254,7 @@ export function getDefaultCalendarSections(): ParsedCalendarSections {
         data: structuredClone(DEFAULT_MODES.seasons.data),
       },
     },
+    lunarGuide: structuredClone(DEFAULT_LUNAR_GUIDE),
     defaultMode: "moon",
   };
 }
@@ -94,7 +262,12 @@ export function getDefaultCalendarSections(): ParsedCalendarSections {
 /** Raw sections array for seed / admin defaults. */
 export function getDefaultCalendarSectionsJson(): unknown[] {
   const defaults = getDefaultCalendarSections();
-  return [defaults.intro, defaults.modes.moon, defaults.modes.seasons];
+  return [
+    defaults.intro,
+    defaults.modes.moon,
+    defaults.modes.seasons,
+    defaults.lunarGuide,
+  ];
 }
 
 export function parseCalendarSections(sections: unknown): ParsedCalendarSections {
@@ -130,6 +303,11 @@ export function parseCalendarSections(sections: unknown): ParsedCalendarSections
           asOptionalString(section.descriptionMd) ?? result.modes[mode].descriptionMd,
         data: "data" in section ? section.data : result.modes[mode].data,
       };
+      continue;
+    }
+
+    if (section.type === "calendarLunarGuide") {
+      result.lunarGuide = parseLunarGuide(section);
     }
   }
 

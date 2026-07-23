@@ -3,6 +3,48 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-07-23 — Home mobile density (Frontend)
+
+**Role**: Frontend  
+**Change**: Mobile denser home — smaller item/section titles in «Новости», «Последние гайды», «База знаний»; tighter `py`/`space-y`/`p` between blocks and cards.  
+**Impact**: Less empty vertical space on phones; desktop sizes largely unchanged (`sm:`).  
+**Reason**: User reported sparse mobile layout on main page.
+
+## 2026-07-23 — SITE-CAL-2: denser home + favorable days (Frontend)
+
+**Role**: Frontend  
+**Change**: Compact home moon grid tightened; hardcoded day markers (`lib/moon-favorable-days.ts`) with icons for посадка / полив / подкормка / урожай / уход; legend + day-panel chips.  
+**Impact**: Home calendar reads as a teaser with clear work cues; data is demo-only until CMS.  
+**Reason**: User asked for smaller home calendar and presentation favorable-day icons.
+
+## 2026-07-23 — SITE-CAL-2: larger moon + emoji favorable (Frontend)
+
+**Role**: Frontend  
+**Change**: Moon phase icons slightly larger; favorable markers switched to color emoji (🌱💧🧪🌾🧤) with bigger cell/legend sizes.  
+**Impact**: Home/calendar markers read clearer for presentation.  
+**Reason**: User asked for bigger moon/favorable icons and colorized emoji.
+
+## 2026-07-23 — SITE-CAL-2: soft green/red day tones (Frontend)
+
+**Role**: Frontend  
+**Change**: Cells tinted by moon-phase tone — waxing = soft green (favorable), new/full/waning = soft red (unfavorable); legend swatches + day-panel label.  
+**Impact**: Quick scan of good/bad lunar days on home and `/calendar`.  
+**Reason**: User asked for red/green favorable coloring with soft opacity.
+
+## 2026-07-23 — SITE-1: static export pre-VPS (Frontend)
+
+**Role**: Frontend  
+**Change**: `output: 'export'` (default; `SITE_STATIC_EXPORT=0` for Node); `images.unoptimized` + trailingSlash; drop page ISR; culture `?label=` client-side; `out/` via `npm run build:static`.  
+**Impact**: Full static HTML site in `out/` for CDN/file hosting before VPS; rebuild to refresh CMS data.  
+**Reason**: Represent public site without Node server until VPS.
+
+## 2026-07-23 — SITE-CAL-2: compact lunar on home (Frontend)
+
+**Role**: Frontend  
+**Change**: `MoonCalendar` `variant="compact"` + `HomeLunarCalendar` after «Последние гайды»; home loads CMS moon entries from calendar page.  
+**Impact**: Main page shows dense month grid with link to `/calendar`; day info stacks under grid.  
+**Reason**: User asked for compact lunar calendar copy on home after Last Guides.
+
 ## 2026-07-23 — SITE-USEFUL-3: social-api + mock fallback (Frontend)
 
 **Role**: Frontend  

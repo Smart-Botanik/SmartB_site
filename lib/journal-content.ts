@@ -33,8 +33,7 @@ export const JOURNAL_FEATURED: JournalNewsArticle = {
   title: "Революция урожая: синхронизация питания cherry-томатов",
   excerpt:
     "Новые алгоритмы обратной связи показывают +24% к сахаристости при подаче питания в такт дыхательным циклам растения.",
-  imageUrl:
-    "https://images.unsplash.com/photo-1592924357224-548917444334?auto=format&fit=crop&w=1200&q=80",
+  imageUrl: "/previews/news-featured.jpg",
   imageAlt: "Спелые cherry-томаты в теплице",
   href: "/guides",
 };
@@ -47,8 +46,7 @@ export const JOURNAL_NEWS: JournalNewsArticle[] = [
     title: "Нейросети для прогноза вредителей 2.0",
     excerpt:
       "Модель компьютерного зрения выявляет грибковый стресс за 72 часа до видимых симптомов на листьях.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1534723452862-4c874995d966?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/previews/news-ai.jpg",
     imageAlt: "Вертикальная ферма с LED-освещением",
     href: "/useful",
   },
@@ -59,8 +57,7 @@ export const JOURNAL_NEWS: JournalNewsArticle[] = [
     title: "Новые датчики влажности почвы",
     excerpt:
       "Датчики с низкой задержкой фиксируют сдвиги влажности и EC на уровне корневой зоны в реальном времени.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "/previews/news-soil.jpg",
     imageAlt: "Датчик в почве на грядке",
     href: "/guides",
   },

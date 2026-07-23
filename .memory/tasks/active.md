@@ -5,16 +5,17 @@ WIP limit: **≤ 5**. Канон: этот файл + [`cards/`](./cards/). **Б
 ## Active
 
 1. [ ] **SITE-CAL-2** — Moon month grid from prototype
-   - Next: visual check `/calendar`; optional CMS denser entries
+   - Next: visual check `/` denser compact + favorable icons; `/calendar`; optional CMS denser entries
    - Card: [`cards/SITE-CAL-2.md`](./cards/SITE-CAL-2.md)
 2. [ ] **SITE-1** — Public site launch tails
-   - Next: TG smoke A1; пакет B; brand / SEO
+   - Next: serve/deploy `out/`; TG smoke A1; пакет B; brand / SEO
    - Card: [`cards/SITE-1.md`](./cards/SITE-1.md)
 
 ## Done (кратко)
 
 | Дата | ID | Суть |
 |------|-----|------|
+| 2026-07-22 | SITE-HOME-NEWS-1 | Home news block + nav; Latest → Гайды |
 | 2026-07-22 | SITE-USEFUL-4 | `/useful` unified feed: left filters + cards |
 | 2026-07-22 | SITE-USEFUL-3 | `/useful` social: video feed · photo comments · guide likes |
 | 2026-07-22 | SITE-USEFUL-2 | `/useful`: video · photo · tags · guides + header/footer |

@@ -3,14 +3,15 @@
 > **Старт:** этот файл → [`tasks/active.md`](./tasks/active.md) → card.  
 > **AI:** [`AGENTS.md`](./AGENTS.md)
 
-**Обновлено:** 2026-07-22 (SITE-CAL-2 · seasons UI off, moon only)
+**Обновлено:** 2026-07-23 (SITE-CAL-2 · home favorable days)
 
 ---
 
 ## Фокус
 
-**SITE-CAL-2** — `/calendar` month grid (prototype layout/styles, no app shell).  
-**SITE-1** tails: TG smoke A1; пакет B; brand.  
+**SITE-CAL-2** — `/calendar` month grid + compact home teaser (favorable icons).  
+**SITE-1** tails: static `out/` pre-VPS; TG smoke A1; пакет B; brand.  
+SITE-HOME-NEWS-1 ✅ — home «Последнее» + guides; nav → `#news-updates`.
 SITE-USEFUL-4 ✅ — `/useful` left filters + central feed (no right rail).
 
 ---
@@ -19,8 +20,8 @@ SITE-USEFUL-4 ✅ — `/useful` left filters + central feed (no right rail).
 
 | # | ID | Суть | Card |
 |---|-----|------|------|
-| 1 | SITE-CAL-2 | Moon month grid from prototype | [SITE-CAL-2](./tasks/cards/SITE-CAL-2.md) |
-| 2 | SITE-1 | Launch tails: TG smoke, пакет B, brand | [SITE-1](./tasks/cards/SITE-1.md) |
+| 1 | SITE-CAL-2 | Moon month grid + home compact | [SITE-CAL-2](./tasks/cards/SITE-CAL-2.md) |
+| 2 | SITE-1 | Launch tails: static export, TG, brand | [SITE-1](./tasks/cards/SITE-1.md) |
 
 Platform WIP (другие apps): `../../memory/hub.md` — не дублировать здесь.
 
@@ -30,6 +31,11 @@ Platform WIP (другие apps): `../../memory/hub.md` — не дублиро�
 
 | Дата | Суть |
 |------|------|
+| 2026-07-23 | SITE-CAL-2: denser home calendar + hardcoded favorable icons |
+| 2026-07-23 | SITE-1: `output: 'export'` → `out/` static site pre-VPS |
+| 2026-07-23 | SITE-CAL-2: compact lunar on home after «Последние гайды» |
+| 2026-07-22 | SITE-HOME-NEWS-1: local previews + title «Новости и обновления»; nav «Последнее» |
+| 2026-07-22 | SITE-HOME-NEWS-1: home news + nav; Latest → Гайды |
 | 2026-07-22 | SITE-USEFUL-4: `/useful` unified feed from prototype |
 | 2026-07-22 | SITE-CAL-2: moon month grid (prototype layout, site chrome) |
 | 2026-07-22 | SITE-USEFUL-3: social `/useful` + guide likes/comments (hardcoded) |

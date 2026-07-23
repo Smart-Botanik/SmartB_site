@@ -7,8 +7,6 @@ import {
   parseCalendarSections,
 } from "@/lib/calendar-sections";
 
-export const revalidate = 3600;
-
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = await fetchPublishedSitePage("calendar");

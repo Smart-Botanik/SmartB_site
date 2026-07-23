@@ -5,6 +5,16 @@ import { Fragment, useMemo, useState } from "react";
 import { MaterialIcon } from "@/components/MaterialIcon";
 import type { MoonCalendarEntry } from "@/lib/calendar-sections";
 import {
+  FAVORABLE_ACTIVITIES,
+  UNFAVORABLE_DAY_EMOJIS,
+  dayToneFromPhase,
+  dayToneLabelRu,
+  favorableActivityMeta,
+  favorableForDay,
+  type DayTone,
+  type FavorableActivity,
+} from "@/lib/moon-favorable-days";
+import {
   WEEKDAY_LABELS_RU,
   daysInMonth,
   formatDateKey,
@@ -22,6 +32,8 @@ type MoonCalendarProps = {
   entries: MoonCalendarEntry[];
   initialYear?: number;
   initialMonthIndex?: number;
+  /** Dense grid for home / embeds — no table mode, inline day panel. */
+  variant?: "full" | "compact";
 };
 
 type ViewMode = "grid" | "list";
@@ -39,6 +51,8 @@ type SelectedDay = {
   key: string;
   date: Date;
   entry?: MoonCalendarEntry;
+  favorable: FavorableActivity[];
+  tone: DayTone;
   moon: {
     phase: MoonPhaseId;
     age: number;
@@ -114,13 +128,70 @@ function formatDayShort(date: Date): string {
   return `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
-function DayInfoContent({ selected }: { selected: SelectedDay }) {
+function FavorableEmoji({
+  id,
+  className = "",
+}: {
+  id: FavorableActivity;
+  className?: string;
+}) {
+  const meta = favorableActivityMeta(id);
+  return (
+    <span className={`moon-cal-cell-fav ${className}`} aria-hidden>
+      {meta.emoji}
+    </span>
+  );
+}
+
+function CellBottomMarks({
+  tone,
+  favorable,
+}: {
+  tone: DayTone;
+  favorable: FavorableActivity[];
+}) {
+  if (tone === "unfavorable") {
+    return (
+      <div className="moon-cal-cell-marks moon-cal-cell-marks--bottom">
+        {UNFAVORABLE_DAY_EMOJIS.map(emoji => (
+          <span key={emoji} className="moon-cal-cell-fav" aria-hidden>
+            {emoji}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  if (favorable.length === 0) {
+    return (
+      <div className="moon-cal-cell-marks moon-cal-cell-marks--bottom" />
+    );
+  }
+
+  return (
+    <div className="moon-cal-cell-marks moon-cal-cell-marks--bottom">
+      {favorable.map(id => (
+        <FavorableEmoji key={id} id={id} />
+      ))}
+    </div>
+  );
+}
+
+function DayInfoContent({
+  selected,
+  compact = false,
+}: {
+  selected: SelectedDay;
+  compact?: boolean;
+}) {
+  const toneLabel = dayToneLabelRu(selected.tone);
+
   return (
     <>
       <div className="moon-cal-day-panel-body">
         <MaterialIcon
           name={moonPhaseIcon(selected.moon.phase)}
-          className="text-5xl text-primary-container moon-glow"
+          className="moon-cal-day-panel-moon text-primary-container moon-glow"
         />
         <div>
           <h4 className="font-headline text-xl text-primary md:text-2xl">
@@ -135,14 +206,72 @@ function DayInfoContent({ selected }: { selected: SelectedDay }) {
           </p>
         </div>
       </div>
+
+      {toneLabel ? (
+        <p className={`moon-cal-day-tone moon-cal-day-tone--${selected.tone}`}>
+          {selected.tone === "unfavorable" ? (
+            <span className="moon-cal-day-tone-emojis" aria-hidden>
+              😠 👎
+            </span>
+          ) : null}
+          {toneLabel}
+        </p>
+      ) : null}
+
+      {selected.tone !== "unfavorable" && selected.favorable.length > 0 ? (
+        <ul className="moon-cal-favorable-list" aria-label="Благоприятные работы">
+          {selected.favorable.map(id => {
+            const meta = favorableActivityMeta(id);
+            return (
+              <li key={id} className="moon-cal-favorable-item">
+                <span className="moon-cal-favorable-icon" aria-hidden>
+                  {meta.emoji}
+                </span>
+                <span>{meta.label}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+
       {selected.entry?.note ? (
-        <p className="mt-4 font-body text-on-surface">{selected.entry.note}</p>
-      ) : (
-        <p className="mt-4 font-body text-on-surface-variant">
-          Подсказки на этот день появятся, когда запись добавят в админке.
+        <p className="mt-3 font-body text-on-surface">{selected.entry.note}</p>
+      ) : compact && selected.favorable.length > 0 ? null : (
+        <p className="mt-3 font-body text-on-surface-variant">
+          {compact
+            ? "В этот день специальных работ не отмечено."
+            : "Подсказки на этот день появятся, когда запись добавят в админке."}
         </p>
       )}
     </>
+  );
+}
+
+function FavorableLegend() {
+  return (
+    <div className="moon-cal-legend-block">
+      <ul className="moon-cal-tone-legend" aria-label="Благоприятность дня">
+        <li>
+          <span className="moon-cal-tone-swatch is-favorable" aria-hidden />
+          Благоприятный
+        </li>
+        <li>
+          <span className="moon-cal-tone-swatch is-unfavorable" aria-hidden />
+          <span aria-hidden>😠👎</span>
+          Неблагоприятный
+        </li>
+      </ul>
+      <ul className="moon-cal-favorable-legend" aria-label="Обозначения работ">
+        {FAVORABLE_ACTIVITIES.map(item => (
+          <li key={item.id}>
+            <span className="moon-cal-favorable-icon" aria-hidden>
+              {item.emoji}
+            </span>
+            <span>{item.shortLabel}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -150,7 +279,9 @@ export function MoonCalendar({
   entries,
   initialYear,
   initialMonthIndex,
+  variant = "full",
 }: MoonCalendarProps) {
+  const isCompact = variant === "compact";
   const now = new Date();
   const [year, setYear] = useState(initialYear ?? now.getFullYear());
   const [monthIndex, setMonthIndex] = useState(
@@ -158,6 +289,7 @@ export function MoonCalendar({
   );
   const [view, setView] = useState<ViewMode>("grid");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const activeView: ViewMode = isCompact ? "grid" : view;
 
   const entryByDate = useMemo(() => {
     const map = new Map<string, MoonCalendarEntry>();
@@ -186,7 +318,14 @@ export function MoonCalendar({
           if (!date) return null;
           const entry = entryByDate.get(selectedKey);
           const moon = resolveMoonPhase(date, entry?.phase);
-          return { date, entry, moon, key: selectedKey } satisfies SelectedDay;
+          return {
+            date,
+            entry,
+            moon,
+            key: selectedKey,
+            favorable: favorableForDay(date.getDate()),
+            tone: dayToneFromPhase(moon.phase),
+          } satisfies SelectedDay;
         })()
       : null;
 
@@ -207,7 +346,9 @@ export function MoonCalendar({
   }
 
   return (
-    <div className="moon-cal-root">
+    <div
+      className={`moon-cal-root${isCompact ? " moon-cal-root--compact" : ""}`}
+    >
       <header className="moon-cal-toolbar moon-cal-substrate">
         <div className="moon-cal-toolbar-inner">
           <div className="moon-cal-month-picker">
@@ -231,34 +372,36 @@ export function MoonCalendar({
               <MaterialIcon name="chevron_right" className="text-lg" />
             </button>
           </div>
-          <div
-            className="moon-cal-view-toggle"
-            role="group"
-            aria-label="Вид календаря"
-          >
-            <button
-              type="button"
-              aria-pressed={view === "grid"}
-              onClick={() => setViewMode("grid")}
-              className={view === "grid" ? "is-active" : undefined}
+          {!isCompact ? (
+            <div
+              className="moon-cal-view-toggle"
+              role="group"
+              aria-label="Вид календаря"
             >
-              <MaterialIcon name="calendar_view_month" className="text-base" />
-              Сетка
-            </button>
-            <button
-              type="button"
-              aria-pressed={view === "list"}
-              onClick={() => setViewMode("list")}
-              className={view === "list" ? "is-active" : undefined}
-            >
-              <MaterialIcon name="table_rows" className="text-base" />
-              Таблица
-            </button>
-          </div>
+              <button
+                type="button"
+                aria-pressed={view === "grid"}
+                onClick={() => setViewMode("grid")}
+                className={view === "grid" ? "is-active" : undefined}
+              >
+                <MaterialIcon name="calendar_view_month" className="text-base" />
+                Сетка
+              </button>
+              <button
+                type="button"
+                aria-pressed={view === "list"}
+                onClick={() => setViewMode("list")}
+                className={view === "list" ? "is-active" : undefined}
+              >
+                <MaterialIcon name="table_rows" className="text-base" />
+                Таблица
+              </button>
+            </div>
+          ) : null}
         </div>
       </header>
 
-      {view === "grid" ? (
+      {activeView === "grid" ? (
         <div className="moon-cal-grid-stage">
           <div
             className="moon-cal-grid moon-cal-substrate"
@@ -275,6 +418,12 @@ export function MoonCalendar({
               const moon = resolveMoonPhase(cell.date, cell.entry?.phase);
               const icon = moonPhaseIcon(moon.phase);
               const isSelected = selectedKey === cell.key;
+              const favorable = cell.inMonth
+                ? favorableForDay(cell.day)
+                : [];
+              const tone = cell.inMonth
+                ? dayToneFromPhase(moon.phase)
+                : "neutral";
 
               return (
                 <button
@@ -289,11 +438,13 @@ export function MoonCalendar({
                     !cell.inMonth ? "is-outside" : ""
                   } ${cell.isToday ? "is-today" : ""} ${
                     isSelected ? "is-selected" : ""
+                  } ${favorable.length > 0 ? "has-favorable" : ""} ${
+                    tone !== "neutral" ? `is-tone-${tone}` : ""
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-0.5">
-                    <div className="flex min-h-[0.75rem] gap-0.5">
-                      {cell.entry?.note ? (
+                  <div className="moon-cal-cell-head">
+                    <div className="moon-cal-cell-marks">
+                      {!isCompact && cell.entry?.note ? (
                         <MaterialIcon
                           name="eco"
                           className="text-[10px] text-primary-fixed-dim"
@@ -309,25 +460,28 @@ export function MoonCalendar({
                     </span>
                   </div>
 
-                  <div className="flex flex-1 items-center justify-center py-0.5">
+                  <div className="moon-cal-cell-moon-stage">
                     <MaterialIcon
                       name={icon}
-                      className={`text-lg moon-glow md:text-2xl ${
-                        cell.isToday || isSelected
-                          ? "text-primary-container"
-                          : "text-on-surface/40"
-                      }`}
+                      className="moon-cal-cell-moon"
                     />
                   </div>
 
-                  <div className="hidden min-h-0 flex-col gap-0 sm:flex">
-                    <span className="truncate font-label text-[9px] leading-tight text-on-surface-variant/80">
-                      {moon.lunarDay} л.д.
-                    </span>
-                    <span className="truncate font-label text-[8px] uppercase tracking-tighter text-primary-fixed-dim/70">
-                      {moonPhaseLabelRu(moon.phase)}
-                    </span>
-                  </div>
+                  {isCompact ? (
+                    <div className="moon-cal-cell-foot">
+                      <CellBottomMarks tone={tone} favorable={favorable} />
+                    </div>
+                  ) : (
+                    <div className="moon-cal-cell-foot hidden sm:flex">
+                      <CellBottomMarks tone={tone} favorable={favorable} />
+                      <span className="truncate font-label text-[9px] leading-tight text-on-surface-variant/80">
+                        {moon.lunarDay} л.д.
+                      </span>
+                      <span className="truncate font-label text-[8px] uppercase tracking-tighter text-primary-fixed-dim/70">
+                        {moonPhaseLabelRu(moon.phase)}
+                      </span>
+                    </div>
+                  )}
                 </button>
               );
             })}
@@ -351,7 +505,7 @@ export function MoonCalendar({
                   <MaterialIcon name="close" />
                 </button>
               </div>
-              <DayInfoContent selected={selected} />
+              <DayInfoContent selected={selected} compact={isCompact} />
             </aside>
           ) : null}
         </div>
@@ -378,6 +532,8 @@ export function MoonCalendar({
                   date: day.date,
                   entry: day.entry,
                   moon,
+                  favorable: favorableForDay(day.day),
+                  tone: dayToneFromPhase(moon.phase),
                 };
 
                 return (
@@ -438,6 +594,8 @@ export function MoonCalendar({
           </table>
         </div>
       )}
+
+      {isCompact ? <FavorableLegend /> : null}
     </div>
   );
 }

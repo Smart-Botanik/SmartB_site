@@ -24,11 +24,24 @@
 - [x] Table view: day / weekday / phase / lunar day / illumination / note
 - [x] Grid: floating day panel absolute top-right inside calendar
 - [x] Table: expand row for day info (no floating panel)
+- [x] Header art under titles with fade (mask + light veil)
+- [x] Active: `public/moon-calendar-header-moonlit.png`
+- [x] Saved for next: `public/moon-calendar-header-garden-saved.png`
+- [x] Lunar howto guide (`calendarLunarGuide`) + phase SVGs under `public/calendar/`
+- [x] Compact moon grid on home after «Последние гайды» (`HomeLunarCalendar`, `variant="compact"`)
+- [x] Home compact denser cells + hardcoded favorable-day icons (landing/watering/nutrients/harvest/care)
 
 ---
 
 ## Files
 
 - `components/CalendarPage/`
+- `components/HomeLunarCalendar/`
 - `lib/moon-phase.ts`
-- `app/globals.css` (moon-glow, cell hover)
+- `lib/moon-favorable-days.ts` (demo markers)
+- `lib/calendar-sections.ts` (`calendarLunarGuide`)
+- `app/globals.css` (moon-glow, cell hover, header media fade, guide, compact, favorable)
+- `app/page.tsx` (home compact calendar)
+- `public/moon-calendar-header-moonlit.png`
+- `public/moon-calendar-header-garden-saved.png`
+- `public/calendar/moon-phase-{new,waxing,full,waning}.svg`
