@@ -3,6 +3,132 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-07-24 — Nav: optimistic active on click (Frontend)
+
+**Role**: Frontend  
+**Change**: `SiteHeader` keeps `pendingHref` while soft-nav is in flight and uses it for active path/hash.  
+**Impact**: Click «Гайды» from «Последнее» highlights «Гайды» immediately (no «Главная» flash).  
+**Reason**: Clearing hash before pathname updates made `/` + empty hash match «Главная».
+
+## 2026-07-24 — Calendar header copy indent + text shadow (Frontend)
+
+**Role**: Frontend  
+**Change**: Calendar header more horizontal padding; copy nudged from left; soft bg-tinted text-shadow on kicker/title/subtitle.  
+**Impact**: `/calendar` titles sit inset from the frame edge and stay readable over the photo.  
+**Reason**: User asked to move text from left, add header indents, and text shadows.
+
+## 2026-07-24 — Calendar header light contrast (Frontend)
+
+**Role**: Frontend  
+**Change**: Light theme calendar header — image opacity `0.92`, lighter title veil, soft outline + inset edge; dark stays at `0.58`.  
+**Impact**: `/calendar` header photo reads with more contrast in light theme and has a soft frame.  
+**Reason**: User asked for more contrast, opacity tweak, and soft border in light theme.
+
+## 2026-07-24 — Calendar header image opacity (Frontend)
+
+**Role**: Frontend  
+**Change**: `.moon-cal-page-header-img` opacity `0.72` → `0.58`.  
+**Impact**: Header photo on `/calendar` sits a bit softer under the titles.  
+**Reason**: User asked for a bit more opacity on the calendar header image.
+
+## 2026-07-24 — Home cultures: client tag chips (Frontend)
+
+**Role**: Frontend  
+**Change**: Moved `PopularTaxonomyTags` (+ `onClick` stopPropagation) into a `"use client"` module under `HomeSidebarCultures`.  
+**Impact**: Home sidebar no longer throws RSC “Event handlers cannot be passed to Client Component props”.  
+**Reason**: Server `HomeSidebarCultures` cannot serialize `onClick` on Next `Link`.
+
+## 2026-07-24 — Nav: highlight «Последнее» (Frontend)
+
+**Role**: Frontend  
+**Change**: `SiteHeader` syncs URL hash on click / popstate / soft-nav tick so `isSiteNavLinkActive` marks «Последнее» when visiting `/#news-updates`.  
+**Impact**: Header (desktop + mobile) highlights «Последнее» instead of staying on «Главная».  
+**Reason**: Next client nav often skips `hashchange`, so active state never flipped.
+
+## 2026-07-24 — Home cultures: whole-row click (Frontend)
+
+**Role**: Frontend  
+**Change**: Culture sidebar rows use a stretched hub link; taxonomy label chips stay separate links to `?label=` filter.  
+**Impact**: Click anywhere on a culture row opens the hub; label chips open the filtered guide page.  
+**Reason**: User asked for whole-item navigation excluding label clicks.
+
+## 2026-07-24 — SITE-HOME-NEWS-1: one «Последнее» on home (Frontend)
+
+**Role**: Frontend  
+**Change**: Merged home «Последнее» + «Гайды» into a single `HomeLatest` block titled «Последнее» («Все» → `/guides`); removed `HomeNewsUpdates` from `/`.  
+**Impact**: Nav `#news-updates` lands on recent guides; journal news stays on `/journal`.  
+**Reason**: User asked to combine the two home sections into one.
+
+## 2026-07-24 — SITE-CAL-2: light-theme header text contrast (Frontend)
+
+**Role**: Frontend  
+**Change**: Denser light-theme header veil; title/subtitle/kicker use darker ink colors; dark theme keeps previous wash + light title.  
+**Impact**: Calendar header copy stays readable on pale/white light background.  
+**Reason**: User reported poor contrast of header text in light theme.
+
+## 2026-07-24 — SITE-CAL-2: header no blur, more opacity wash (Frontend)
+
+**Role**: Frontend  
+**Change**: Removed blur/scale from `.moon-cal-page-header-img`; set `opacity: 0.72`.  
+**Impact**: Sharp header photo with lighter transparency into the page.  
+**Reason**: User asked to drop blur and add transparency instead.
+
+## 2026-07-23 — SITE-CAL-2: header blur + stronger veil (Frontend)
+
+**Role**: Frontend  
+**Change**: `.moon-cal-page-header-img` blur(2.5px) + slight scale; stronger title fade veil.  
+**Impact**: Soft unsharp header photo with denser wash behind titles.  
+**Reason**: User asked for stronger veil and a less sharp / blurred photo.
+
+## 2026-07-23 — SITE-CAL-2: header photo less transparent (Frontend)
+
+**Role**: Frontend  
+**Change**: Stronger mask opacity + lighter title veil on `.moon-cal-page-header-media` / `-fade`.  
+**Impact**: Calendar header image reads more solid; titles still get a thin readability wash.  
+**Reason**: User asked for a less transparent photo.
+
+## 2026-07-23 — SITE-CAL-2: calendar header garden+moon art (Frontend)
+
+**Role**: Frontend  
+**Change**: New `/calendar` header image `moon-calendar-header-garden-moon.png` (path through night vegetable garden under crescent moon); previous moonlit art kept as `moon-calendar-header-moonlit-saved.png`.  
+**Impact**: Header art reads clearly as garden + moon, with sky copy space for titles.  
+**Reason**: User asked for another garden-and-moon header image.
+
+## 2026-07-23 — SITE-CAL-2: legend help padding (Frontend)
+
+**Role**: Frontend  
+**Change**: Internal padding on `.moon-cal-legend-block` (tone + favorable icons help under compact calendar).  
+**Impact**: Help legend (Благоприятный / Неблагоприятный / работы) no longer sits flush against the calendar edges.  
+**Reason**: User asked for indents on the help block.
+
+## 2026-07-23 — Home: «Гайды» title (Frontend)
+
+**Role**: Frontend  
+**Change**: `HomeLatest` h2 «Последние гайды» → «Гайды».  
+**Impact**: Shorter section label on home.  
+**Reason**: User rename request.
+
+## 2026-07-23 — SITE-HOME-NEWS-1: title sync «Последнее» (Frontend)
+
+**Role**: Frontend  
+**Change**: `HomeNewsUpdates` h2 → «Последнее» (match nav); mobile header nav uses active highlight for hash links.  
+**Impact**: Menu label and home section title match; click «Последнее» → `#news-updates` + highlight.  
+**Reason**: User asked to sync titles and keep section jump + active state.
+
+## 2026-07-23 — SITE-CAL-2: compact cell insets (Frontend)
+
+**Role**: Frontend  
+**Change**: Home compact moon cells — more padding and foot `bottom` inset so favorable icons clear the cell edge.  
+**Impact**: Icons no longer stick to the bottom border on `/`.  
+**Reason**: User reported icons flush against cell bottom on the main-page calendar.
+
+## 2026-07-23 — SITE-CAL-2: day panel padding (Frontend)
+
+**Role**: Frontend  
+**Change**: Larger internal padding on `.moon-cal-day-panel` (full + compact) and table expand row.  
+**Impact**: Day detail card no longer feels flush to the glass edges when a cell is selected.  
+**Reason**: User asked for internal indents on the cell-click card.
+
 ## 2026-07-23 — Home mobile density (Frontend)
 
 **Role**: Frontend  

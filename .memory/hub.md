@@ -3,7 +3,7 @@
 > **Старт:** этот файл → [`tasks/active.md`](./tasks/active.md) → card.  
 > **AI:** [`AGENTS.md`](./AGENTS.md)
 
-**Обновлено:** 2026-07-23 (SITE-CAL-2 · home favorable days)
+**Обновлено:** 2026-07-24 (SITE-HOME-NEWS-1 · one «Последнее»)
 
 ---
 
@@ -11,7 +11,7 @@
 
 **SITE-CAL-2** — `/calendar` month grid + compact home teaser (favorable icons).  
 **SITE-1** tails: static `out/` pre-VPS; TG smoke A1; пакет B; brand.  
-SITE-HOME-NEWS-1 ✅ — home «Последнее» + guides; nav → `#news-updates`.
+SITE-HOME-NEWS-1 ✅ — home one «Последнее» (guides, «Все»→`/guides`); nav → `#news-updates`.
 SITE-USEFUL-4 ✅ — `/useful` left filters + central feed (no right rail).
 
 ---
@@ -31,6 +31,7 @@ Platform WIP (другие apps): `../../memory/hub.md` — не дублиро�
 
 | Дата | Суть |
 |------|------|
+| 2026-07-24 | SITE-HOME-NEWS-1: home «Последнее» = guides only; dropped separate news block |
 | 2026-07-23 | SITE-CAL-2: denser home calendar + hardcoded favorable icons |
 | 2026-07-23 | SITE-1: `output: 'export'` → `out/` static site pre-VPS |
 | 2026-07-23 | SITE-CAL-2: compact lunar on home after «Последние гайды» |

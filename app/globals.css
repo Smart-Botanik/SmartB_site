@@ -347,9 +347,25 @@
 
     margin-bottom: 1.25rem;
 
-    padding: 1.1rem 0.85rem 5.75rem;
+    padding: 1.45rem clamp(1.25rem, 3.5vw, 2rem) 5.75rem;
 
     border-radius: 1rem;
+
+  }
+
+
+
+  /* Light: clearer photo + soft edge against warm page bg */
+
+  :root:not([data-theme="dark"]) .moon-cal-page-header {
+
+    border: 1px solid color-mix(in srgb, var(--color-outline-variant) 72%, transparent);
+
+    box-shadow:
+
+      0 1px 2px color-mix(in srgb, var(--color-shadow-soft) 55%, transparent),
+
+      inset 0 0 0 1px color-mix(in srgb, var(--color-surface-container-high) 65%, transparent);
 
   }
 
@@ -363,19 +379,17 @@
 
     z-index: 0;
 
-    /* dissolve into page behind titles; keep garden clear at bottom */
+    /* soft edge into page; photo stays mostly solid */
 
     -webkit-mask-image: linear-gradient(
 
       180deg,
 
-      transparent 0%,
+      rgba(0, 0, 0, 0.55) 0%,
 
-      rgba(0, 0, 0, 0.22) 14%,
+      rgba(0, 0, 0, 0.85) 12%,
 
-      rgba(0, 0, 0, 0.7) 36%,
-
-      #000 58%,
+      #000 28%,
 
       #000 100%
 
@@ -385,13 +399,11 @@
 
       180deg,
 
-      transparent 0%,
+      rgba(0, 0, 0, 0.55) 0%,
 
-      rgba(0, 0, 0, 0.22) 14%,
+      rgba(0, 0, 0, 0.85) 12%,
 
-      rgba(0, 0, 0, 0.7) 36%,
-
-      #000 58%,
+      #000 28%,
 
       #000 100%
 
@@ -407,6 +419,16 @@
 
     object-position: center 78%;
 
+    opacity: 0.58;
+
+  }
+
+
+
+  :root:not([data-theme="dark"]) .moon-cal-page-header-img {
+
+    opacity: 0.92;
+
   }
 
 
@@ -419,7 +441,7 @@
 
     pointer-events: none;
 
-    /* light readability veil only over title zone — no milky full wash */
+    /* readability veil over title zone */
 
     background:
 
@@ -427,11 +449,13 @@
 
         180deg,
 
-        color-mix(in srgb, var(--color-background) 55%, transparent) 0%,
+        color-mix(in srgb, var(--color-background) 72%, transparent) 0%,
 
-        color-mix(in srgb, var(--color-background) 18%, transparent) 32%,
+        color-mix(in srgb, var(--color-background) 42%, transparent) 28%,
 
-        transparent 52%
+        color-mix(in srgb, var(--color-background) 14%, transparent) 50%,
+
+        transparent 66%
 
       ),
 
@@ -439,9 +463,41 @@
 
         105deg,
 
-        color-mix(in srgb, var(--color-background) 28%, transparent) 0%,
+        color-mix(in srgb, var(--color-background) 42%, transparent) 0%,
 
-        transparent 46%
+        transparent 50%
+
+      );
+
+  }
+
+
+
+  [data-theme="dark"] .moon-cal-page-header-fade {
+
+    background:
+
+      linear-gradient(
+
+        180deg,
+
+        color-mix(in srgb, var(--color-background) 62%, transparent) 0%,
+
+        color-mix(in srgb, var(--color-background) 32%, transparent) 28%,
+
+        color-mix(in srgb, var(--color-background) 10%, transparent) 48%,
+
+        transparent 62%
+
+      ),
+
+      linear-gradient(
+
+        105deg,
+
+        color-mix(in srgb, var(--color-background) 36%, transparent) 0%,
+
+        transparent 48%
 
       );
 
@@ -456,6 +512,24 @@
     z-index: 1;
 
     max-width: 34rem;
+
+    margin-left: clamp(0.35rem, 1.5vw, 0.85rem);
+
+    padding-left: 0.15rem;
+
+  }
+
+
+
+  .moon-cal-page-kicker {
+
+    color: var(--color-primary-fixed-dim);
+
+    text-shadow:
+
+      0 1px 1px color-mix(in srgb, var(--color-background) 55%, transparent),
+
+      0 1px 6px color-mix(in srgb, var(--color-background) 28%, transparent);
 
   }
 
@@ -475,7 +549,13 @@
 
     letter-spacing: -0.015em;
 
-    color: var(--color-primary);
+    color: var(--color-on-surface);
+
+    text-shadow:
+
+      0 1px 1px color-mix(in srgb, var(--color-background) 60%, transparent),
+
+      0 1px 8px color-mix(in srgb, var(--color-background) 32%, transparent);
 
   }
 
@@ -490,6 +570,54 @@
     font-size: 0.95rem;
 
     line-height: 1.55;
+
+    color: var(--color-on-surface-variant);
+
+    text-shadow:
+
+      0 1px 1px color-mix(in srgb, var(--color-background) 50%, transparent),
+
+      0 1px 6px color-mix(in srgb, var(--color-background) 25%, transparent);
+
+  }
+
+
+
+  /* Light: ink on pale wash — avoid soft mid-greens on near-white */
+
+  :root:not([data-theme="dark"]) .moon-cal-page-kicker {
+
+    color: #1f5c38;
+
+  }
+
+
+
+  :root:not([data-theme="dark"]) .moon-cal-page-title {
+
+    color: #122018;
+
+  }
+
+
+
+  :root:not([data-theme="dark"]) .moon-cal-page-subtitle {
+
+    color: #2f3d34;
+
+  }
+
+
+
+  [data-theme="dark"] .moon-cal-page-title {
+
+    color: var(--color-primary);
+
+  }
+
+
+
+  [data-theme="dark"] .moon-cal-page-subtitle {
 
     color: var(--color-on-surface-variant);
 
@@ -891,7 +1019,7 @@
 
   .moon-cal-table-expand-inner {
 
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 1.25rem 1.5rem 1.4rem;
 
     border-top: 1px solid var(--color-glass-panel-border);
 
@@ -1307,11 +1435,11 @@
 
   .moon-cal-root--compact .moon-cal-cell {
 
-    aspect-ratio: 1 / 0.78;
+    aspect-ratio: 1 / 0.82;
 
-    min-height: 2.6rem;
+    min-height: 2.85rem;
 
-    padding: 0.14rem 0.2rem;
+    padding: 0.22rem 0.28rem 0.32rem;
 
   }
 
@@ -1355,11 +1483,11 @@
 
   .moon-cal-root--compact .moon-cal-cell-foot {
 
-    left: 0.18rem;
+    left: 0.22rem;
 
-    right: 0.18rem;
+    right: 0.22rem;
 
-    bottom: 0.12rem;
+    bottom: 0.28rem;
 
   }
 
@@ -1389,7 +1517,7 @@
 
     max-height: none;
 
-    padding: 0.55rem 0.7rem;
+    padding: 1rem 1.15rem 1.1rem;
 
   }
 
@@ -1545,9 +1673,11 @@
 
     flex-direction: column;
 
-    gap: 0.35rem;
+    gap: 0.45rem;
 
-    margin-top: 0.15rem;
+    margin-top: 0.35rem;
+
+    padding: 0.55rem 0.7rem 0.5rem;
 
   }
 
@@ -1725,7 +1855,7 @@
 
     overflow-y: auto;
 
-    padding: 1.25rem 1.35rem;
+    padding: 1.5rem 1.65rem 1.6rem;
 
     animation: moon-cal-panel-in 0.2s ease-out;
 

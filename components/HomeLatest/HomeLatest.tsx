@@ -35,7 +35,7 @@ export function HomeLatest({ guides, limit = 6 }: HomeLatestProps) {
     <div className="glass-effect rounded-2xl border border-outline-variant/10 p-3.5 dark:border-outline-variant/15 sm:p-5">
       <div className="mb-2.5 flex items-center justify-between gap-2 sm:mb-4">
         <h2 className="font-headline text-lg text-on-surface sm:text-headline-mobile">
-          Последние гайды
+          Последнее
         </h2>
         <Link
           href="/guides"

@@ -24,12 +24,16 @@
 - [x] Table view: day / weekday / phase / lunar day / illumination / note
 - [x] Grid: floating day panel absolute top-right inside calendar
 - [x] Table: expand row for day info (no floating panel)
-- [x] Header art under titles with fade (mask + light veil)
-- [x] Active: `public/moon-calendar-header-moonlit.png`
-- [x] Saved for next: `public/moon-calendar-header-garden-saved.png`
+- [x] Header art under titles with fade (mask + light veil) — light: opacity 0.92 + soft border; dark: 0.58 (2026-07-24)
+- [x] Active: `public/moon-calendar-header-garden-moon.png` (garden path + crescent)
+- [x] Saved: `public/moon-calendar-header-moonlit-saved.png` (prev night sky)
+- [x] Saved: `public/moon-calendar-header-garden-saved.png` (warm garden illustration)
 - [x] Lunar howto guide (`calendarLunarGuide`) + phase SVGs under `public/calendar/`
 - [x] Compact moon grid on home after «Последние гайды» (`HomeLunarCalendar`, `variant="compact"`)
 - [x] Home compact denser cells + hardcoded favorable-day icons (landing/watering/nutrients/harvest/care)
+- [x] Day panel internal padding (grid float + compact + table expand)
+- [x] Compact home cells: bottom inset so favorable icons clear the edge
+- [x] Legend help block padding (tone + activity icons)
 
 ---
 
@@ -42,6 +46,7 @@
 - `lib/calendar-sections.ts` (`calendarLunarGuide`)
 - `app/globals.css` (moon-glow, cell hover, header media fade, guide, compact, favorable)
 - `app/page.tsx` (home compact calendar)
-- `public/moon-calendar-header-moonlit.png`
+- `public/moon-calendar-header-garden-moon.png`
+- `public/moon-calendar-header-moonlit-saved.png`
 - `public/moon-calendar-header-garden-saved.png`
 - `public/calendar/moon-phase-{new,waxing,full,waning}.svg`

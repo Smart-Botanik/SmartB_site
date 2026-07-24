@@ -15,7 +15,7 @@ WIP limit: **≤ 5**. Канон: этот файл + [`cards/`](./cards/). **Б
 
 | Дата | ID | Суть |
 |------|-----|------|
-| 2026-07-22 | SITE-HOME-NEWS-1 | Home news block + nav; Latest → Гайды |
+| 2026-07-24 | SITE-HOME-NEWS-1 | Home one «Последнее» (guides); «Все»→`/guides` |
 | 2026-07-22 | SITE-USEFUL-4 | `/useful` unified feed: left filters + cards |
 | 2026-07-22 | SITE-USEFUL-3 | `/useful` social: video feed · photo comments · guide likes |
 | 2026-07-22 | SITE-USEFUL-2 | `/useful`: video · photo · tags · guides + header/footer |

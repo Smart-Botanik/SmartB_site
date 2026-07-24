@@ -11,74 +11,50 @@ import {
   DEFAULT_CULTURES,
   type DefaultCulture,
 } from "@/lib/default-cultures";
-import { MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS } from "@/lib/popular-taxonomy-labels";
+
+import { PopularTaxonomyTags } from "./PopularTaxonomyTags";
 
 type HomeSidebarCulturesProps = {
   cultures?: CultureOption[];
 };
 
-function PopularTaxonomyTags({
-  hubSlug,
-  tags,
-}: {
-  hubSlug: string;
-  tags: ContentLabel[];
-}) {
-  const visible = tags.slice(0, MAX_SIDEBAR_POPULAR_TAXONOMY_LABELS);
-  if (visible.length === 0) {
-    return null;
-  }
-
-  const baseHref = cultureHubHref(hubSlug);
-
-  return (
-    <ul className="mt-1 flex flex-wrap gap-x-[0.3rem] gap-y-[0.05rem]" aria-label="Метки культуры">
-      {visible.map(tag => (
-        <li key={tag.key}>
-          <Link
-            href={`${baseHref}?label=${encodeURIComponent(tag.key)}`}
-            className="inline-flex rounded-md border border-outline-variant/20 bg-surface-container-high px-1.5 py-1 text-[11px] leading-none text-on-surface-variant transition-colors hover:border-primary-container/35 hover:text-primary-container dark:border-outline-variant/15 dark:hover:border-primary-container/25"
-          >
-            {tag.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 function DefaultCultureList({ cultures }: { cultures: DefaultCulture[] }) {
   return (
     <>
-      {cultures.map(culture => (
-        <li key={culture.tagKey}>
-          <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
-            <Link
-              href={cultureHubHref(culture.hubSlug)}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-surface-container-high text-2xl leading-none"
-              aria-label={culture.label}
-            >
-              <span aria-hidden>{culture.emoji}</span>
-            </Link>
-            <div className="min-w-0 flex-1">
+      {cultures.map(culture => {
+        const href = cultureHubHref(culture.hubSlug);
+
+        return (
+          <li key={culture.tagKey}>
+            <div className="group relative flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
               <Link
-                href={cultureHubHref(culture.hubSlug)}
-                className="font-medium text-on-surface hover:text-primary-container"
+                href={href}
+                className="absolute inset-0 z-0 rounded-xl"
+                aria-label={culture.label}
+              />
+              <div
+                className="pointer-events-none relative z-0 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-surface-container-high text-2xl leading-none"
+                aria-hidden
               >
-                {culture.label}
-              </Link>
-              <PopularTaxonomyTags
-                hubSlug={culture.hubSlug}
-                tags={culture.popularTags}
+                <span>{culture.emoji}</span>
+              </div>
+              <div className="relative min-w-0 flex-1">
+                <span className="pointer-events-none font-medium text-on-surface group-hover:text-primary-container">
+                  {culture.label}
+                </span>
+                <PopularTaxonomyTags
+                  hubSlug={culture.hubSlug}
+                  tags={culture.popularTags}
+                />
+              </div>
+              <MaterialIcon
+                name="chevron_right"
+                className="pointer-events-none relative z-0 mt-1 text-[20px] text-outline transition-transform group-hover:translate-x-0.5 group-hover:text-primary-fixed-dim"
               />
             </div>
-            <MaterialIcon
-              name="chevron_right"
-              className="mt-1 text-[20px] text-outline transition-transform group-hover:translate-x-0.5 group-hover:text-primary-fixed-dim"
-            />
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </>
   );
 }
@@ -88,28 +64,28 @@ function ApiCultureList({ cultures }: { cultures: CultureOption[] }) {
     <>
       {cultures.map(option => {
         const href = cultureHubHref(option.hubSlug);
+        const tags: ContentLabel[] = option.popularTags ?? [];
 
         return (
           <li key={option.tagKey}>
-            <div className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
-              <Link href={href} className="shrink-0" aria-label={option.label}>
+            <div className="group relative flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
+              <Link
+                href={href}
+                className="absolute inset-0 z-0 rounded-xl"
+                aria-label={option.label}
+              />
+              <div className="pointer-events-none relative z-0 shrink-0" aria-hidden>
                 <CultureThumbnail option={option} />
-              </Link>
-              <div className="min-w-0 flex-1">
-                <Link
-                  href={href}
-                  className="font-medium text-on-surface hover:text-primary-container"
-                >
+              </div>
+              <div className="relative min-w-0 flex-1">
+                <span className="pointer-events-none font-medium text-on-surface group-hover:text-primary-container">
                   {option.label}
-                </Link>
-                <PopularTaxonomyTags
-                  hubSlug={option.hubSlug}
-                  tags={option.popularTags ?? []}
-                />
+                </span>
+                <PopularTaxonomyTags hubSlug={option.hubSlug} tags={tags} />
               </div>
               <MaterialIcon
                 name="chevron_right"
-                className="mt-1 text-[20px] text-outline transition-transform group-hover:translate-x-0.5 group-hover:text-primary-fixed-dim"
+                className="pointer-events-none relative z-0 mt-1 text-[20px] text-outline transition-transform group-hover:translate-x-0.5 group-hover:text-primary-fixed-dim"
               />
             </div>
           </li>

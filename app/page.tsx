@@ -3,7 +3,6 @@ import { HomeHero } from "@/components/HomeHero";
 import { HomeKnowledge } from "@/components/HomeKnowledge";
 import { HomeLatest } from "@/components/HomeLatest";
 import { HomeLunarCalendar } from "@/components/HomeLunarCalendar";
-import { HomeNewsUpdates } from "@/components/HomeNewsUpdates";
 import { HomeSidebarCultures } from "@/components/HomeSidebarCultures";
 import {
   getDefaultCalendarSections,
@@ -19,7 +18,6 @@ import {
   fetchPublishedCultureOptions,
   resolveDefaultCultureOptions,
 } from "@/lib/culture-options";
-import { JOURNAL_FEATURED, JOURNAL_NEWS } from "@/lib/journal-content";
 import { HOME_KNOWLEDGE_CHAPTERS } from "@/lib/site-content";
 import { parseHomeSections, resolveCultureChipsSection } from "@/lib/site-sections";
 
@@ -85,10 +83,6 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-10">
           <div className="space-y-6 sm:space-y-10">
             <div id="news-updates" className="scroll-mt-28">
-              <HomeNewsUpdates featured={JOURNAL_FEATURED} articles={JOURNAL_NEWS} />
-            </div>
-
-            <div id="guides" className="scroll-mt-28">
               <HomeLatest guides={latestGuides} limit={6} />
             </div>
 

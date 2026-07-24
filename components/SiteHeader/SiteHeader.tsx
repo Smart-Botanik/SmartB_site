@@ -18,17 +18,67 @@ function navLinkClassName(active: boolean): string {
   }`;
 }
 
+function hashFromHref(href: string): string {
+  const hashIndex = href.indexOf("#");
+  return hashIndex >= 0 ? href.slice(hashIndex) : "";
+}
+
+function pathnameFromHref(href: string): string {
+  const hashIndex = href.indexOf("#");
+  const path = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
+  return path === "" ? "/" : path;
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [hash, setHash] = useState("");
+  /** Optimistic destination while soft-nav is in flight (avoids «Главная» flash). */
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const syncHash = () => setHash(window.location.hash);
     syncHash();
+    // Next soft-nav can apply the hash a tick after pathname updates.
+    const timeoutId = window.setTimeout(syncHash, 0);
     window.addEventListener("hashchange", syncHash);
-    return () => window.removeEventListener("hashchange", syncHash);
+    window.addEventListener("popstate", syncHash);
+    return () => {
+      window.clearTimeout(timeoutId);
+      window.removeEventListener("hashchange", syncHash);
+      window.removeEventListener("popstate", syncHash);
+    };
   }, [pathname]);
+
+  // Drop optimistic highlight once the URL matches intent (or on back / stall).
+  useEffect(() => {
+    if (pendingHref === null) return;
+
+    if (
+      pathname === pathnameFromHref(pendingHref) &&
+      hash === hashFromHref(pendingHref)
+    ) {
+      setPendingHref(null);
+      return;
+    }
+
+    const onPopState = () => setPendingHref(null);
+    window.addEventListener("popstate", onPopState);
+    const timeoutId = window.setTimeout(() => setPendingHref(null), 2500);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      window.clearTimeout(timeoutId);
+    };
+  }, [pathname, hash, pendingHref]);
+
+  const handleNavClick = (href: string) => {
+    setPendingHref(href);
+    setHash(hashFromHref(href));
+    setMenuOpen(false);
+  };
+
+  const activePathname = pendingHref ? pathnameFromHref(pendingHref) : pathname;
+  const activeHash = pendingHref ? hashFromHref(pendingHref) : hash;
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20">
@@ -37,6 +87,7 @@ export function SiteHeader() {
           href="/"
           className="flex shrink-0 items-center justify-self-start"
           aria-label="SmartБотanik — на главную"
+          onClick={() => handleNavClick("/")}
         >
           <BrandWordmark className="h-8 w-auto sm:h-9" />
         </Link>
@@ -46,12 +97,14 @@ export function SiteHeader() {
           aria-label="Основная навигация"
         >
           {SITE_HEADER_NAV_LINKS.map(link => {
-            const active = isSiteNavLinkActive(link, pathname, hash);
+            const active = isSiteNavLinkActive(link, activePathname, activeHash);
             return (
               <Link
                 key={`${link.href}:${link.label}`}
                 href={link.href}
                 className={navLinkClassName(active)}
+                aria-current={active ? "page" : undefined}
+                onClick={() => handleNavClick(link.href)}
               >
                 {link.label}
               </Link>
@@ -80,16 +133,22 @@ export function SiteHeader() {
           aria-label="Мобильная навигация"
         >
           <div className="flex flex-col gap-3">
-            {SITE_HEADER_NAV_LINKS.map(link => (
-              <Link
-                key={`${link.href}:${link.label}`}
-                href={link.href}
-                className="font-label text-label uppercase text-on-surface-variant"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {SITE_HEADER_NAV_LINKS.map(link => {
+              const active = isSiteNavLinkActive(link, activePathname, activeHash);
+              return (
+                <Link
+                  key={`${link.href}:${link.label}`}
+                  href={link.href}
+                  className={`font-label text-label uppercase ${
+                    active ? "text-primary-container" : "text-on-surface-variant"
+                  }`}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => handleNavClick(link.href)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <SiteHeaderAuth variant="mobile" />
           </div>
         </nav>

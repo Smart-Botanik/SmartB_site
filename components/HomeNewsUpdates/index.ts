@@ -1,1 +1,0 @@
-export { HomeNewsUpdates } from "./HomeNewsUpdates";

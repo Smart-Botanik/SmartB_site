@@ -27,7 +27,7 @@ export function CalendarPageClient({ sections }: CalendarPageClientProps) {
         <header className="moon-cal-page-header">
           <div className="moon-cal-page-header-media" aria-hidden="true">
             <Image
-              src="/moon-calendar-header-moonlit.png"
+              src="/moon-calendar-header-garden-moon.png"
               alt=""
               fill
               priority
@@ -37,7 +37,7 @@ export function CalendarPageClient({ sections }: CalendarPageClientProps) {
             <div className="moon-cal-page-header-fade" />
           </div>
           <div className="moon-cal-page-header-copy">
-            <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
+            <span className="moon-cal-page-kicker font-label text-label uppercase tracking-widest">
               Инструменты
             </span>
             <h1 className="moon-cal-page-title">Лунный календарь</h1>
