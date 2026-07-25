@@ -20,6 +20,15 @@ const socialGraphqlUrl =
 const socialInternalKey =
   process.env.SOCIAL_SERVICE_INTERNAL_KEY ?? "dev-social-internal";
 
+/** Site → user-service for profile display names (ADR-0024). Not backend_nest. */
+const userGraphqlUrl =
+  process.env.USER_GRAPHQL_URL ??
+  process.env.NEXT_PUBLIC_USER_GRAPHQL_URL ??
+  "http://localhost:3019/graphql";
+
+const userInternalKey =
+  process.env.USER_SERVICE_INTERNAL_KEY ?? "dev-user-internal";
+
 export const siteEnv = {
   graphqlUrl,
   apiBaseUrl,
@@ -27,5 +36,7 @@ export const siteEnv = {
   telegramUrl,
   socialGraphqlUrl,
   socialInternalKey,
+  userGraphqlUrl,
+  userInternalKey,
   revalidateSeconds: Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS ?? "3600"),
 };

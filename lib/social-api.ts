@@ -10,6 +10,7 @@ import {
   getHardcodedEngagementByDiscussionId,
   type DiscussionSubjectType,
 } from "./engagement";
+import { fetchDisplayNamesByUserIds } from "./user-api";
 
 type GraphqlResponse<T> = {
   data?: T;
@@ -129,9 +130,25 @@ export async function fetchEngagementBundle(
 
   if (!data?.engagementStats) return null;
 
+  const commentsRaw = data.comments ?? [];
+  const names = await fetchDisplayNamesByUserIds(
+    commentsRaw.map((c) => c.authorId),
+  );
+  const comments = commentsRaw.map((row) => {
+    const mapped = mapComment(row);
+    const fromProfile = names.get(row.authorId);
+    if (fromProfile) {
+      return {
+        ...mapped,
+        author: { ...mapped.author, displayName: fromProfile },
+      };
+    }
+    return mapped;
+  });
+
   return {
     stats: mapStats(data.engagementStats),
-    comments: (data.comments ?? []).map(mapComment),
+    comments,
   };
 }
 
