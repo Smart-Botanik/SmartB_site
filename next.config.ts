@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname),
   ...(staticExport
     ? {
-        output: "export" as const,
-        /** Cleaner paths on static hosts (`/guides/` → `guides/index.html`). */
-        trailingSlash: true,
-      }
+      output: "export" as const,
+      /** Cleaner paths on static hosts (`/guides/` → `guides/index.html`). */
+      trailingSlash: true,
+    }
     : {}),
   images: {
     unoptimized: staticExport,
@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "http", hostname: "localhost", pathname: "/**" },
       { protocol: "http", hostname: "127.0.0.1", pathname: "/**" },
+      { protocol: "http", hostname: "192.168.1.11", port: "3000", pathname: "/**" },
+      { protocol: "https", hostname: "192.168.1.11", port: "3000", pathname: "/**" },
     ],
   },
 };

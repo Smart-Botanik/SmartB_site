@@ -169,11 +169,20 @@ export function resolveDefaultCultureOptions(
 
 /** Absolute URL for Media from Nest (relative /uploads/...). */
 export function resolveMediaUrl(url: string): string {
+  const rewritePattern = /^(?:https?:\/\/)?(?:localhost|192\.168\.1\.11):3001\/uploads\//i;
+  if (rewritePattern.test(url)) {
+    return url.replace(rewritePattern, "http://192.168.1.11:3001/uploads/");
+  }
+
   if (/^https?:\/\//i.test(url)) {
     return url;
   }
   const base = siteEnv.apiBaseUrl.replace(/\/$/, "");
-  return `${base}${url.startsWith("/") ? url : `/${url}`}`;
+  const resolved = `${base}${url.startsWith("/") ? url : `/${url}`}`;
+  if (rewritePattern.test(resolved)) {
+    return resolved.replace(rewritePattern, "http://192.168.1.11:3001/uploads/");
+  }
+  return resolved;
 }
 
 export function cultureHubHref(hubSlug: string): string {
