@@ -35,6 +35,11 @@
 - [x] Compact home cells: bottom inset so favorable icons clear the edge
 - [x] Legend help block padding (tone + activity icons)
 
+## Follow-up
+
+- **SITE-CAL-3** — real `publishedCalendarDays` + matrix resolve; drop demo favorability / no `generalState` cell bg · [`SITE-CAL-3`](./SITE-CAL-3.md)
+- Strategy: [`ARCH-CAL-EPHEM-1`](../../../../memory/tasks/cards/ARCH-CAL-EPHEM-1.md)
+
 ---
 
 ## Files

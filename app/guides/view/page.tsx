@@ -4,9 +4,9 @@ import { GuidesCatalog, loadGuidesCatalogData } from "@/components/GuidesCatalog
 import { GuideViewShell } from "@/components/GuideViewShell";
 
 export const metadata: Metadata = {
-  title: "Гайды и материалы — SmartБотаник",
+  title: "Гайды и материалы — СмартБотаник",
   description:
-    "Руководства по выращиванию, закрутке и репорты — база знаний SmartБотаник.",
+    "Руководства по выращиванию, закрутке и репорты — база знаний СмартБотаник.",
 };
 
 export default async function GuidesViewPage() {

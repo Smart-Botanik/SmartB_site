@@ -11,15 +11,15 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const page = await fetchPublishedSitePage("calendar");
     return {
-      title: page?.seoTitle ?? `Лунный календарь — SmartБотаник`,
+      title: page?.seoTitle ?? `Лунный календарь — СмартБотаник`,
       description:
         page?.seoDescription ??
-        "Лунный календарь SmartБотаник для работ в саду.",
+        "Лунный календарь СмартБотаник для работ в саду.",
     };
   } catch {
     return {
-      title: "Лунный календарь — SmartБотаник",
-      description: "Лунный календарь SmartБотаник для работ в саду.",
+      title: "Лунный календарь — СмартБотаник",
+      description: "Лунный календарь СмартБотаник для работ в саду.",
     };
   }
 }

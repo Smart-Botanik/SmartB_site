@@ -13,16 +13,19 @@ type EngagementBarProps = {
   /** Compact for cards; full for article / gallery. */
   size?: "compact" | "full";
   className?: string;
+  /** When false, only likes are shown (Useful feed — comments later). */
+  showComments?: boolean;
   onCommentClick?: () => void;
 };
 
 /**
- * Like + comment counters. Like toggles locally until BK-ENGAGE-1 API exists.
+ * Like (+ optional comment) counters. Like toggles locally until BK-ENGAGE-1 API exists.
  */
 export function EngagementBar({
   stats,
   size = "compact",
   className = "",
+  showComments = true,
   onCommentClick,
 }: EngagementBarProps) {
   const [liked, setLiked] = useState(Boolean(stats.likedByMe));
@@ -57,20 +60,22 @@ export function EngagementBar({
         <MaterialIcon name="favorite" filled={liked} className="text-[18px]" />
         <span>{formatEngagementCount(likeCount)}</span>
       </button>
-      <button
-        type="button"
-        className="engagement-bar-btn"
-        aria-label={`Комментарии: ${stats.commentCount}`}
-        onClick={event => {
-          event.preventDefault();
-          event.stopPropagation();
-          onCommentClick?.();
-        }}
-      >
-        <MaterialIcon name="chat_bubble" className="text-[18px]" />
-        <span>{formatEngagementCount(stats.commentCount)}</span>
-        {isFull ? <span className="engagement-bar-hint">коммент.</span> : null}
-      </button>
+      {showComments ? (
+        <button
+          type="button"
+          className="engagement-bar-btn"
+          aria-label={`Комментарии: ${stats.commentCount}`}
+          onClick={event => {
+            event.preventDefault();
+            event.stopPropagation();
+            onCommentClick?.();
+          }}
+        >
+          <MaterialIcon name="chat_bubble" className="text-[18px]" />
+          <span>{formatEngagementCount(stats.commentCount)}</span>
+          {isFull ? <span className="engagement-bar-hint">коммент.</span> : null}
+        </button>
+      ) : null}
     </div>
   );
 }

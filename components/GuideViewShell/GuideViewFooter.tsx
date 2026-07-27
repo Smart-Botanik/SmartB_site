@@ -15,7 +15,7 @@ export function GuideViewFooter() {
             aria-hidden
           />
           <p className="font-label text-label text-on-surface-variant opacity-80">
-            © {new Date().getFullYear()} SmartБотаник
+            © {new Date().getFullYear()} СмартБотаник
           </p>
         </div>
 

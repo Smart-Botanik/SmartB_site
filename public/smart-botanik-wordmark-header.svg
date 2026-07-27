@@ -1,4 +1,4 @@
-<svg viewBox="0 0 260 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SmartБотаник">
+<svg viewBox="0 0 280 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="СмартБотаник">
   <text
     x="0"
     y="28"
@@ -7,7 +7,7 @@
     font-weight="700"
     letter-spacing="-0.02em"
   >
-    <tspan fill="#00ff9d">Smart</tspan>
+    <tspan fill="#00ff9d">Смарт</tspan>
     <tspan fill="#dde2f3">Ботаник</tspan>
   </text>
 </svg>

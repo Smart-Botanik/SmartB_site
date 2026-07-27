@@ -8,10 +8,65 @@ import { GUIDE_SECTION_META, partitionGuidesByKnowledgeSection } from "@/lib/gui
 import { resolveEngagement } from "@/lib/social-api";
 
 import { UsefulFeedClient } from "./UsefulFeedClient";
-import { buildUsefulFeedPosts, galleryItemsToFeed } from "./useful-feed";
+import {
+  USEFUL_FEED_USE_PLACEHOLDERS,
+  buildPlaceholderUsefulFeedPosts,
+  buildUsefulFeedPosts,
+  galleryItemsToFeed,
+} from "./useful-feed";
 
 export async function UsefulPageContent() {
   const meta = GUIDE_SECTION_META.interesting;
+
+  const posts = USEFUL_FEED_USE_PLACEHOLDERS
+    ? buildPlaceholderUsefulFeedPosts()
+    : await loadLiveUsefulFeedPosts();
+
+  const postsWithEngagement = await Promise.all(
+    posts.map(async post => {
+      const subjectId =
+        post.type === "guide"
+          ? post.id.replace(/^guide\./, "")
+          : post.type === "source"
+            ? post.id.replace(/^source\./, "")
+            : post.id.replace(/^(video|image)\./, "");
+      const subjectType =
+        post.type === "guide"
+          ? ("GUIDE" as const)
+          : ("MEDIA_GALLERY_ITEM" as const);
+      const engagement = await resolveEngagement({
+        discussionId: post.discussionId,
+        subjectType,
+        subjectId,
+      });
+      return { ...post, engagement };
+    }),
+  );
+
+  return (
+    <div className="mx-auto max-w-container-max px-gutter pb-20 pt-10">
+      <div className="relative mb-6 py-3">
+        <div className="hero-gradient absolute inset-0 -z-10" />
+        <div className="mb-1 flex flex-col gap-0.5">
+          <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
+            Сообщество
+          </span>
+          <h1 className="font-display text-[36px] leading-tight text-primary md:text-[44px]">
+            {meta.title}
+          </h1>
+        </div>
+        <p className="max-w-2xl font-body text-sm text-on-surface-variant">
+          Одна лента: таймлапсы, фото, гайды и внешние источники. Слева — фильтр
+          по типу, чтобы быстрее находить полезное.
+        </p>
+      </div>
+
+      <UsefulFeedClient posts={postsWithEngagement} />
+    </div>
+  );
+}
+
+async function loadLiveUsefulFeedPosts() {
   const useful = await fetchPublishedUsefulGalleries();
   const imageGalleryId =
     useful.imageGalleryId?.trim() ||
@@ -41,48 +96,10 @@ export async function UsefulPageContent() {
   );
   const videoItems = galleryItemsToFeed(videoGallery?.items ?? [], "VIDEO");
   const photoItems = galleryItemsToFeed(imageGallery?.items ?? [], "IMAGE");
-  const posts = buildUsefulFeedPosts({
+
+  return buildUsefulFeedPosts({
     videos: videoItems,
     photos: photoItems,
     guides: guidesBySection.interesting,
   });
-
-  const postsWithEngagement = await Promise.all(
-    posts.map(async post => {
-      const subjectId =
-        post.type === "guide"
-          ? post.id.replace(/^guide\./, "")
-          : post.id.replace(/^(video|image)\./, "");
-      const subjectType =
-        post.type === "guide" ? ("GUIDE" as const) : ("MEDIA_GALLERY_ITEM" as const);
-      const engagement = await resolveEngagement({
-        discussionId: post.discussionId,
-        subjectType,
-        subjectId,
-      });
-      return { ...post, engagement };
-    }),
-  );
-
-  return (
-    <div className="mx-auto max-w-container-max px-gutter pb-20 pt-16">
-      <div className="relative mb-10 px-[12px] py-[24px]">
-        <div className="hero-gradient absolute inset-0 -z-10" />
-        <div className="mb-2 flex flex-col gap-1">
-          <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
-            Сообщество
-          </span>
-          <h1 className="font-display text-display text-primary md:text-[64px] md:leading-tight">
-            {meta.title}
-          </h1>
-        </div>
-        <p className="max-w-2xl font-body text-on-surface-variant">
-          Одна лента: таймлапсы, фото и гайды. Слева — фильтр по типу, чтобы
-          быстрее находить полезное.
-        </p>
-      </div>
-
-      <UsefulFeedClient posts={postsWithEngagement} />
-    </div>
-  );
 }

@@ -55,7 +55,7 @@
 | **B1** | Полив в жару: когда и сколько | `watering-in-heat` | `topic.growing`, outdoor env | W1 |
 | **B2** | Закрутка после сушки: базовый чеклист | `preserving-after-dry` | `topic.preserving` (+ crop optional) | W1–W2 |
 | **B3** | Огурцы: пчелоопыление vs партенокарпик (коротко) | `cucumber-pollination-basics` | `crop.cucumber`, `topic.growing` | W2 |
-| **B4** | Как мы строим SmartБотаник #1 (behind the scenes) | `building-smart-botanik-1` | `topic.interesting` | W2 · CONTENT-BLOG-1 |
+| **B4** | Как мы строим СмартБотаник #1 (behind the scenes) | `building-smart-botanik-1` | `topic.interesting` | W2 · CONTENT-BLOG-1 |
 
 ---
 
@@ -72,7 +72,7 @@
 
 📖 Полная статья: {PUBLIC_SITE_BASE_URL}/guides/{slug}
 
-#SmartБотаник #выращивание {#культура}
+#СмартБотаник #выращивание {#культура}
 ```
 
 CTA в конце обязателен. Hashtags — через BK-TG-2 footer, если уже включён.

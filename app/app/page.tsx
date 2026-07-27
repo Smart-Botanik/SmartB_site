@@ -5,9 +5,9 @@ import { MaterialIcon } from "@/components/MaterialIcon";
 import { siteEnv } from "@/lib/env";
 
 export const metadata: Metadata = {
-  title: "Приложение — SmartБотаник",
+  title: "Приложение — СмартБотаник",
   description:
-    "Дневник выращивания SmartБотаник — заметки, метрики и фото по неделям цикла. Скоро.",
+    "Дневник выращивания СмартБотаник — заметки, метрики и фото по неделям цикла. Скоро.",
 };
 
 export default function AppPlaceholderPage() {
@@ -22,7 +22,7 @@ export default function AppPlaceholderPage() {
             Скоро
           </span>
           <h1 className="font-display text-display text-on-surface md:text-[48px] md:leading-tight">
-            Приложение SmartБотаник
+            Приложение СмартБотаник
           </h1>
           <p className="font-body text-on-surface-variant">
             Дневник цикла, метрики и фотоурожай — в одном месте. Пока готовим запуск, следите за

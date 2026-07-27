@@ -4,10 +4,13 @@ WIP limit: **≤ 5**. Канон: этот файл + [`cards/`](./cards/). **Б
 
 ## Active
 
-1. [ ] **SITE-CAL-2** — Moon month grid from prototype
+1. [ ] **SITE-JOURNAL-1** — `/journal` CMS news + page chrome
+   - Next: visual QA; retest when `topic.news` seed live; upstream BK-CONTENT-JOURNAL-1 / FR-VUE-JOURNAL-1
+   - Card: [`cards/SITE-JOURNAL-1.md`](./cards/SITE-JOURNAL-1.md)
+2. [ ] **SITE-CAL-2** — Moon month grid from prototype
    - Next: visual check `/` denser compact + favorable icons; `/calendar`; optional CMS denser entries
    - Card: [`cards/SITE-CAL-2.md`](./cards/SITE-CAL-2.md)
-2. [ ] **SITE-1** — Public site launch tails
+3. [ ] **SITE-1** — Public site launch tails
    - Next: serve/deploy `out/`; TG smoke A1; пакет B; brand / SEO
    - Card: [`cards/SITE-1.md`](./cards/SITE-1.md)
 
@@ -15,6 +18,9 @@ WIP limit: **≤ 5**. Канон: этот файл + [`cards/`](./cards/). **Б
 
 | Дата | ID | Суть |
 |------|-----|------|
+| 2026-07-26 | SITE-USEFUL-6 | `/useful` Post likes-only + filter counts |
+| 2026-07-26 | SITE-USEFUL-5 | `/useful` источники + placeholder feed |
+| 2026-07-26 | SITE-CAL-3 | published days + culture select + matrix tones |
 | 2026-07-24 | SITE-HOME-NEWS-1 | Home one «Последнее» (guides); «Все»→`/guides` |
 | 2026-07-22 | SITE-USEFUL-4 | `/useful` unified feed: left filters + cards |
 | 2026-07-22 | SITE-USEFUL-3 | `/useful` social: video feed · photo comments · guide likes |
@@ -41,7 +47,7 @@ Upstream engagement (draft, **not** hub WIP until confirm): [`ARCH-ENGAGE-1`](..
 
 Upstream calendar (done this slice): [`BK-CONTENT-CAL-1`](../../../memory/tasks/cards/BK-CONTENT-CAL-1.md) · [`FR-VUE-CAL-1`](../../../memory/tasks/cards/FR-VUE-CAL-1.md)
 
-Upstream useful/media: [`ARCH-MEDIA-TAX-1`](../../../memory/tasks/cards/ARCH-MEDIA-TAX-1.md) · [`FR-VUE-MEDIA-1`](../../../memory/tasks/cards/FR-VUE-MEDIA-1.md)
+Upstream useful/media: [`ARCH-MEDIA-TAX-1`](../../../memory/tasks/cards/ARCH-MEDIA-TAX-1.md) · [`FR-VUE-MEDIA-1`](../../../memory/tasks/cards/FR-VUE-MEDIA-1.md) · [`FR-VUE-USEFUL-FEED-2`](../../../memory/tasks/cards/FR-VUE-USEFUL-FEED-2.md) (admin interactive feed — not hub WIP)
 
 ## Notes
 

@@ -5,7 +5,7 @@ import type { TelegramBlockSection } from "@/lib/site-sections";
 type HomeTelegramBlockProps = TelegramBlockSection;
 
 export function HomeTelegramBlock({
-  title = "Telegram-канал SmartБотanik",
+  title = "Telegram-канал СмартБотаник",
   text = "Короткие советы, анонсы новых статей и ссылки на полные руководства на сайте.",
   channelUrl,
   buttonLabel = "Подписаться на канал",

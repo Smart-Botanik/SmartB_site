@@ -8,9 +8,9 @@ export function SiteFooter() {
     <footer className="mt-auto w-full bg-surface-container-highest py-12">
       <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-6 px-gutter md:flex-row">
         <div className="flex flex-col items-center gap-1 md:items-start">
-          <span className="font-headline text-headline-mobile text-primary">SmartБотаник</span>
+          <span className="font-headline text-headline-mobile text-primary">СмартБотаник</span>
           <p className="font-label text-label text-on-surface-variant opacity-70">
-            © {new Date().getFullYear()} SmartБотаник. Точное выращивание.
+            © {new Date().getFullYear()} СмартБотаник. Точное выращивание.
           </p>
         </div>
 

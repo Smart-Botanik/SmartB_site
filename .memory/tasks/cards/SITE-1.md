@@ -47,7 +47,7 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 | FR-SITE-CF-1 | Culture sidebar API | [x] 2026-07-07 |
 | SITE-HOME-LATEST-1 | Latest glass card = culture sidebar layout | [x] 2026-07-22 |
 | FE-SITE-LCH-3 | Footer links / About | [ ] partial |
-| FE-SITE-LCH-4 | Header CTA «Скоро» | [ ] partial |
+| FE-SITE-LCH-4 | Header CTA «Скоро» | [x] 2026-07-27 — «Войти» hidden until social |
 | FR-SITE-LCH-1 / BK-TG-1 / FR-TG-1 | Admin + publish | [x] |
 
 ### Done (2026-07-22) — `/app` placeholder
@@ -62,8 +62,20 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 |----|--------|--------|
 | CONTENT-BRD-1…3 | Media, covers, tone | [ ] |
 | CONTENT-BRD-4 | bodyTelegramMd A1/A2 | [x] |
-| FE-SITE-BRD-1…3 | Logo/tokens/hero/OG | [ ] partial logo |
+| FE-SITE-BRD-1…3 | Logo/tokens/hero/OG | [ ] partial — wordmark rename 2026-07-27 |
 | FR-CONTENT-BRD-1 | Guide form checklist | [ ] |
+
+### Done (2026-07-27) — Hide header «Войти»
+
+- `SiteHeaderAuth` returns `null` (desktop + mobile) until social / login module
+- Mock auth helper kept for later restore
+
+### Done (2026-07-27) — Brand `СмартБотаник`
+
+- Display rename `SmartБотаник` → `СмартБотаник` (UI, metadata, brief/TG drafts)
+- Regenerated `public/smart-botanik-logo-full.png` + wordmark PNGs; SVG/React `BrandWordmark` «Смарт» (green) + «Ботаник»
+- Hero: opaque black lockup trial as `smart-botanik-logo-full.png` (1024×682) + plate radius/shadow
+- Domain / TG slug `smart-botanik*` left as-is
 
 ## Open tails
 

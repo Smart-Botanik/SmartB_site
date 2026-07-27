@@ -27,7 +27,8 @@ export function HomeLunarCalendar({ entries }: HomeLunarCalendarProps) {
         </Link>
       </div>
       <p className="mb-3 text-xs text-on-surface-variant opacity-80 sm:text-sm">
-        Благоприятные дни для посадки, полива, подкормки, урожая и ухода.
+        Выберите культуру — благоприятные дни по лунной матрице (посадка, полив,
+        уход).
       </p>
 
       <MoonCalendar entries={entries} variant="compact" />

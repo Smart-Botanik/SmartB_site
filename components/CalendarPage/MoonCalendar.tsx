@@ -1,16 +1,27 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 
+import { GuideMarkdown } from "@/components/GuideMarkdown";
 import { MaterialIcon } from "@/components/MaterialIcon";
+import {
+  fetchPublishedCalendarDay,
+  fetchPublishedCalendarDays,
+  type PublishedCalendarDay,
+  type PublishedCalendarDayListItem,
+} from "@/lib/calendar-api";
+import {
+  cellDayTone,
+  cellFavorableActivities,
+  listFavorableCultureActions,
+  type FavorableCultureAction,
+} from "@/lib/calendar-favorable";
 import type { MoonCalendarEntry } from "@/lib/calendar-sections";
+import { DEFAULT_CULTURES } from "@/lib/default-cultures";
 import {
   FAVORABLE_ACTIVITIES,
   UNFAVORABLE_DAY_EMOJIS,
-  dayToneFromPhase,
-  dayToneLabelRu,
   favorableActivityMeta,
-  favorableForDay,
   type DayTone,
   type FavorableActivity,
 } from "@/lib/moon-favorable-days";
@@ -34,6 +45,8 @@ type MoonCalendarProps = {
   initialMonthIndex?: number;
   /** Dense grid for home / embeds — no table mode, inline day panel. */
   variant?: "full" | "compact";
+  /** Initial culture tag key; empty = all cultures. Compact defaults to tomato. */
+  initialCultureTagKey?: string;
 };
 
 type ViewMode = "grid" | "list";
@@ -44,6 +57,7 @@ type DayCell = {
   inMonth: boolean;
   date: Date;
   entry?: MoonCalendarEntry;
+  published?: PublishedCalendarDayListItem;
   isToday: boolean;
 };
 
@@ -51,8 +65,7 @@ type SelectedDay = {
   key: string;
   date: Date;
   entry?: MoonCalendarEntry;
-  favorable: FavorableActivity[];
-  tone: DayTone;
+  published?: PublishedCalendarDayListItem;
   moon: {
     phase: MoonPhaseId;
     age: number;
@@ -60,6 +73,12 @@ type SelectedDay = {
     illumination: number;
   };
 };
+
+type DayDetailState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "ready"; day: PublishedCalendarDay | null }
+  | { status: "error"; message: string };
 
 const WEEKDAY_FULL_RU = [
   "Понедельник",
@@ -70,6 +89,8 @@ const WEEKDAY_FULL_RU = [
   "Суббота",
   "Воскресенье",
 ] as const;
+
+const CULTURE_ALL = "";
 
 function buildMonthCells(year: number, monthIndex: number): DayCell[] {
   const todayKey = formatDateKey(new Date());
@@ -124,8 +145,41 @@ function buildMonthCells(year: number, monthIndex: number): DayCell[] {
   return cells;
 }
 
+function monthQueryRange(year: number, monthIndex: number): {
+  from: string;
+  to: string;
+} {
+  const cells = buildMonthCells(year, monthIndex);
+  return {
+    from: cells[0].key,
+    to: cells[cells.length - 1].key,
+  };
+}
+
 function formatDayShort(date: Date): string {
   return `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function resolveCellMoon(
+  date: Date,
+  published?: PublishedCalendarDayListItem,
+  pagePhase?: string,
+) {
+  return resolveMoonPhase(date, published?.moonPhase ?? pagePhase);
+}
+
+function matrixInputForDay(
+  moonPhase: string,
+  published: PublishedCalendarDayListItem | PublishedCalendarDay | undefined,
+  cultureTagKey: string,
+) {
+  const zodiac = published?.moonZodiacSign?.trim();
+  if (!zodiac) return null;
+  return {
+    moonPhase: published?.moonPhase?.trim() || moonPhase,
+    moonZodiacSign: zodiac,
+    cultureTagKey: cultureTagKey || null,
+  };
 }
 
 function FavorableEmoji({
@@ -179,12 +233,32 @@ function CellBottomMarks({
 
 function DayInfoContent({
   selected,
+  detail,
+  favorableFor,
+  cultureTagKey,
   compact = false,
 }: {
   selected: SelectedDay;
+  detail: DayDetailState;
+  favorableFor: FavorableCultureAction[];
+  cultureTagKey: string;
   compact?: boolean;
 }) {
-  const toneLabel = dayToneLabelRu(selected.tone);
+  const cmsTitle = detail.status === "ready" ? detail.day?.title?.trim() : "";
+  const listTitle = selected.published?.title?.trim() ?? "";
+  const cmsBody =
+    detail.status === "ready" ? detail.day?.bodyMd?.trim() ?? "" : "";
+  const pageNote = selected.entry?.note?.trim() ?? "";
+  const culture = cultureTagKey
+    ? DEFAULT_CULTURES.find(c => c.tagKey === cultureTagKey)
+    : null;
+  const favorableHeading = culture
+    ? `Благоприятно · ${culture.label}`
+    : "Благоприятно для";
+  const hasZodiac = Boolean(
+    (detail.status === "ready" && detail.day?.moonZodiacSign) ||
+      selected.published?.moonZodiacSign,
+  );
 
   return (
     <>
@@ -195,11 +269,11 @@ function DayInfoContent({
         />
         <div>
           <h4 className="font-headline text-xl text-primary md:text-2xl">
-            {moonPhaseLabelRu(selected.moon.phase)}
+            {cmsTitle || listTitle || moonPhaseLabelRu(selected.moon.phase)}
           </h4>
           <p className="mt-1 font-label text-label text-on-surface-variant">
-            {selected.moon.lunarDay} лунный день · освещённость{" "}
-            {selected.moon.illumination}%
+            {moonPhaseLabelRu(selected.moon.phase)} · {selected.moon.lunarDay}{" "}
+            лунный день · освещённость {selected.moon.illumination}%
           </p>
           <p className="mt-1 font-label text-label text-on-surface-variant">
             {WEEKDAY_FULL_RU[mondayWeekdayIndex(selected.date)]}
@@ -207,53 +281,87 @@ function DayInfoContent({
         </div>
       </div>
 
-      {toneLabel ? (
-        <p className={`moon-cal-day-tone moon-cal-day-tone--${selected.tone}`}>
-          {selected.tone === "unfavorable" ? (
-            <span className="moon-cal-day-tone-emojis" aria-hidden>
-              😠 👎
-            </span>
-          ) : null}
-          {toneLabel}
-        </p>
-      ) : null}
-
-      {selected.tone !== "unfavorable" && selected.favorable.length > 0 ? (
-        <ul className="moon-cal-favorable-list" aria-label="Благоприятные работы">
-          {selected.favorable.map(id => {
-            const meta = favorableActivityMeta(id);
-            return (
-              <li key={id} className="moon-cal-favorable-item">
-                <span className="moon-cal-favorable-icon" aria-hidden>
-                  {meta.emoji}
-                </span>
-                <span>{meta.label}</span>
-              </li>
-            );
-          })}
-        </ul>
-      ) : null}
-
-      {selected.entry?.note ? (
-        <p className="mt-3 font-body text-on-surface">{selected.entry.note}</p>
-      ) : compact && selected.favorable.length > 0 ? null : (
+      {detail.status === "loading" ? (
         <p className="mt-3 font-body text-on-surface-variant">
-          {compact
-            ? "В этот день специальных работ не отмечено."
-            : "Подсказки на этот день появятся, когда запись добавят в админке."}
+          Загружаем описание дня…
         </p>
-      )}
+      ) : null}
+
+      {detail.status === "error" ? (
+        <p className="mt-3 font-body text-on-surface-variant">
+          Не удалось загрузить день: {detail.message}
+        </p>
+      ) : null}
+
+      {detail.status === "ready" || detail.status === "idle" ? (
+        <>
+          {favorableFor.length > 0 ? (
+            <div className="moon-cal-favorable-block">
+              <p className="moon-cal-favorable-heading">{favorableHeading}</p>
+              <ul
+                className="moon-cal-favorable-list"
+                aria-label={favorableHeading}
+              >
+                {favorableFor.map(item => (
+                  <li
+                    key={`${item.tagKey}:${item.activityKind}`}
+                    className="moon-cal-favorable-item"
+                  >
+                    {!culture ? (
+                      <span className="moon-cal-favorable-icon" aria-hidden>
+                        {item.cultureEmoji}
+                      </span>
+                    ) : null}
+                    <span>{item.label}</span>
+                    <span className="moon-cal-favorable-icon" aria-hidden>
+                      {item.activityEmoji}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : hasZodiac ? (
+            <p className="mt-3 font-body text-on-surface-variant">
+              {culture
+                ? `Нет явно благоприятных работ для «${culture.label}» на этот день.`
+                : "Нет явно благоприятных работ по культурам на этот день."}
+            </p>
+          ) : detail.status === "ready" ? (
+            <p className="mt-3 font-body text-on-surface-variant">
+              Знак зодиака для дня ещё не в кэше — благоприятность появится
+              после публикации дня с эфемеридами.
+            </p>
+          ) : null}
+
+          {cmsBody ? (
+            <div className="moon-cal-day-body mt-3">
+              <GuideMarkdown markdown={cmsBody} className="guide-markdown" />
+            </div>
+          ) : pageNote ? (
+            <p className="mt-3 font-body text-on-surface">{pageNote}</p>
+          ) : detail.status === "ready" && !compact ? (
+            <p className="mt-3 font-body text-on-surface-variant">
+              Описание дня ещё не опубликовано в админке.
+            </p>
+          ) : null}
+        </>
+      ) : null}
     </>
   );
 }
 
-function FavorableLegend() {
+function FavorableLegend({ cultureTagKey }: { cultureTagKey: string }) {
+  const culture = cultureTagKey
+    ? DEFAULT_CULTURES.find(c => c.tagKey === cultureTagKey)
+    : null;
+
   return (
     <div className="moon-cal-legend-block">
       <ul className="moon-cal-tone-legend" aria-label="Благоприятность дня">
         <li>
           <span className="moon-cal-tone-swatch is-favorable" aria-hidden />
           Благоприятный
+          {culture ? ` · ${culture.label}` : ""}
         </li>
         <li>
           <span className="moon-cal-tone-swatch is-unfavorable" aria-hidden />
@@ -280,6 +388,7 @@ export function MoonCalendar({
   initialYear,
   initialMonthIndex,
   variant = "full",
+  initialCultureTagKey,
 }: MoonCalendarProps) {
   const isCompact = variant === "compact";
   const now = new Date();
@@ -289,6 +398,15 @@ export function MoonCalendar({
   );
   const [view, setView] = useState<ViewMode>("grid");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [dayDetail, setDayDetail] = useState<DayDetailState>({ status: "idle" });
+  const [publishedByDate, setPublishedByDate] = useState<
+    Map<string, PublishedCalendarDayListItem>
+  >(() => new Map());
+  const [cultureTagKey, setCultureTagKey] = useState(
+    () =>
+      initialCultureTagKey ??
+      (isCompact ? "crop.tomato" : CULTURE_ALL),
+  );
   const activeView: ViewMode = isCompact ? "grid" : view;
 
   const entryByDate = useMemo(() => {
@@ -299,12 +417,31 @@ export function MoonCalendar({
     return map;
   }, [entries]);
 
+  useEffect(() => {
+    let cancelled = false;
+    const { from, to } = monthQueryRange(year, monthIndex);
+
+    fetchPublishedCalendarDays(from, to).then(days => {
+      if (cancelled) return;
+      const map = new Map<string, PublishedCalendarDayListItem>();
+      for (const day of days) {
+        map.set(day.date, day);
+      }
+      setPublishedByDate(map);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [year, monthIndex]);
+
   const cells = useMemo(() => {
     return buildMonthCells(year, monthIndex).map(cell => ({
       ...cell,
       entry: entryByDate.get(cell.key),
+      published: publishedByDate.get(cell.key),
     }));
-  }, [year, monthIndex, entryByDate]);
+  }, [year, monthIndex, entryByDate, publishedByDate]);
 
   const monthDays = useMemo(
     () => cells.filter(cell => cell.inMonth),
@@ -317,17 +454,66 @@ export function MoonCalendar({
           const date = parseDateKey(selectedKey);
           if (!date) return null;
           const entry = entryByDate.get(selectedKey);
-          const moon = resolveMoonPhase(date, entry?.phase);
+          const published = publishedByDate.get(selectedKey);
+          const cmsPhase =
+            dayDetail.status === "ready"
+              ? dayDetail.day?.moonPhase ?? published?.moonPhase ?? entry?.phase
+              : published?.moonPhase ?? entry?.phase;
+          const moon = resolveMoonPhase(date, cmsPhase);
           return {
             date,
             entry,
+            published,
             moon,
             key: selectedKey,
-            favorable: favorableForDay(date.getDate()),
-            tone: dayToneFromPhase(moon.phase),
           } satisfies SelectedDay;
         })()
       : null;
+
+  const favorableFor = useMemo(() => {
+    if (!selected) return [];
+    const published =
+      dayDetail.status === "ready" && dayDetail.day
+        ? dayDetail.day
+        : selected.published;
+    const input = matrixInputForDay(
+      selected.moon.phase,
+      published,
+      cultureTagKey,
+    );
+    if (!input) return [];
+    return listFavorableCultureActions(input);
+  }, [selected, dayDetail, cultureTagKey]);
+
+  useEffect(() => {
+    if (!selectedKey) {
+      setDayDetail({ status: "idle" });
+      return;
+    }
+
+    let cancelled = false;
+    setDayDetail({ status: "loading" });
+
+    fetchPublishedCalendarDay(selectedKey)
+      .then(day => {
+        if (!cancelled) {
+          setDayDetail({ status: "ready", day });
+        }
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) {
+          setDayDetail({
+            status: "error",
+            message:
+              error instanceof Error ? error.message : "ошибка запроса",
+          });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedKey]);
 
   function shiftMonth(delta: number) {
     const next = new Date(year, monthIndex + delta, 1);
@@ -372,32 +558,54 @@ export function MoonCalendar({
               <MaterialIcon name="chevron_right" className="text-lg" />
             </button>
           </div>
-          {!isCompact ? (
-            <div
-              className="moon-cal-view-toggle"
-              role="group"
-              aria-label="Вид календаря"
-            >
-              <button
-                type="button"
-                aria-pressed={view === "grid"}
-                onClick={() => setViewMode("grid")}
-                className={view === "grid" ? "is-active" : undefined}
+
+          <div className="moon-cal-toolbar-controls">
+            <label className="moon-cal-culture-select">
+              <span className="moon-cal-culture-select-label">Культура</span>
+              <select
+                value={cultureTagKey}
+                onChange={event => setCultureTagKey(event.target.value)}
+                aria-label="Культура для благоприятности"
               >
-                <MaterialIcon name="calendar_view_month" className="text-base" />
-                Сетка
-              </button>
-              <button
-                type="button"
-                aria-pressed={view === "list"}
-                onClick={() => setViewMode("list")}
-                className={view === "list" ? "is-active" : undefined}
+                <option value={CULTURE_ALL}>Все культуры</option>
+                {DEFAULT_CULTURES.map(culture => (
+                  <option key={culture.tagKey} value={culture.tagKey}>
+                    {culture.emoji} {culture.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {!isCompact ? (
+              <div
+                className="moon-cal-view-toggle"
+                role="group"
+                aria-label="Вид календаря"
               >
-                <MaterialIcon name="table_rows" className="text-base" />
-                Таблица
-              </button>
-            </div>
-          ) : null}
+                <button
+                  type="button"
+                  aria-pressed={view === "grid"}
+                  onClick={() => setViewMode("grid")}
+                  className={view === "grid" ? "is-active" : undefined}
+                >
+                  <MaterialIcon
+                    name="calendar_view_month"
+                    className="text-base"
+                  />
+                  Сетка
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={view === "list"}
+                  onClick={() => setViewMode("list")}
+                  className={view === "list" ? "is-active" : undefined}
+                >
+                  <MaterialIcon name="table_rows" className="text-base" />
+                  Таблица
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </header>
 
@@ -415,15 +623,21 @@ export function MoonCalendar({
             ))}
 
             {cells.map(cell => {
-              const moon = resolveMoonPhase(cell.date, cell.entry?.phase);
+              const moon = resolveCellMoon(
+                cell.date,
+                cell.published,
+                cell.entry?.phase,
+              );
               const icon = moonPhaseIcon(moon.phase);
               const isSelected = selectedKey === cell.key;
-              const favorable = cell.inMonth
-                ? favorableForDay(cell.day)
-                : [];
-              const tone = cell.inMonth
-                ? dayToneFromPhase(moon.phase)
-                : "neutral";
+              const matrix = cell.inMonth
+                ? matrixInputForDay(moon.phase, cell.published, cultureTagKey)
+                : null;
+              const favorable = matrix ? cellFavorableActivities(matrix) : [];
+              const tone: DayTone = matrix ? cellDayTone(matrix) : "neutral";
+              const hasCmsNote = Boolean(
+                cell.published?.title || cell.entry?.note,
+              );
 
               return (
                 <button
@@ -444,7 +658,7 @@ export function MoonCalendar({
                 >
                   <div className="moon-cal-cell-head">
                     <div className="moon-cal-cell-marks">
-                      {!isCompact && cell.entry?.note ? (
+                      {!isCompact && hasCmsNote ? (
                         <MaterialIcon
                           name="eco"
                           className="text-[10px] text-primary-fixed-dim"
@@ -505,7 +719,13 @@ export function MoonCalendar({
                   <MaterialIcon name="close" />
                 </button>
               </div>
-              <DayInfoContent selected={selected} compact={isCompact} />
+              <DayInfoContent
+                selected={selected}
+                detail={dayDetail}
+                favorableFor={favorableFor}
+                cultureTagKey={cultureTagKey}
+                compact={isCompact}
+              />
             </aside>
           ) : null}
         </div>
@@ -524,16 +744,23 @@ export function MoonCalendar({
             </thead>
             <tbody>
               {monthDays.map(day => {
-                const moon = resolveMoonPhase(day.date, day.entry?.phase);
+                const moon = resolveCellMoon(
+                  day.date,
+                  day.published,
+                  day.entry?.phase,
+                );
                 const isSelected = selectedKey === day.key;
                 const weekday = WEEKDAY_FULL_RU[mondayWeekdayIndex(day.date)];
+                const note =
+                  day.published?.title?.trim() ||
+                  day.entry?.note?.trim() ||
+                  "—";
                 const expanded: SelectedDay = {
                   key: day.key,
                   date: day.date,
                   entry: day.entry,
+                  published: day.published,
                   moon,
-                  favorable: favorableForDay(day.day),
-                  tone: dayToneFromPhase(moon.phase),
                 };
 
                 return (
@@ -574,15 +801,24 @@ export function MoonCalendar({
                       <td className="moon-cal-table-mono">
                         {moon.illumination}%
                       </td>
-                      <td className="moon-cal-table-note">
-                        {day.entry?.note?.trim() ? day.entry.note : "—"}
-                      </td>
+                      <td className="moon-cal-table-note">{note}</td>
                     </tr>
                     {isSelected ? (
                       <tr className="moon-cal-table-expand" aria-live="polite">
                         <td colSpan={6}>
                           <div className="moon-cal-table-expand-inner">
-                            <DayInfoContent selected={expanded} />
+                            <DayInfoContent
+                              selected={
+                                selectedKey === day.key && selected
+                                  ? selected
+                                  : expanded
+                              }
+                              detail={dayDetail}
+                              favorableFor={
+                                selectedKey === day.key ? favorableFor : []
+                              }
+                              cultureTagKey={cultureTagKey}
+                            />
                           </div>
                         </td>
                       </tr>
@@ -595,7 +831,12 @@ export function MoonCalendar({
         </div>
       )}
 
-      {isCompact ? <FavorableLegend /> : null}
+      {isCompact ? <FavorableLegend cultureTagKey={cultureTagKey} /> : null}
+      {!isCompact ? (
+        <div className="mt-3">
+          <FavorableLegend cultureTagKey={cultureTagKey} />
+        </div>
+      ) : null}
     </div>
   );
 }

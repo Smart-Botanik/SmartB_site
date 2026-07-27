@@ -154,7 +154,7 @@ export function resolveTelegramBlockSection(
 ): TelegramBlockSection {
   return {
     type: "telegramBlock",
-    title: section?.title ?? "Telegram-канал SmartБотаник",
+    title: section?.title ?? "Telegram-канал СмартБотаник",
     text:
       section?.text ??
       "Короткие советы, анонсы новых статей и ссылки на полные руководства на сайте.",

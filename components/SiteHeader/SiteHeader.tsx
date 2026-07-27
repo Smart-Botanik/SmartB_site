@@ -86,7 +86,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex shrink-0 items-center justify-self-start"
-          aria-label="SmartБотanik — на главную"
+          aria-label="СмартБотаник — на главную"
           onClick={() => handleNavClick("/")}
         >
           <BrandWordmark className="h-8 w-auto sm:h-9" />

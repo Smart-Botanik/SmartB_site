@@ -3,13 +3,17 @@
 > **Старт:** этот файл → [`tasks/active.md`](./tasks/active.md) → card.  
 > **AI:** [`AGENTS.md`](./AGENTS.md)
 
-**Обновлено:** 2026-07-24 (SITE-HOME-NEWS-1 · one «Последнее»)
+**Обновлено:** 2026-07-27 (brand СмартБотаник + SITE-JOURNAL-1 WIP)
 
 ---
 
 ## Фокус
 
+**SITE-JOURNAL-1** — `/journal` CMS news (`topic.news`) + SitePage intro; cycle feed mock.  
 **SITE-CAL-2** — `/calendar` month grid + compact home teaser (favorable icons).  
+**SITE-CAL-3** ✅ — published days + culture select + matrix favorability.  
+**SITE-USEFUL-6** ✅ — `/useful` Post canon + filter counts (likes only).  
+**SITE-USEFUL-5** ✅ — `/useful` источники + placeholder feed.  
 **SITE-1** tails: static `out/` pre-VPS; TG smoke A1; пакет B; brand.  
 SITE-HOME-NEWS-1 ✅ — home one «Последнее» (guides, «Все»→`/guides`); nav → `#news-updates`.
 SITE-USEFUL-4 ✅ — `/useful` left filters + central feed (no right rail).
@@ -20,8 +24,9 @@ SITE-USEFUL-4 ✅ — `/useful` left filters + central feed (no right rail).
 
 | # | ID | Суть | Card |
 |---|-----|------|------|
-| 1 | SITE-CAL-2 | Moon month grid + home compact | [SITE-CAL-2](./tasks/cards/SITE-CAL-2.md) |
-| 2 | SITE-1 | Launch tails: static export, TG, brand | [SITE-1](./tasks/cards/SITE-1.md) |
+| 1 | SITE-JOURNAL-1 | `/journal` news from CMS + intro | [SITE-JOURNAL-1](./tasks/cards/SITE-JOURNAL-1.md) |
+| 2 | SITE-CAL-2 | Moon month grid + home compact | [SITE-CAL-2](./tasks/cards/SITE-CAL-2.md) |
+| 3 | SITE-1 | Launch tails: static export, TG, brand | [SITE-1](./tasks/cards/SITE-1.md) |
 
 Platform WIP (другие apps): `../../memory/hub.md` — не дублировать здесь.
 
@@ -31,6 +36,14 @@ Platform WIP (другие apps): `../../memory/hub.md` — не дублиро�
 
 | Дата | Суть |
 |------|------|
+| 2026-07-27 | Header: hide «Войти» until social module |
+| 2026-07-27 | Hero: trial opaque СмартБотаник lockup (`smart-botanik-logo-full.png`) |
+| 2026-07-27 | Brand: SmartБотаник → СмартБотаник; logo PNGs regenerated |
+| 2026-07-27 | SITE-JOURNAL-1 WIP: `/journal` CMS news (`topic.news`) + SitePage intro |
+| 2026-07-26 | SITE-USEFUL-6 ✅: Post likes-only + filter counts |
+| 2026-07-26 | SITE-USEFUL-5 ✅: `/useful` источники + placeholder feed |
+| 2026-07-26 | SITE-CAL-3 ✅: month list + culture select + matrix cells |
+| 2026-07-25 | SITE-CAL-3: click day → `publishedCalendarDay` + «Благоприятно для» |
 | 2026-07-24 | SITE-HOME-NEWS-1: home «Последнее» = guides only; dropped separate news block |
 | 2026-07-23 | SITE-CAL-2: denser home calendar + hardcoded favorable icons |
 | 2026-07-23 | SITE-1: `output: 'export'` → `out/` static site pre-VPS |

@@ -7,6 +7,7 @@ import { MaterialIcon } from "@/components/MaterialIcon";
 import { UsefulFeedPostCard } from "./UsefulFeedPostCard";
 import {
   USEFUL_FEED_FILTERS,
+  countUsefulFeedByType,
   filterUsefulFeedPosts,
   type UsefulFeedFilter,
   type UsefulFeedPost,
@@ -18,6 +19,8 @@ type UsefulFeedClientProps = {
 
 export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
   const [filter, setFilter] = useState<UsefulFeedFilter>("all");
+
+  const counts = useMemo(() => countUsefulFeedByType(posts), [posts]);
 
   const visible = useMemo(
     () => filterUsefulFeedPosts(posts, filter),
@@ -31,6 +34,7 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
         <nav className="useful-feed-sidebar-nav">
           {USEFUL_FEED_FILTERS.map(item => {
             const active = filter === item.id;
+            const count = counts[item.id];
             return (
               <button
                 key={item.id}
@@ -40,13 +44,17 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
                 onClick={() => setFilter(item.id)}
               >
                 <MaterialIcon name={item.icon} className="text-[22px]" />
-                <span>{item.label}</span>
+                <span className="useful-feed-filter-label">{item.label}</span>
+                <span className="useful-feed-filter-count" aria-label={`${count}`}>
+                  {count}
+                </span>
               </button>
             );
           })}
         </nav>
         <p className="useful-feed-sidebar-hint">
-          Видео, фото и гайды в одной ленте. Фильтр слева — по типу материала.
+          Видео, фото, гайды и внешние источники в одной ленте. Фильтр слева —
+          по типу материала.
         </p>
       </aside>
 
@@ -54,6 +62,7 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
         <div className="useful-feed-mobile-filters" aria-label="Фильтры">
           {USEFUL_FEED_FILTERS.map(item => {
             const active = filter === item.id;
+            const count = counts[item.id];
             return (
               <button
                 key={item.id}
@@ -63,6 +72,7 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
                 onClick={() => setFilter(item.id)}
               >
                 {item.shortLabel}
+                <span className="useful-feed-chip-count">{count}</span>
               </button>
             );
           })}
@@ -76,8 +86,8 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
           </div>
         ) : (
           <p className="useful-feed-empty">
-            Пока нет материалов в этом фильтре. Загляните во «Все посты» или
-            добавьте контент в галереи и гайды «Полезное».
+            Пока нет материалов в этом фильтре (0). Загляните во «Все посты» или
+            добавьте контент в галереи, гайды и источники «Полезное».
           </p>
         )}
       </div>

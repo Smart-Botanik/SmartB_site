@@ -25,7 +25,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SmartБотаник — гайды и гроу-репорты",
+  title: "СмартБотаник — гайды и гроу-репорты",
   description:
     "Руководства по выращиванию, закрутке и публичные гроу-репорты. Сообщество в Telegram.",
   icons: { icon: "/favicon.ico" },

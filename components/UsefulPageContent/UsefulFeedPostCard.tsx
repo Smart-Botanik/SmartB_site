@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
-import { CommentsList } from "@/components/CommentsList";
 import { EngagementBar } from "@/components/EngagementBar";
 import { ItemMediaGallery } from "@/components/ItemMediaGallery";
 import { MaterialIcon } from "@/components/MaterialIcon";
@@ -13,7 +11,10 @@ import {
   type EngagementBundle,
 } from "@/lib/engagement";
 
-import type { UsefulFeedPost } from "./useful-feed";
+import {
+  isExternalHref,
+  type UsefulFeedPost,
+} from "./useful-feed";
 
 type UsefulFeedPostCardProps = {
   post: UsefulFeedPost;
@@ -29,28 +30,69 @@ function engagementForPost(post: UsefulFeedPost): EngagementBundle {
   }
   return getHardcodedEngagement(
     "MEDIA_GALLERY_ITEM",
-    post.id.replace(/^(video|image)\./, ""),
+    post.id.replace(/^(video|image|source)\./, ""),
   );
 }
 
+function PostCta({ post }: { post: UsefulFeedPost }) {
+  if (!post.href) return null;
+
+  const external = post.type === "source" || isExternalHref(post.href);
+  const label = post.type === "source" ? "Открыть источник" : "Читать гайд";
+  const className = "useful-feed-card-guide-link";
+
+  if (external) {
+    return (
+      <a
+        href={post.href}
+        className={className}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {label}
+        <MaterialIcon name="open_in_new" className="text-[16px]" />
+      </a>
+    );
+  }
+
+  return (
+    <Link href={post.href} className={className}>
+      {label}
+      <MaterialIcon name="arrow_forward" className="text-[16px]" />
+    </Link>
+  );
+}
+
+/**
+ * Useful feed Post card: header · media · body · socials (likes only).
+ * Comments / composer — out of scope until SITE-USEFUL-3 / BK-ENGAGE-1.
+ */
 export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
   const engagement = engagementForPost(post);
-  const [commentsOpen, setCommentsOpen] = useState(false);
   const initial = post.authorName.slice(0, 1).toUpperCase();
+  const metaBits = [
+    post.metaLabel,
+    post.sourceHost ? post.sourceHost : null,
+    post.isDemo ? "демо" : null,
+  ].filter(Boolean);
 
   return (
     <article className="useful-feed-card">
       <header className="useful-feed-card-header">
         <div className="useful-feed-card-author">
-          <div className="useful-feed-card-avatar" aria-hidden>
-            {initial}
+          <div
+            className={`useful-feed-card-avatar${post.type === "source" ? " useful-feed-card-avatar--source" : ""}`}
+            aria-hidden
+          >
+            {post.type === "source" ? (
+              <MaterialIcon name="link" className="text-[20px]" />
+            ) : (
+              initial
+            )}
           </div>
           <div>
             <p className="useful-feed-card-author-name">{post.authorName}</p>
-            <p className="useful-feed-card-meta">
-              {post.metaLabel}
-              {post.isDemo ? " · демо" : ""}
-            </p>
+            <p className="useful-feed-card-meta">{metaBits.join(" · ")}</p>
           </div>
         </div>
         {post.badge ? (
@@ -90,12 +132,18 @@ export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
           />
         ) : (
           <div className="useful-feed-card-video-placeholder" aria-hidden>
-            <MaterialIcon name="image" className="text-[40px]" />
+            <MaterialIcon
+              name={post.type === "source" ? "link" : "image"}
+              className="text-[40px]"
+            />
           </div>
         )}
 
         {post.type === "video" ? (
           <span className="useful-feed-card-live">Таймлапс</span>
+        ) : null}
+        {post.type === "source" && post.sourceHost ? (
+          <span className="useful-feed-card-source-chip">{post.sourceHost}</span>
         ) : null}
       </div>
 
@@ -109,30 +157,15 @@ export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
           <EngagementBar
             stats={engagement.stats}
             size="full"
-            onCommentClick={() => setCommentsOpen(open => !open)}
+            showComments={false}
           />
-          {post.href ? (
-            <Link href={post.href} className="useful-feed-card-guide-link">
-              Читать гайд
-              <MaterialIcon name="arrow_forward" className="text-[16px]" />
-            </Link>
-          ) : null}
+          <PostCta post={post} />
         </div>
 
-        {commentsOpen ? (
-          <CommentsList
-            comments={engagement.comments}
-            showComposer
-            className="useful-feed-card-comments"
-          />
-        ) : (
-          <div className="useful-feed-card-composer" aria-hidden>
-            <div className="useful-feed-card-composer-avatar">{initial}</div>
-            <div className="useful-feed-card-composer-field">
-              Добавить комментарий…
-            </div>
-          </div>
-        )}
+        {/* Comments / composer — future (SITE-USEFUL-3 / BK-ENGAGE-1)
+        <CommentsList … />
+        <div className="useful-feed-card-composer">…</div>
+        */}
       </div>
     </article>
   );

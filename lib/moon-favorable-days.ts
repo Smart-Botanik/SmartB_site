@@ -1,6 +1,4 @@
-/** Demo favorable-day markers for calendar presentation (hardcoded; CMS later). */
-
-import type { MoonPhaseId } from "@/lib/moon-phase";
+/** Activity meta for lunar calendar presentation (icons / labels). */
 
 export type FavorableActivity =
   | "landing"
@@ -9,7 +7,7 @@ export type FavorableActivity =
   | "harvest"
   | "care";
 
-/** General lunar day tone (favorable / not) for presentation tint. */
+/** Day tone for cell presentation — from matrix resolve, not CMS generalState. */
 export type DayTone = "favorable" | "unfavorable" | "neutral";
 
 export type FavorableActivityMeta = {
@@ -63,27 +61,6 @@ export function favorableActivityMeta(
   return META_BY_ID[id];
 }
 
-/**
- * Rough moon-phase → day tone for presentation.
- * Most phases favorable; only new/full marked unfavorable (demo bias).
- */
-export function dayToneFromPhase(phase: MoonPhaseId): DayTone {
-  switch (phase) {
-    case "new":
-    case "full":
-      return "unfavorable";
-    case "waxing_crescent":
-    case "first_quarter":
-    case "waxing_gibbous":
-    case "waning_gibbous":
-    case "last_quarter":
-    case "waning_crescent":
-      return "favorable";
-    default:
-      return "favorable";
-  }
-}
-
 export function dayToneLabelRu(tone: DayTone): string | null {
   if (tone === "favorable") return "Благоприятный день";
   if (tone === "unfavorable") return "Неблагоприятный день";
@@ -92,35 +69,3 @@ export function dayToneLabelRu(tone: DayTone): string | null {
 
 /** Presentation markers for unfavorable (red) days. */
 export const UNFAVORABLE_DAY_EMOJIS = ["😠", "👎"] as const;
-
-/**
- * Day-of-month → favorable activities (applies to any viewed month).
- * Presentation sample only — replace with CMS later.
- */
-export const DEMO_FAVORABLE_BY_DAY: Record<number, FavorableActivity[]> = {
-  1: ["care"],
-  2: ["watering"],
-  3: ["landing", "care"],
-  5: ["nutrients"],
-  6: ["watering", "care"],
-  8: ["landing"],
-  9: ["watering", "nutrients"],
-  11: ["harvest"],
-  12: ["care", "watering"],
-  14: ["landing", "watering"],
-  15: ["nutrients", "care"],
-  17: ["watering"],
-  18: ["harvest", "care"],
-  20: ["landing", "nutrients"],
-  21: ["watering", "care"],
-  23: ["watering", "landing"],
-  24: ["care"],
-  26: ["harvest"],
-  27: ["nutrients", "watering"],
-  28: ["landing", "care"],
-  30: ["watering", "harvest"],
-};
-
-export function favorableForDay(dayOfMonth: number): FavorableActivity[] {
-  return DEMO_FAVORABLE_BY_DAY[dayOfMonth] ?? [];
-}

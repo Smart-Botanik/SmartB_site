@@ -3,6 +3,90 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-07-27 — Culture presentation photos: small 1=2 size (Frontend)
+
+**Role**: Frontend  
+**Change**: `.culture-presentation-photos--1` / `--2` share fixed `--culture-photo-size` (9.5rem) so one and two photos render the same cell size.  
+**Impact**: Single photo no longer stretches full column; two photos match that small size.  
+**Reason**: User asked 1-photo small, 2-photos same size as 1.
+
+## 2026-07-27 — Hide header login CTA (Frontend)
+
+**Role**: Frontend  
+**Change**: `SiteHeaderAuth` returns `null` (desktop + mobile menu).  
+**Impact**: «Войти» no longer shown in site chrome.  
+**Reason**: Hide until social / login module work starts.
+
+## 2026-07-27 — Hero lockup: opaque black trial (Frontend)
+
+**Role**: Frontend  
+**Change**: Replaced `public/smart-botanik-logo-full.png` with user ChatGPT lockup (black plate, book+sprout+bars); hero glow CSS adapted for opaque plate (radius + soft green bloom, no drop-shadow on alpha).  
+**Impact**: Home hero shows the new branded lockup trial.  
+**Reason**: User asked to try this asset as Hero image.
+
+## 2026-07-27 — `/useful` compact title aligned with feed (Frontend)
+
+**Role**: Frontend  
+**Change**: Title block — drop extra `px-[12px]` so left edge matches feed; smaller type/padding/`pt`/`mb`.  
+**Impact**: Intro sits on one vertical line with sidebar+feed and takes less height.  
+**Reason**: User asked to align title with feed and make the title container smaller.
+
+## 2026-07-27 — Hero logo true transparency (Frontend)
+
+**Role**: Frontend  
+**Change**: Source PNG had checkerboard baked as RGB (`Format24bppRgb`, no alpha). Stripped via `scripts/strip-checkerboard.py` + despill → RGBA; toned down hero light plate so bg shows through.  
+**Impact**: `/smart-botanik-logo-full.png` is transparent over hero.  
+**Reason**: User asked why logo was not transparent.
+
+## 2026-07-27 — Hero logo: user transparent PNG (Frontend)
+
+**Role**: Frontend  
+**Change**: Replaced `public/smart-botanik-logo-full.png` with user ChatGPT asset (СмартБотаник, transparent); HomeHero dims 1024×682; soft light plate under `.hero-logo-glow` for dark «Ботаник» on night bg.  
+**Impact**: Hero uses the approved transparent lockup.  
+**Reason**: User provided the image to use as main Hero logo.
+
+## 2026-07-27 — Brand rename SmartБотаник → СмартБотаник (Frontend)
+
+**Role**: Frontend  
+**Change**: Renamed display brand `SmartБотаник` → `СмартБотаник` across UI/metadata/docs; regenerated `public/smart-botanik-logo-full.png`, wordmark PNGs + header SVG; `BrandWordmark` «Смарт»+«Ботаник». Domain/slug `smart-botanik` unchanged.  
+**Impact**: Site chrome and SEO titles use fully Cyrillic wordmark.  
+**Reason**: User asked to regenerate logo and grep/rename brand strings.
+
+## 2026-07-27 — SITE-JOURNAL-1 WIP: `/journal` CMS news wiring (Frontend)
+
+**Role**: Frontend  
+**Change**: `/journal` — async page; `resolveJournalNewsFeed()` from `publishedCropGuides(termKey: topic.news)` with placeholder fallback; `journal-sections` for `SitePage` key `journal` intro/SEO; card SITE-JOURNAL-1.  
+**Impact**: News column ready for CMS; cycle sidebar still mock until public diary API.  
+**Reason**: User asked to implement journal page; mirror calendar/useful CMS read pattern.
+
+## 2026-07-26 — SITE-USEFUL-6: Post likes-only + filter counts (Frontend)
+
+**Role**: Frontend  
+**Change**: `/useful` — Post canon (Image + likes); hide comments; `countUsefulFeedByType` on sidebar/chips; `USEFUL_POST_TYPE_LABELS`; drafted admin [`FR-VUE-USEFUL-FEED-2`](../../memory/tasks/cards/FR-VUE-USEFUL-FEED-2.md) (not hub WIP).  
+**Impact**: Filters show per-type counts; socials = likes only until engagement follow-up.  
+**Reason**: Plan Useful Posts + filters + admin feed; comments deferred.
+
+## 2026-07-26 — SITE-USEFUL-5: источники + placeholder feed (Frontend)
+
+**Role**: Frontend  
+**Change**: `/useful` — filter/type «Источники»; placeholder feed (8 posts); source cards with host chip + external CTA; live CMS behind `USEFUL_FEED_USE_PLACEHOLDERS`.  
+**Impact**: Лента «Полезное» показывает демо-контент включая внешние источники без CMS.  
+**Reason**: User asked to adapt useful with sources and use placeholders for now.
+
+## 2026-07-26 — SITE-CAL-3 done: month list + culture select + matrix cells (Frontend)
+
+**Role**: Frontend  
+**Change**: Wire `publishedCalendarDays` for month; culture select; cell icons/tone from contracts matrix; drop demo favorable-by-day / phase tone.  
+**Impact**: `/calendar` and home compact show real CMS ephemeris cache + culture-filtered favorability; panel still loads day body on click.  
+**Reason**: Finish SITE-CAL-3 acceptance (no generalState, matrix SoT).
+
+## 2026-07-25 — Calendar click → published day + favorable for (Frontend)
+
+**Role**: Frontend  
+**Change**: SITE-CAL-3 — `publishedCalendarDay` on cell click; panel shows CMS title/bodyMd and «Благоприятно для» culture×action via contracts matrix (`lib/calendar-api.ts`, `lib/calendar-favorable.ts`).  
+**Impact**: `/calendar` day panel binds to BFF content; favorable list is matrix-based (not dated cultureMarks / demo).  
+**Reason**: User asked to load day data on click and show favorable culture–action pairs plus descriptions.
+
 ## 2026-07-24 — Nav: optimistic active on click (Frontend)
 
 **Role**: Frontend  
