@@ -25,7 +25,7 @@ export function HomeLunarCalendar({ entries }: HomeLunarCalendarProps) {
             fill
             sizes="(max-width: 768px) 100vw, 720px"
             priority
-            className="object-cover object-[center_60%] opacity-35 dark:opacity-45 transition-opacity duration-300"
+            className="object-cover object-[center_60%] opacity-[0.06] dark:opacity-[0.08] grayscale transition-opacity duration-300"
           />
           {/* Readability gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/60 to-background/20 dark:from-background/98 dark:via-background/70 dark:to-background/30" />
