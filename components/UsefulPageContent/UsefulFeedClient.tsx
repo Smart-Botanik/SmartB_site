@@ -71,11 +71,11 @@ export function UsefulFeedClient({ posts }: UsefulFeedClientProps) {
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 800px"
-              className="object-cover object-[center_60%] opacity-65 dark:opacity-45 saturate-[1.15] dark:saturate-100 dark:brightness-95 transition-all duration-300"
+              className="object-cover object-[center_60%] opacity-90 dark:opacity-75 saturate-[1.2] dark:saturate-110 dark:brightness-100 transition-all duration-300"
             />
             {/* Readability gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/45 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent dark:from-background/90 dark:via-background/40 dark:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/30 to-transparent dark:from-background/85 dark:via-background/45 dark:to-background/15" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/65 via-background/20 to-transparent dark:from-background/80 dark:via-background/30 dark:to-transparent" />
           </div>
 
           {/* Header content */}

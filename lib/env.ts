@@ -1,5 +1,5 @@
 const graphqlUrl =
-  process.env.NEXT_PUBLIC_GRAPHQL_URL ?? "http://192.168.1.11:3001/graphql";
+  process.env.NEXT_PUBLIC_GRAPHQL_URL ?? "http://192.168.1.12:3001/graphql";
 
 const apiBaseUrl =
   process.env.NEXT_PUBLIC_API_BASE_URL ??

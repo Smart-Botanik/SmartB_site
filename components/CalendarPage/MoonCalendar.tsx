@@ -29,6 +29,8 @@ import {
   WEEKDAY_LABELS_RU,
   daysInMonth,
   formatDateKey,
+  getZodiacSymbol,
+  getZodiacLabelRu,
   mondayWeekdayIndex,
   monthTitleRu,
   moonPhaseIcon,
@@ -351,7 +353,7 @@ function CellBottomMarks({
           </span>
         ))}
         {extraCount > 0 ? (
-          <span className="text-[9px] font-semibold text-on-surface-variant/80 select-none ml-0.5">
+          <span className="text-[9px] font-bold text-on-surface drop-shadow-xs select-none ml-0.5">
             +{extraCount}
           </span>
         ) : null}
@@ -403,6 +405,12 @@ function DayInfoContent({
       selected.published?.moonZodiacSign,
   );
 
+  const zodiacSign =
+    (detail.status === "ready" && detail.day?.moonZodiacSign) ||
+    selected.published?.moonZodiacSign ||
+    selected.entry?.zodiacSign;
+  const zodiacSymbol = getZodiacSymbol(zodiacSign);
+
   return (
     <>
       <div className="moon-cal-day-panel-body">
@@ -414,13 +422,36 @@ function DayInfoContent({
           <h4 className="font-headline text-xl text-primary md:text-2xl">
             {cmsTitle || listTitle || moonPhaseLabelRu(selected.moon.phase)}
           </h4>
-          <p className="mt-1 font-label text-label text-on-surface-variant">
-            {moonPhaseLabelRu(selected.moon.phase)} · {selected.moon.lunarDay}{" "}
-            лунный день · освещённость {selected.moon.illumination}%
-          </p>
-          <p className="mt-1 font-label text-label text-on-surface-variant">
-            {WEEKDAY_FULL_RU[mondayWeekdayIndex(selected.date)]}
-          </p>
+          <div className="mt-2 flex flex-wrap gap-2 font-label text-xs">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/90 border border-outline-variant/15 text-primary font-semibold shadow-2xs">
+              <MaterialIcon
+                name={moonPhaseIcon(selected.moon.phase)}
+                className="text-sm text-primary-container moon-glow"
+              />
+              <span>
+                {moonPhaseLabelRu(selected.moon.phase)} · {selected.moon.lunarDay} лунный день
+              </span>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/90 border border-outline-variant/15 text-primary font-semibold shadow-2xs">
+              <MaterialIcon name="light_mode" className="text-sm text-primary-container" />
+              <span>освещённость {selected.moon.illumination}%</span>
+            </span>
+
+            {zodiacSign ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/90 border border-outline-variant/15 text-secondary font-semibold shadow-2xs">
+                <span aria-hidden="true" className="text-sm font-extrabold leading-none">
+                  {zodiacSymbol}
+                </span>
+                <span>{getZodiacLabelRu(zodiacSign)}</span>
+              </span>
+            ) : null}
+
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/90 border border-outline-variant/15 text-on-surface-variant font-semibold shadow-2xs">
+              <MaterialIcon name="event" className="text-sm text-primary-container" />
+              <span>{WEEKDAY_FULL_RU[mondayWeekdayIndex(selected.date)]}</span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -844,6 +875,15 @@ export function MoonCalendar({
                       : ""
                   } ${tone !== "neutral" ? `is-tone-${tone}` : ""}`}
                 >
+                  <div className="moon-cal-cell-bg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={moonPhaseImage(moon.phase)}
+                      alt=""
+                      className="moon-cal-cell-bg-img"
+                    />
+                  </div>
+
                   <div className="moon-cal-cell-head">
                     <div className="moon-cal-cell-marks">
                       {!isCompact && hasCmsNote ? (
@@ -863,25 +903,42 @@ export function MoonCalendar({
                   </div>
 
                   <div className="moon-cal-cell-moon-stage">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={moonPhaseImage(moon.phase)}
-                      alt={moonPhaseLabelRu(moon.phase)}
-                      className="moon-cal-cell-moon"
+                    <MaterialIcon
+                      name={moonPhaseIcon(moon.phase)}
+                      className={`moon-glow text-lg sm:text-2xl ${
+                        cell.isToday || isSelected
+                          ? "text-primary-container"
+                          : "text-on-surface/50 dark:text-on-surface/60"
+                      }`}
                     />
                   </div>
 
                   <div className="moon-cal-cell-foot flex flex-col items-start gap-0.5">
-                    <CellBottomMarks
-                      tone={tone}
-                      favorable={favorable}
-                      favCultures={favCultures}
-                    />
-                    <span className="truncate font-label text-[8px] leading-tight text-on-surface-variant/80 sm:text-[9px]">
-                      {moon.lunarDay} л.д.
-                    </span>
-                    <span className="truncate font-label text-[7px] uppercase tracking-tighter text-primary-fixed-dim/70 sm:text-[8px]">
-                      {moonPhaseLabelRu(moon.phase)}
+                    <div className="flex items-center gap-1.5 w-full">
+                      <CellBottomMarks
+                        tone={tone}
+                        favorable={favorable}
+                        favCultures={favCultures}
+                      />
+                      <span className="truncate font-label text-[10px] font-bold leading-tight text-on-surface drop-shadow-xs sm:text-[11px]">
+                        {moon.lunarDay} л.д.
+                      </span>
+                    </div>
+                    <span className="truncate font-label text-[9px] font-extrabold uppercase tracking-tight text-primary drop-shadow-xs dark:text-primary-container sm:text-[10px] inline-flex items-center gap-1">
+                      <MaterialIcon
+                        name={moonPhaseIcon(moon.phase)}
+                        className="text-[11px] leading-none"
+                      />
+                      <span>{moonPhaseLabelRu(moon.phase)}</span>
+                      {cell.published?.moonZodiacSign || cell.entry?.zodiacSign ? (
+                        <span
+                          aria-hidden="true"
+                          className="ml-0.5 text-[10px] text-secondary font-bold"
+                          title={cell.published?.moonZodiacSign || cell.entry?.zodiacSign}
+                        >
+                          {getZodiacSymbol(cell.published?.moonZodiacSign || cell.entry?.zodiacSign)}
+                        </span>
+                      ) : null}
                     </span>
                   </div>
                 </button>
@@ -1011,12 +1068,20 @@ export function MoonCalendar({
                       </td>
                       <td>{weekday}</td>
                       <td>
-                        <span className="moon-cal-table-phase">
+                        <span className="moon-cal-table-phase inline-flex items-center gap-1.5">
                           <MaterialIcon
                             name={moonPhaseIcon(moon.phase)}
                             className="text-xl text-primary-container moon-glow"
                           />
                           <span>{moonPhaseLabelRu(moon.phase)}</span>
+                          {day.published?.moonZodiacSign || day.entry?.zodiacSign ? (
+                            <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high border border-outline-variant/15 text-secondary">
+                              <span aria-hidden="true" className="text-xs font-bold">
+                                {getZodiacSymbol(day.published?.moonZodiacSign || day.entry?.zodiacSign)}
+                              </span>
+                              <span>{day.published?.moonZodiacSign || day.entry?.zodiacSign}</span>
+                            </span>
+                          ) : null}
                         </span>
                       </td>
                       <td className="moon-cal-table-mono">{moon.lunarDay}</td>

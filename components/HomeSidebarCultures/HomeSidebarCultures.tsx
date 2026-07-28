@@ -43,6 +43,7 @@ function DefaultCultureList({ cultures }: { cultures: DefaultCulture[] }) {
                     hubSlug: culture.hubSlug,
                     preview: culture.image ? { id: culture.tagKey, url: culture.image } : null,
                   }}
+                  size={38}
                 />
               </div>
               <div className="pointer-events-none relative z-0 min-w-0 flex-1">
@@ -82,7 +83,7 @@ function ApiCultureList({ cultures }: { cultures: CultureOption[] }) {
                 aria-label={option.label}
               />
               <div className="pointer-events-none relative z-0 shrink-0" aria-hidden>
-                <CultureThumbnail option={option} />
+                <CultureThumbnail option={option} size={38} />
               </div>
               <div className="pointer-events-none relative z-0 min-w-0 flex-1">
                 <span className="font-medium text-on-surface group-hover:text-primary-container">
@@ -111,7 +112,7 @@ export async function HomeSidebarCultures({
   const useApiCatalog = cultures != null && cultures.length > 0;
 
   return (
-    <aside className="block-culture-section lg:sticky lg:top-24 lg:self-start">
+    <aside className="block-culture-section lg:sticky lg:top-20 lg:self-start">
       <div className="glass-effect overflow-hidden rounded-2xl border border-outline-variant/10 dark:border-outline-variant/15">
         <div className="header-cultures section-header relative overflow-hidden px-4 py-5 sm:px-5 sm:py-5 border-b border-outline-variant/10 dark:border-outline-variant/15">
           {/* Background Image Container */}
@@ -122,23 +123,23 @@ export async function HomeSidebarCultures({
               fill
               sizes="(max-width: 768px) 100vw, 320px"
               priority
-              className="object-cover object-center opacity-65 dark:opacity-45 saturate-[1.15] dark:saturate-100 dark:brightness-95 transition-all duration-300"
+              className="object-cover object-center opacity-45 sm:opacity-55 dark:opacity-35 sm:dark:opacity-45 saturate-[1.1] dark:saturate-110 dark:brightness-100 transition-all duration-300"
             />
             {/* Readability gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/45 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent dark:from-background/90 dark:via-background/40 dark:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/55 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/35 dark:from-background/95 dark:via-background/85 dark:to-background/40" />
           </div>
 
           {/* Header content */}
           <div className="relative z-10">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-white/10 bg-surface-container-high flex items-center justify-center p-1.5">
+                <div className="relative h-10 w-10 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-black/5 dark:ring-white/10 bg-surface-container-high/90 backdrop-blur-sm flex items-center justify-center p-2.5">
                   <Image
                     src="/icons/growing.svg"
                     alt="Культуры"
                     fill
-                    sizes="48px"
+                    sizes="40px"
                     className="object-contain"
                   />
                 </div>
@@ -146,14 +147,14 @@ export async function HomeSidebarCultures({
                   <h2 className="font-headline text-lg font-bold text-on-surface sm:text-xl">
                     Культуры
                   </h2>
-                  <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed">
+                  <p className="mt-0.5 text-xs text-on-surface-variant leading-relaxed font-medium">
                     Гайды и материалы по основным культурам.
                   </p>
                 </div>
               </div>
               <Link
                 href="/guides"
-                className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1 mt-1 shrink-0"
+                className="font-label text-[11px] font-semibold uppercase tracking-wide text-primary hover:text-primary-container transition-all duration-200 flex items-center gap-1 mt-1 shrink-0 px-2.5 py-1 rounded-full bg-surface-container/80 dark:bg-surface-container-high/80 border border-outline-variant/20 shadow-xs hover:shadow-sm backdrop-blur-sm"
               >
                 <span>Все</span>
                 <span className="text-xs">→</span>

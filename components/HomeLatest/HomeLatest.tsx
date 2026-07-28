@@ -45,18 +45,18 @@ export async function HomeLatest({ guides: passedGuides, limit = 6 }: HomeLatest
             fill
             sizes="(max-width: 768px) 100vw, 720px"
             priority
-            className="object-cover object-[center_60%] opacity-70 dark:opacity-50 saturate-[1.15] dark:saturate-100 dark:brightness-95 transition-all duration-300"
+            className="object-cover object-[center_60%] opacity-45 sm:opacity-55 dark:opacity-35 sm:dark:opacity-45 saturate-[1.1] dark:saturate-110 dark:brightness-100 transition-all duration-300"
           />
           {/* Readability gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/45 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent dark:from-background/90 dark:via-background/40 dark:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/55 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/35 dark:from-background/95 dark:via-background/85 dark:to-background/40" />
         </div>
 
         {/* Header content */}
         <div className="relative z-10">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-white/10">
+              <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-black/5 dark:ring-white/10 bg-surface-container-high/90 backdrop-blur-sm">
                 <Image
                   src="/latest-section-logo.png"
                   alt="Последнее"
@@ -69,14 +69,14 @@ export async function HomeLatest({ guides: passedGuides, limit = 6 }: HomeLatest
                 <h2 className="font-headline text-xl font-bold text-on-surface sm:text-2xl">
                   Последнее
                 </h2>
-                <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed max-w-xl">
+                <p className="mt-0.5 text-[13px] text-on-surface-variant leading-relaxed max-w-xl font-medium">
                   Недавно опубликованные гайды и статьи из базы знаний.
                 </p>
               </div>
             </div>
             <Link
               href="/guides"
-              className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1 mt-1 shrink-0"
+              className="font-label text-[11px] font-semibold uppercase tracking-wide text-primary hover:text-primary-container transition-all duration-200 flex items-center gap-1 mt-1 shrink-0 px-2.5 py-1 rounded-full bg-surface-container/80 dark:bg-surface-container-high/80 border border-outline-variant/20 shadow-xs hover:shadow-sm backdrop-blur-sm"
             >
               <span>Все публикации</span>
               <span className="text-xs">→</span>
@@ -119,7 +119,7 @@ export async function HomeLatest({ guides: passedGuides, limit = 6 }: HomeLatest
                           {guide.title}
                         </h3>
                         {guide.excerpt ? (
-                          <p className="line-clamp-2 text-xs text-on-surface-variant sm:text-sm">
+                          <p className="line-clamp-2 text-[13px] text-on-surface-variant">
                             {guide.excerpt}
                           </p>
                         ) : null}

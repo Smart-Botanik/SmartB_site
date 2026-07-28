@@ -163,14 +163,17 @@
   .section-header {
     position: relative;
     overflow: hidden;
+    --section-header-text-shadow: 0 1px 3px rgba(240, 235, 227, 0.95), 0 0 8px rgba(240, 235, 227, 0.85);
   }
 
-  .section-header-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
+  [data-theme="dark"] .section-header {
+    --section-header-text-shadow: 0 1px 3px rgba(13, 19, 31, 0.95), 0 0 8px rgba(13, 19, 31, 0.85);
+  }
+
+  .section-header h2,
+  .section-header p,
+  .section-header a {
+    text-shadow: var(--section-header-text-shadow);
   }
 
   /* Header specific selectors for targeting/customization */
@@ -178,4 +181,25 @@
   .header-cultures {}
   .header-knowledge {}
   .header-lunar-calendar {}
+
+  /* Site header text/drop shadow to prevent merging with background in light theme */
+  .block-header {
+    --header-text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.4);
+    --header-drop-shadow: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+  }
+
+  [data-theme="dark"] .block-header {
+    --header-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    --header-drop-shadow: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  }
+
+  .block-header nav a,
+  .block-header button,
+  .block-header span {
+    text-shadow: var(--header-text-shadow);
+  }
+
+  .block-header svg {
+    filter: var(--header-drop-shadow);
+  }
 }

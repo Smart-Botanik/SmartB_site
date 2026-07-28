@@ -17,7 +17,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteHeader />
-      <main className="pt-16">{children}</main>
+      <main className="pt-14">{children}</main>
       <SiteFooter />
     </>
   );

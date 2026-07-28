@@ -329,6 +329,7 @@ export function listCalendarModes(
 export type MoonCalendarEntry = {
   date: string;
   phase?: string;
+  zodiacSign?: string;
   note?: string;
 };
 
@@ -349,11 +350,15 @@ export function parseMoonEntries(data: unknown): MoonCalendarEntry[] {
     if (!date) {
       return [];
     }
+    const phase = asOptionalString(entry.phase);
+    const zodiacSign = asOptionalString(entry.zodiacSign);
+    const note = asOptionalString(entry.note);
     return [
       {
         date,
-        phase: asOptionalString(entry.phase),
-        note: asOptionalString(entry.note),
+        ...(phase ? { phase } : {}),
+        ...(zodiacSign ? { zodiacSign } : {}),
+        ...(note ? { note } : {}),
       },
     ];
   });

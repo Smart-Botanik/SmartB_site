@@ -2,7 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { MoonCalendar } from "@/components/CalendarPage";
+import { MaterialIcon } from "@/components/MaterialIcon";
 import { loadMoonEntries, type MoonCalendarEntry } from "@/lib/calendar-sections";
+import {
+  formatDateKey,
+  getZodiacSymbol,
+  moonPhaseIcon,
+  moonPhaseImage,
+  moonPhaseLabelRu,
+  resolveMoonPhase,
+} from "@/lib/moon-phase";
 
 type HomeLunarCalendarProps = {
   entries?: MoonCalendarEntry[];
@@ -12,6 +21,13 @@ export async function HomeLunarCalendar({
   entries: passedEntries,
 }: HomeLunarCalendarProps = {}) {
   const entries = passedEntries ?? (await loadMoonEntries());
+  const todayDate = new Date();
+  const todayMoon = resolveMoonPhase(todayDate);
+  const todayKey = formatDateKey(todayDate);
+  const todayEntry = entries.find(e => e.date === todayKey);
+  const todayZodiac = todayEntry?.zodiacSign || "в Стрельце";
+  const todayZodiacSymbol = getZodiacSymbol(todayZodiac);
+
   return (
     <div
       id="lunar-calendar"
@@ -26,11 +42,11 @@ export async function HomeLunarCalendar({
             fill
             sizes="(max-width: 768px) 100vw, 720px"
             priority
-            className="object-cover object-[center_60%] opacity-75 saturate-[1.15] dark:opacity-40 dark:saturate-100 dark:brightness-90 transition-all duration-300"
+            className="object-cover object-[center_60%] opacity-65 sm:opacity-75 dark:opacity-55 sm:dark:opacity-65 saturate-[1.1] dark:saturate-110 dark:brightness-100 transition-all duration-300"
           />
           {/* Readability gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/40 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/25 to-transparent dark:from-background/90 dark:via-background/40 dark:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/55 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/35 dark:from-background/95 dark:via-background/85 dark:to-background/40" />
         </div>
 
         {/* Header content */}
@@ -47,17 +63,34 @@ export async function HomeLunarCalendar({
                 />
               </div>
               <div>
-                <h2 className="font-headline text-xl font-bold text-on-surface sm:text-2xl">
-                  Лунный календарь
-                </h2>
-                <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed max-w-xl">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="font-headline text-xl font-bold text-on-surface sm:text-2xl">
+                    Лунный календарь
+                  </h2>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high/90 dark:bg-surface-container-high/70 text-primary border border-primary/20 backdrop-blur-sm shadow-2xs">
+                    <MaterialIcon
+                      name={moonPhaseIcon(todayMoon.phase)}
+                      className="text-sm text-primary-container moon-glow"
+                    />
+                    <span>{moonPhaseLabelRu(todayMoon.phase)}</span>
+                  </span>
+                  {todayZodiac ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-container-high/90 dark:bg-surface-container-high/70 text-secondary border border-secondary/20 backdrop-blur-sm shadow-2xs">
+                      <span aria-hidden="true" className="text-sm font-extrabold leading-none">
+                        {todayZodiacSymbol}
+                      </span>
+                      <span>{todayZodiac}</span>
+                    </span>
+                  ) : null}
+                </div>
+                <p className="mt-0.5 text-xs text-on-surface-variant leading-relaxed max-w-xl font-medium">
                   Выберите культуру — благоприятные дни по лунной матрице (посадка, полив, уход).
                 </p>
               </div>
             </div>
             <Link
               href="/calendar"
-              className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1 mt-1 shrink-0"
+              className="font-label text-[11px] font-semibold uppercase tracking-wide text-primary hover:text-primary-container transition-all duration-200 flex items-center gap-1 mt-1 shrink-0 px-2.5 py-1 rounded-full bg-surface-container/80 dark:bg-surface-container-high/80 border border-outline-variant/20 shadow-xs hover:shadow-sm backdrop-blur-sm"
             >
               <span>Весь календарь</span>
               <span className="text-xs">→</span>

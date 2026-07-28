@@ -187,3 +187,71 @@ export function moonPhaseImage(phase: MoonPhaseId): string {
       return "/moon-phases/waning-moon.png";
   }
 }
+
+export type ZodiacSignName =
+  | "Aries"
+  | "Taurus"
+  | "Gemini"
+  | "Cancer"
+  | "Leo"
+  | "Virgo"
+  | "Libra"
+  | "Scorpio"
+  | "Sagittarius"
+  | "Capricorn"
+  | "Aquarius"
+  | "Pisces";
+
+export type ZodiacSignMeta = {
+  id: ZodiacSignName;
+  nameRu: string;
+  inSignRu: string;
+  symbol: string;
+};
+
+export const ZODIAC_SIGNS_META: ZodiacSignMeta[] = [
+  { id: "Aries", nameRu: "Овен", inSignRu: "в Овне", symbol: "♈" },
+  { id: "Taurus", nameRu: "Телец", inSignRu: "в Тельце", symbol: "♉" },
+  { id: "Gemini", nameRu: "Близнецы", inSignRu: "в Близнецах", symbol: "♊" },
+  { id: "Cancer", nameRu: "Рак", inSignRu: "в Раке", symbol: "♋" },
+  { id: "Leo", nameRu: "Лев", inSignRu: "во Льве", symbol: "♌" },
+  { id: "Virgo", nameRu: "Дева", inSignRu: "в Деве", symbol: "♍" },
+  { id: "Libra", nameRu: "Весы", inSignRu: "в Весах", symbol: "♎" },
+  { id: "Scorpio", nameRu: "Скорпион", inSignRu: "в Скорпионе", symbol: "♏" },
+  { id: "Sagittarius", nameRu: "Стрелец", inSignRu: "в Стрельце", symbol: "♐" },
+  { id: "Capricorn", nameRu: "Козерог", inSignRu: "в Козероге", symbol: "♑" },
+  { id: "Aquarius", nameRu: "Водолей", inSignRu: "в Водолее", symbol: "♒" },
+  { id: "Pisces", nameRu: "Рыбы", inSignRu: "в Рыбах", symbol: "♓" },
+];
+
+export function getZodiacSymbol(signStr?: string | null): string {
+  if (!signStr?.trim()) return "";
+  const s = signStr.trim().toLowerCase();
+  for (const z of ZODIAC_SIGNS_META) {
+    if (
+      s.includes(z.nameRu.toLowerCase()) ||
+      s.includes(z.inSignRu.toLowerCase()) ||
+      s.includes(z.id.toLowerCase())
+    ) {
+      return z.symbol;
+    }
+  }
+  return "✨";
+}
+
+export function getZodiacLabelRu(signStr?: string | null): string {
+  if (!signStr?.trim()) return "";
+  const s = signStr.trim().toLowerCase();
+  for (const z of ZODIAC_SIGNS_META) {
+    if (
+      s.includes(z.nameRu.toLowerCase()) ||
+      s.includes(z.inSignRu.toLowerCase()) ||
+      s.includes(z.id.toLowerCase())
+    ) {
+      return z.inSignRu;
+    }
+  }
+  return signStr;
+}
+
+

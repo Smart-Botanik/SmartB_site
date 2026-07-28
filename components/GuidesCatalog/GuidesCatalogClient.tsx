@@ -134,22 +134,22 @@ export function GuidesCatalogClient({
             fill
             priority
             sizes="(max-width: 768px) 100vw, 1200px"
-            className="object-cover object-[center_60%] opacity-65 dark:opacity-45 saturate-[1.15] dark:saturate-100 dark:brightness-95 transition-all duration-300"
+            className="object-cover object-[center_60%] opacity-90 dark:opacity-75 saturate-[1.2] dark:saturate-110 dark:brightness-100 transition-all duration-300"
           />
           {/* Readability gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/45 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/30 to-transparent dark:from-background/90 dark:via-background/40 dark:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/30 to-transparent dark:from-background/85 dark:via-background/45 dark:to-background/15" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/65 via-background/20 to-transparent dark:from-background/80 dark:via-background/30 dark:to-transparent" />
         </div>
 
         {/* Header content */}
         <div className="relative z-10 flex items-start gap-4 sm:gap-6">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-surface-container-high p-3 border border-outline-variant/15 shadow-sm sm:h-20 sm:w-20">
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-surface-container-high p-4 border border-outline-variant/15 shadow-sm sm:h-20 sm:w-20 sm:p-5">
             <Image
               src="/icons/growing.svg"
               alt=""
               width={48}
               height={48}
-              className="h-11 w-11 sm:h-14 sm:w-14 object-contain"
+              className="h-9 w-9 sm:h-10 sm:w-10 object-contain"
             />
           </div>
           <div className="flex flex-col min-w-0">

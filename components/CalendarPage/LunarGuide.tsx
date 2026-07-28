@@ -1,7 +1,16 @@
+import { MaterialIcon } from "@/components/MaterialIcon";
 import type { CalendarLunarGuideSection } from "@/lib/calendar-sections";
+import { getZodiacSymbol } from "@/lib/moon-phase";
 
 type LunarGuideProps = {
   guide: CalendarLunarGuideSection;
+};
+
+const PHASE_ICONS: Record<string, string> = {
+  new: "brightness_1",
+  waxing: "brightness_4",
+  full: "brightness_5",
+  waning: "brightness_6",
 };
 
 export function LunarGuide({ guide }: LunarGuideProps) {
@@ -25,7 +34,13 @@ export function LunarGuide({ guide }: LunarGuideProps) {
               className="moon-cal-guide-phase-img"
             />
             <div>
-              <h3 className="moon-cal-guide-phase-label">{phase.label}</h3>
+              <h3 className="moon-cal-guide-phase-label inline-flex items-center gap-1.5">
+                <MaterialIcon
+                  name={PHASE_ICONS[phase.id] || "brightness_4"}
+                  className="text-primary text-base moon-glow"
+                />
+                <span>{phase.label}</span>
+              </h3>
               <p className="moon-cal-guide-phase-body">{phase.body}</p>
             </div>
           </li>
@@ -50,10 +65,16 @@ export function LunarGuide({ guide }: LunarGuideProps) {
             {guide.zodiacGroups.map(group => (
               <li key={group.id} className="moon-cal-guide-zodiac-item">
                 <p className="moon-cal-guide-zodiac-label">{group.label}</p>
-                <p className="moon-cal-guide-zodiac-signs">
+                <p className="moon-cal-guide-zodiac-signs flex flex-wrap gap-1.5">
                   {group.signs.map(sign => (
-                    <span key={sign.name} className="moon-cal-guide-zodiac-sign">
-                      <span aria-hidden="true">{sign.symbol}</span> {sign.name}
+                    <span
+                      key={sign.name}
+                      className="moon-cal-guide-zodiac-sign inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-high/90 border border-outline-variant/15 text-xs font-semibold text-on-surface"
+                    >
+                      <span aria-hidden="true" className="text-secondary font-extrabold text-sm">
+                        {sign.symbol || getZodiacSymbol(sign.name)}
+                      </span>
+                      <span>{sign.name}</span>
                     </span>
                   ))}
                 </p>
@@ -66,3 +87,4 @@ export function LunarGuide({ guide }: LunarGuideProps) {
     </section>
   );
 }
+

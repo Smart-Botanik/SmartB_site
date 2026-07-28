@@ -4,16 +4,13 @@ test("lunar calendar has 'Все культуры' selected by default on the ho
   // Navigate to the main page
   await page.goto("/");
 
-  // Find the lunar calendar select element by its aria-label
-  const selectDropdown = page.getByLabel("Культура для благоприятности");
-  await expect(selectDropdown).toBeVisible();
+  // Find the culture picker trigger button
+  const trigger = page.locator(".moon-cal-culture-picker-trigger");
+  await expect(trigger).toBeVisible();
 
-  // Assert that its default selected value is empty string (CULTURE_ALL)
-  await expect(selectDropdown).toHaveValue("");
-
-  // Assert the selected option's text is "Все культуры"
-  const selectedText = await selectDropdown.locator("option:checked").textContent();
-  expect(selectedText?.trim()).toBe("Все культуры");
+  // Assert the selected label text contains "Все культуры"
+  const label = trigger.locator(".moon-cal-culture-picker-label");
+  await expect(label).toHaveText("Все культуры");
 
   // Verify that the calendar tone legend displays "Благоприятный" (which indicates all cultures, not a specific one)
   const legendItem = page.locator(".moon-cal-tone-legend li").first();

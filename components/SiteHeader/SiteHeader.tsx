@@ -81,15 +81,15 @@ export function SiteHeader() {
   const activeHash = pendingHref ? hashFromHref(pendingHref) : hash;
 
   return (
-    <header className="block-header fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20">
-      <div className="mx-auto grid h-16 max-w-container-max grid-cols-[auto_1fr_auto] items-center px-gutter md:grid-cols-[1fr_auto_1fr]">
+    <header className="block-header fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20 shadow-sm dark:shadow-md">
+      <div className="mx-auto grid h-14 max-w-container-max grid-cols-[auto_1fr_auto] items-center px-gutter md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
           className="flex shrink-0 items-center justify-self-start"
           aria-label="СмартБотаник — на главную"
           onClick={() => handleNavClick("/")}
         >
-          <BrandWordmark className="h-8 w-auto sm:h-9" />
+          <BrandWordmark className="h-7 w-auto sm:h-8" />
         </Link>
 
         <nav

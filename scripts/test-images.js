@@ -31,7 +31,7 @@ async function testImages() {
     }
 
     // Filter unique URLs
-    const uniqueUrls = [...new Set(urls)].filter(u => u.includes('uploads') || u.includes('3001') || u.includes('192.168.1.11'));
+    const uniqueUrls = [...new Set(urls)].filter(u => u.includes('uploads') || u.includes('3001') || u.includes('192.168.1.12'));
 
     console.log(`\nFound ${uniqueUrls.length} relevant image reference(s) on the main page:`);
     let hasError = false;
@@ -46,9 +46,9 @@ async function testImages() {
       if (isLocalhost3001) {
         console.log(`❌ FAIL: ${imgUrl} (points to localhost:3001)`);
         hasError = true;
-      } else if (imgUrl.includes('192.168.1.11:3000/uploads')) {
-        console.log(`✅ PASS: ${imgUrl} (points to static host 192.168.1.11:3000)`);
-      } else if (imgUrl.includes('192.168.1.11:3001/uploads')) {
+      } else if (imgUrl.includes('192.168.1.12:3000/uploads')) {
+        console.log(`✅ PASS: ${imgUrl} (points to static host 192.168.1.12:3000)`);
+      } else if (imgUrl.includes('192.168.1.12:3001/uploads')) {
         console.log(`❌ FAIL: ${imgUrl} (points to wrong port 3001)`);
         hasError = true;
       } else {
