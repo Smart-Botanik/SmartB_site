@@ -153,9 +153,6 @@ export function GuidesCatalogClient({
             />
           </div>
           <div className="flex flex-col min-w-0">
-            <span className="font-label text-[10px] uppercase tracking-widest text-primary-fixed-dim sm:text-xs">
-              База знаний
-            </span>
             <h1 className="font-headline text-2xl font-bold text-on-surface sm:text-3xl">
               Гайды и материалы
             </h1>

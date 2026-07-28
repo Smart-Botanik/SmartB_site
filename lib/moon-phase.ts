@@ -170,3 +170,20 @@ export function monthTitleRu(year: number, monthIndex: number): string {
 }
 
 export const WEEKDAY_LABELS_RU = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"] as const;
+
+export function moonPhaseImage(phase: MoonPhaseId): string {
+  switch (phase) {
+    case "new":
+      return "/moon-phases/new-moon.png";
+    case "full":
+      return "/moon-phases/full-moon.png";
+    case "waxing_crescent":
+    case "first_quarter":
+    case "waxing_gibbous":
+      return "/moon-phases/waxing-moon.png";
+    case "waning_gibbous":
+    case "last_quarter":
+    case "waning_crescent":
+      return "/moon-phases/waning-moon.png";
+  }
+}

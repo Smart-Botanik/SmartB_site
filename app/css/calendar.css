@@ -920,11 +920,11 @@
 
     justify-content: center;
 
-    font-size: 0.85rem;
+    width: 24px;
 
-    line-height: 1;
+    height: 24px;
 
-    color: color-mix(in srgb, #c9c4ba 50%, #0d121c 50%);
+    object-fit: contain;
 
     /* drop-shadow follows the glyph silhouette (box-shadow wraps the square span) */
 
@@ -937,8 +937,6 @@
 
   .moon-cal-cell.is-today .moon-cal-cell-moon,
   .moon-cal-cell.is-selected .moon-cal-cell-moon {
-    color: color-mix(in srgb, var(--color-primary-container) 58%, #0d121c 42%);
-
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55))
       drop-shadow(0 2px 6px rgba(0, 0, 0, 0.42))
       drop-shadow(
@@ -949,7 +947,9 @@
 
   @media (min-width: 768px) {
     .moon-cal-cell-moon {
-      font-size: 1.65rem;
+      width: 44px;
+
+      height: 44px;
     }
   }
 
@@ -998,12 +998,16 @@
   }
 
   .moon-cal-root--compact .moon-cal-cell-moon {
-    font-size: 0.72rem;
+    width: 20px;
+
+    height: 20px;
   }
 
   @media (min-width: 768px) {
     .moon-cal-root--compact .moon-cal-cell-moon {
-      font-size: 1.05rem;
+      width: 28px;
+
+      height: 28px;
     }
   }
 

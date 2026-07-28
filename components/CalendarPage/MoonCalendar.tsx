@@ -33,6 +33,7 @@ import {
   monthTitleRu,
   moonPhaseIcon,
   moonPhaseLabelRu,
+  moonPhaseImage,
   parseDateKey,
   resolveMoonPhase,
   startOfMonth,
@@ -488,6 +489,39 @@ function DayInfoContent({
           ) : null}
         </>
       ) : null}
+
+      {(() => {
+        const uniqueCultures = Array.from(new Set(favorableFor.map(item => item.tagKey)));
+        const previewImages = uniqueCultures
+          .map(key => ({
+            key,
+            url: CULTURE_PREVIEW_MAP[key],
+            label: DEFAULT_CULTURES.find(c => c.tagKey === key)?.label || key,
+          }))
+          .filter(item => !!item.url);
+
+        if (previewImages.length === 0) return null;
+
+        return (
+          <div className="mt-5 grid grid-cols-2 gap-2 border-t border-outline-variant/10 pt-4">
+            {previewImages.map(img => (
+              <div key={img.key} className="relative group overflow-hidden rounded-xl border border-outline-variant/10 dark:border-outline-variant/15 aspect-[4/3] bg-surface-container-high">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img.url}
+                  alt={img.label}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2">
+                  <span className="text-[10px] font-semibold text-white truncate w-full">
+                    {img.label}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
     </>
   );
 }
@@ -829,66 +863,92 @@ export function MoonCalendar({
                   </div>
 
                   <div className="moon-cal-cell-moon-stage">
-                    <MaterialIcon
-                      name={icon}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={moonPhaseImage(moon.phase)}
+                      alt={moonPhaseLabelRu(moon.phase)}
                       className="moon-cal-cell-moon"
                     />
                   </div>
 
-                  {isCompact ? (
-                    <div className="moon-cal-cell-foot">
-                      <CellBottomMarks
-                        tone={tone}
-                        favorable={favorable}
-                        favCultures={favCultures}
-                      />
-                    </div>
-                  ) : (
-                    <div className="moon-cal-cell-foot hidden sm:flex">
-                      <CellBottomMarks
-                        tone={tone}
-                        favorable={favorable}
-                        favCultures={favCultures}
-                      />
-                      <span className="truncate font-label text-[9px] leading-tight text-on-surface-variant/80">
-                        {moon.lunarDay} л.д.
-                      </span>
-                      <span className="truncate font-label text-[8px] uppercase tracking-tighter text-primary-fixed-dim/70">
-                        {moonPhaseLabelRu(moon.phase)}
-                      </span>
-                    </div>
-                  )}
+                  <div className="moon-cal-cell-foot flex flex-col items-start gap-0.5">
+                    <CellBottomMarks
+                      tone={tone}
+                      favorable={favorable}
+                      favCultures={favCultures}
+                    />
+                    <span className="truncate font-label text-[8px] leading-tight text-on-surface-variant/80 sm:text-[9px]">
+                      {moon.lunarDay} л.д.
+                    </span>
+                    <span className="truncate font-label text-[7px] uppercase tracking-tighter text-primary-fixed-dim/70 sm:text-[8px]">
+                      {moonPhaseLabelRu(moon.phase)}
+                    </span>
+                  </div>
                 </button>
               );
             })}
           </div>
 
           {selected ? (
-            <aside
-              className="moon-cal-day-panel moon-cal-substrate"
-              aria-label="Информация о дне"
-            >
-              <div className="moon-cal-day-panel-head">
-                <p className="font-label text-label uppercase tracking-widest text-on-surface-variant">
-                  {selected.key}
-                </p>
-                <button
-                  type="button"
-                  className="moon-cal-day-panel-close"
-                  aria-label="Закрыть"
-                  onClick={() => setSelectedKey(null)}
+            isCompact ? (
+              <div
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+                onClick={() => setSelectedKey(null)}
+              >
+                <aside
+                  className="relative w-full max-w-md overflow-hidden rounded-2xl bg-surface-container-high border border-outline-variant/10 dark:border-outline-variant/15 p-5 shadow-2xl max-h-[85vh] overflow-y-auto"
+                  aria-label="Информация о дне"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <MaterialIcon name="close" />
-                </button>
+                  <div className="flex items-center justify-between gap-2 mb-4 border-b border-outline-variant/10 pb-3">
+                    <p className="font-label text-label uppercase tracking-widest text-on-surface-variant">
+                      {selected.key}
+                    </p>
+                    <button
+                      type="button"
+                      className="text-on-surface-variant hover:text-primary transition-colors"
+                      aria-label="Закрыть"
+                      onClick={() => setSelectedKey(null)}
+                    >
+                      <MaterialIcon name="close" />
+                    </button>
+                  </div>
+                  <DayInfoContent
+                    selected={selected}
+                    detail={dayDetail}
+                    favorableFor={favorableFor}
+                    cultureTagKey={cultureTagKey}
+                    compact={true}
+                  />
+                </aside>
               </div>
-              <DayInfoContent
-                selected={selected}
-                detail={dayDetail}
-                favorableFor={favorableFor}
-                cultureTagKey={cultureTagKey}
-                compact={isCompact}
-              />
-            </aside>
+            ) : (
+              <aside
+                className="moon-cal-day-panel moon-cal-substrate"
+                aria-label="Информация о дне"
+              >
+                <div className="moon-cal-day-panel-head">
+                  <p className="font-label text-label uppercase tracking-widest text-on-surface-variant">
+                    {selected.key}
+                  </p>
+                  <button
+                    type="button"
+                    className="moon-cal-day-panel-close"
+                    aria-label="Закрыть"
+                    onClick={() => setSelectedKey(null)}
+                  >
+                    <MaterialIcon name="close" />
+                  </button>
+                </div>
+                <DayInfoContent
+                  selected={selected}
+                  detail={dayDetail}
+                  favorableFor={favorableFor}
+                  cultureTagKey={cultureTagKey}
+                  compact={false}
+                />
+              </aside>
+            )
           ) : null}
         </div>
       ) : (

@@ -58,36 +58,33 @@ export function HomeKnowledge({ chapters }: HomeKnowledgeProps) {
 
         {/* Header content */}
         <div className="relative z-10">
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="font-label text-[10px] uppercase tracking-widest text-primary-fixed-dim">
-              Разделы
-            </span>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-white/10">
+                <Image
+                  src="/knowledge-base-section-logo.png"
+                  alt="База знаний"
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              </div>
+              <div>
+                <h2 className="font-headline text-xl font-bold text-on-surface sm:text-2xl">
+                  База знаний
+                </h2>
+                <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed max-w-xl">
+                  Гайды, закрутки и подборки — отдельные разделы базы знаний.
+                </p>
+              </div>
+            </div>
             <Link
               href="/guides"
-              className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1"
+              className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1 mt-1 shrink-0"
             >
               <span>Все материалы</span>
               <span className="text-xs">→</span>
             </Link>
-          </div>
-          <div className="flex items-center gap-3 mt-1">
-            <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-white/10">
-              <Image
-                src="/knowledge-base-section-logo.png"
-                alt="База знаний"
-                fill
-                sizes="48px"
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="font-headline text-xl font-bold text-on-surface sm:text-2xl">
-                База знаний
-              </h2>
-              <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed max-w-xl">
-                Гайды, закрутки и подборки — отдельные разделы базы знаний.
-              </p>
-            </div>
           </div>
         </div>
       </div>

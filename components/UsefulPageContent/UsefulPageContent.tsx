@@ -45,22 +45,6 @@ export async function UsefulPageContent() {
 
   return (
     <div className="mx-auto max-w-container-max px-gutter pb-20 pt-10">
-      <div className="relative mb-6 py-3">
-        <div className="hero-gradient absolute inset-0 -z-10" />
-        <div className="mb-1 flex flex-col gap-0.5">
-          <span className="font-label text-label uppercase tracking-widest text-primary-fixed-dim">
-            Сообщество
-          </span>
-          <h1 className="font-display text-[36px] leading-tight text-primary md:text-[44px]">
-            {meta.title}
-          </h1>
-        </div>
-        <p className="max-w-2xl font-body text-sm text-on-surface-variant">
-          Одна лента: видео, фото, гайды и внешние источники. Слева — фильтр
-          по типу, чтобы быстрее находить полезное.
-        </p>
-      </div>
-
       <UsefulFeedClient posts={postsWithEngagement} />
     </div>
   );

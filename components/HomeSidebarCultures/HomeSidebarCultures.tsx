@@ -29,7 +29,7 @@ function DefaultCultureList({ cultures }: { cultures: DefaultCulture[] }) {
 
         return (
           <li key={culture.tagKey}>
-            <div className="group relative flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
+            <div className="group relative flex items-start gap-3 rounded-xl border border-outline-variant/10 dark:border-outline-variant/15 bg-surface-container-low/30 p-2 mx-1.5 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/20">
               <Link
                 href={href}
                 className="absolute inset-0 z-10 rounded-xl"
@@ -75,7 +75,7 @@ function ApiCultureList({ cultures }: { cultures: CultureOption[] }) {
 
         return (
           <li key={option.tagKey}>
-            <div className="group relative flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/15">
+            <div className="group relative flex items-start gap-3 rounded-xl border border-outline-variant/10 dark:border-outline-variant/15 bg-surface-container-low/30 p-2 mx-1.5 transition-all hover:border-primary-container/20 hover:bg-surface-container-high dark:hover:border-primary-container/20">
               <Link
                 href={href}
                 className="absolute inset-0 z-10 rounded-xl"
@@ -131,24 +131,34 @@ export async function HomeSidebarCultures({
 
           {/* Header content */}
           <div className="relative z-10">
-            <div className="flex items-center justify-between gap-2 mb-1">
-              <span className="font-label text-[10px] uppercase tracking-widest text-primary-fixed-dim">
-                Навигация
-              </span>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="relative h-12 w-12 shrink-0 rounded-xl overflow-hidden shadow-md ring-1 ring-white/10 bg-surface-container-high flex items-center justify-center p-1.5">
+                  <Image
+                    src="/icons/growing.svg"
+                    alt="Культуры"
+                    fill
+                    sizes="48px"
+                    className="object-contain"
+                  />
+                </div>
+                <div>
+                  <h2 className="font-headline text-lg font-bold text-on-surface sm:text-xl">
+                    Культуры
+                  </h2>
+                  <p className="mt-0.5 text-xs text-on-surface-variant opacity-90 leading-relaxed">
+                    Гайды и материалы по основным культурам.
+                  </p>
+                </div>
+              </div>
               <Link
                 href="/guides"
-                className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1"
+                className="font-label text-[10px] uppercase tracking-wide text-primary hover:text-primary-container transition-colors duration-200 flex items-center gap-1 mt-1 shrink-0"
               >
                 <span>Все</span>
                 <span className="text-xs">→</span>
               </Link>
             </div>
-            <h2 className="font-headline text-lg font-bold text-on-surface sm:text-xl">
-              Культуры
-            </h2>
-            <p className="mt-1.5 text-xs text-on-surface-variant opacity-90 leading-relaxed">
-              Гайды и материалы по основным культурам.
-            </p>
           </div>
         </div>
 
