@@ -101,7 +101,7 @@ export function mediaItemsToPosts(
   return items.map((item, index) => {
     const title = captionTitle(
       item.caption,
-      type === "video" ? "Таймлапс" : "Фото из сообщества",
+      type === "video" ? "Видео" : "Фото из сообщества",
     );
     return {
       id: `${type}.${item.id}`,
@@ -115,12 +115,12 @@ export function mediaItemsToPosts(
       metaLabel:
         type === "video"
           ? item.isDemo
-            ? "Демо · Таймлапс"
-            : "Таймлапс"
+            ? "Демо · Видео"
+            : "Видео"
           : item.isDemo
             ? "Демо · Фото"
             : "Фото",
-      badge: type === "video" ? "Таймлапс" : null,
+      badge: type === "video" ? "Видео" : null,
       isDemo: item.isDemo,
       discussionId: null,
       sortAt: gallerySortAt(index, index),
@@ -184,6 +184,9 @@ export function filterUsefulFeedPosts(
   filter: UsefulFeedFilter,
 ): UsefulFeedPost[] {
   if (filter === "all") return posts;
+  if (filter === "guide") {
+    return posts.filter(post => post.type === "guide" || post.type === "source");
+  }
   return posts.filter(post => post.type === filter);
 }
 
@@ -199,7 +202,11 @@ export function countUsefulFeedByType(
     source: 0,
   };
   for (const post of posts) {
-    counts[post.type] += 1;
+    if (post.type === "guide" || post.type === "source") {
+      counts.guide += 1;
+    } else {
+      counts[post.type] += 1;
+    }
   }
   return counts;
 }
@@ -213,20 +220,14 @@ export const USEFUL_FEED_FILTERS: {
   {
     id: "all",
     label: "Все посты",
-    shortLabel: "Все",
+    shortLabel: "Все посты",
     icon: "grid_view",
   },
   {
-    id: "guide",
-    label: "Гайды и советы",
-    shortLabel: "Гайды",
-    icon: "menu_book",
-  },
-  {
-    id: "source",
-    label: "Источники",
-    shortLabel: "Источники",
-    icon: "link",
+    id: "video",
+    label: "Видео",
+    shortLabel: "Видео",
+    icon: "play_circle",
   },
   {
     id: "image",
@@ -235,10 +236,10 @@ export const USEFUL_FEED_FILTERS: {
     icon: "photo_library",
   },
   {
-    id: "video",
-    label: "Таймлапс",
-    shortLabel: "Таймлапс",
-    icon: "timelapse",
+    id: "guide",
+    label: "Гайды",
+    shortLabel: "Гайды",
+    icon: "menu_book",
   },
 ];
 
@@ -358,8 +359,8 @@ export function buildPlaceholderUsefulFeedPosts(): UsefulFeedPost[] {
       body: "Сравнение двух подходов в одном таймлапсе — видно разницу уже на второй неделе.",
       mediaSrc: null,
       authorName: "Видеолента",
-      metaLabel: "Демо · Таймлапс",
-      badge: "Таймлапс",
+      metaLabel: "Демо · Видео",
+      badge: "Видео",
       isDemo: true,
       sortAt: now - 2 * 60 * 60_000,
     },
@@ -414,8 +415,8 @@ export function buildPlaceholderUsefulFeedPosts(): UsefulFeedPost[] {
       body: "Таймлапс пикировки: подготовка лунок, глубина и первый полив.",
       mediaSrc: null,
       authorName: "Видеолента",
-      metaLabel: "Демо · Таймлапс",
-      badge: "Таймлапс",
+      metaLabel: "Демо · Видео",
+      badge: "Видео",
       isDemo: true,
       sortAt: now - 18 * 60 * 60_000,
     },

@@ -1,0 +1,1757 @@
+.calendar-cell-hover {
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .calendar-cell-hover:hover {
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container-high) 88%,
+      transparent
+    );
+  }
+
+  .calendar-cell-hover:focus-visible {
+    outline: 2px solid var(--color-primary-container);
+
+    outline-offset: -2px;
+
+    z-index: 1;
+  }
+
+  .moon-cal-substrate {
+    border-radius: 1rem;
+
+    border: 1px solid var(--color-glass-panel-border);
+
+    background: var(--color-glass-bg);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow: 0 12px 32px var(--color-shadow-soft);
+  }
+
+  .moon-cal-page {
+    width: 100%;
+
+    max-width: 920px;
+
+    margin-inline: auto;
+  }
+
+  .moon-cal-page-header {
+    position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    min-height: clamp(11.5rem, 28vw, 16.5rem);
+
+    margin-bottom: 1.25rem;
+
+    padding: 1.45rem clamp(1.25rem, 3.5vw, 2rem) 5.75rem;
+
+    border-radius: 1rem;
+  }
+
+  /* Light: clearer photo + soft edge against warm page bg */
+
+  :root:not([data-theme="dark"]) .moon-cal-page-header {
+    border: 1px solid
+      color-mix(in srgb, var(--color-outline-variant) 72%, transparent);
+
+    box-shadow:
+      0 1px 2px color-mix(in srgb, var(--color-shadow-soft) 55%, transparent),
+      inset 0 0 0 1px
+        color-mix(in srgb, var(--color-surface-container-high) 65%, transparent);
+  }
+
+  .moon-cal-page-header-media {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    /* soft edge into page; photo stays mostly solid */
+
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+
+      rgba(0, 0, 0, 0.85) 12%,
+
+      #000 28%,
+
+      #000 100%
+    );
+
+    mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+
+      rgba(0, 0, 0, 0.85) 12%,
+
+      #000 28%,
+
+      #000 100%
+    );
+  }
+
+  .moon-cal-page-header-img {
+    object-fit: cover;
+
+    object-position: center 78%;
+
+    opacity: 0.42;
+
+    filter: brightness(0.88) contrast(1.05);
+
+    transition: opacity 0.3s ease, filter 0.3s ease;
+  }
+
+  :root:not([data-theme="dark"]) .moon-cal-page-header-img {
+    opacity: 0.88;
+
+    filter: saturate(1.18) contrast(1.02);
+  }
+
+  .moon-cal-page-header-fade {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    /* readability veil over title zone */
+
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-background) 72%, transparent) 0%,
+
+        color-mix(in srgb, var(--color-background) 42%, transparent) 28%,
+
+        color-mix(in srgb, var(--color-background) 14%, transparent) 50%,
+
+        transparent 66%
+      ),
+      linear-gradient(
+        105deg,
+        color-mix(in srgb, var(--color-background) 42%, transparent) 0%,
+
+        transparent 50%
+      );
+  }
+
+  [data-theme="dark"] .moon-cal-page-header-fade {
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-background) 62%, transparent) 0%,
+
+        color-mix(in srgb, var(--color-background) 32%, transparent) 28%,
+
+        color-mix(in srgb, var(--color-background) 10%, transparent) 48%,
+
+        transparent 62%
+      ),
+      linear-gradient(
+        105deg,
+        color-mix(in srgb, var(--color-background) 36%, transparent) 0%,
+
+        transparent 48%
+      );
+  }
+
+  .moon-cal-page-header-copy {
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 34rem;
+
+    margin-left: clamp(0.35rem, 1.5vw, 0.85rem);
+
+    padding-left: 0.15rem;
+  }
+
+  .moon-cal-page-kicker {
+    color: var(--color-primary-fixed-dim);
+
+    text-shadow:
+      0 1px 1px color-mix(in srgb, var(--color-background) 55%, transparent),
+      0 1px 6px color-mix(in srgb, var(--color-background) 28%, transparent);
+  }
+
+  .moon-cal-page-title {
+    margin: 0.35rem 0 0;
+
+    font-family: var(--font-hanken), system-ui, sans-serif;
+
+    font-size: clamp(1.65rem, 3.2vw, 2rem);
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.015em;
+
+    color: var(--color-on-surface);
+
+    text-shadow:
+      0 1px 1px color-mix(in srgb, var(--color-background) 60%, transparent),
+      0 1px 8px color-mix(in srgb, var(--color-background) 32%, transparent);
+  }
+
+  .moon-cal-page-subtitle {
+    margin: 0.5rem 0 0;
+
+    max-width: 36rem;
+
+    font-size: 0.95rem;
+
+    line-height: 1.55;
+
+    color: var(--color-on-surface-variant);
+
+    text-shadow:
+      0 1px 1px color-mix(in srgb, var(--color-background) 50%, transparent),
+      0 1px 6px color-mix(in srgb, var(--color-background) 25%, transparent);
+  }
+
+  /* Light: ink on pale wash — avoid soft mid-greens on near-white */
+
+  :root:not([data-theme="dark"]) .moon-cal-page-kicker {
+    color: #1f5c38;
+  }
+
+  :root:not([data-theme="dark"]) .moon-cal-page-title {
+    color: #122018;
+  }
+
+  :root:not([data-theme="dark"]) .moon-cal-page-subtitle {
+    color: #2f3d34;
+  }
+
+  [data-theme="dark"] .moon-cal-page-title {
+    color: var(--color-primary);
+  }
+
+  [data-theme="dark"] .moon-cal-page-subtitle {
+    color: var(--color-on-surface-variant);
+  }
+
+  @media (max-width: 520px) {
+    .moon-cal-page-header {
+      min-height: 12.5rem;
+
+      padding-bottom: 4.75rem;
+    }
+  }
+
+  .moon-cal-root {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 0.5rem;
+  }
+
+  .moon-cal-toolbar {
+    position: relative;
+
+    z-index: 10;
+
+    width: 100%;
+
+    max-width: 920px;
+
+    padding: 0.35rem 0.55rem;
+
+    border-radius: 0.75rem;
+  }
+
+  .moon-cal-toolbar-inner {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 0.5rem 0.75rem;
+  }
+
+  .moon-cal-month-picker {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.15rem;
+  }
+
+  .moon-cal-month-nav {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0.2rem;
+
+    border-radius: 0.4rem;
+
+    color: var(--color-on-surface-variant);
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .moon-cal-month-nav:hover {
+    background: var(--color-surface-container-high);
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-month-label {
+    margin: 0;
+
+    min-width: 8.5rem;
+
+    text-align: center;
+
+    font-family: var(--font-hanken), system-ui, sans-serif;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-toolbar-controls {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.65rem;
+    margin-left: auto;
+  }
+
+  .moon-cal-culture-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .moon-cal-culture-select-label {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+  }
+
+  /* ── Custom Culture Image Picker ─────────────────────────── */
+  .moon-cal-culture-picker {
+    position: relative;
+
+    /* Ensure the dropdown panel floats above the calendar grid below */
+    z-index: 20;
+  }
+
+  .moon-cal-culture-picker-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.3rem;
+    border-radius: 0.55rem;
+    border: 1px solid var(--color-glass-panel-border);
+    background: color-mix(in srgb, var(--color-surface-container-lowest) 55%, transparent);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.83rem;
+    color: var(--color-on-surface);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    max-width: 12rem;
+  }
+
+  .moon-cal-culture-picker-trigger:hover,
+  .moon-cal-culture-picker-trigger.is-open {
+    border-color: color-mix(in srgb, var(--color-primary) 50%, transparent);
+    background: color-mix(in srgb, var(--color-primary-container) 12%, transparent);
+  }
+
+  .moon-cal-culture-picker-trigger:focus {
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 45%, transparent);
+    outline-offset: 1px;
+  }
+
+  .moon-cal-culture-picker-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .moon-cal-culture-picker-thumb--all {
+    font-size: 14px;
+    line-height: 1;
+    width: 22px;
+    height: 22px;
+    background: color-mix(in srgb, var(--color-primary-container) 25%, transparent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .moon-cal-culture-picker-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .moon-cal-culture-picker-chevron {
+    font-size: 10px;
+    color: var(--color-on-surface-variant);
+    flex-shrink: 0;
+  }
+
+  /* Dropdown panel */
+  .moon-cal-culture-picker-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 11rem;
+    padding: 0.35rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-glass-panel-border);
+    background: color-mix(in srgb, var(--color-surface-container-high) 95%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--color-shadow, #000) 18%, transparent);
+  }
+
+  /* Individual culture chip inside the panel */
+  .moon-cal-culture-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    background: transparent;
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.83rem;
+    color: var(--color-on-surface);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.12s, border-color 0.12s;
+    width: 100%;
+  }
+
+  .moon-cal-culture-chip:hover {
+    background: color-mix(in srgb, var(--color-primary-container) 15%, transparent);
+    border-color: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  .moon-cal-culture-chip.is-active {
+    background: color-mix(in srgb, var(--color-primary-container) 30%, transparent);
+    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  .moon-cal-culture-chip-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .moon-cal-culture-chip-thumb--all {
+    background: color-mix(in srgb, var(--color-primary-container) 20%, transparent);
+    border-radius: 6px;
+  }
+
+  .moon-cal-culture-chip-label {
+    flex: 1;
+  }
+
+
+  .moon-cal-view-toggle {
+    display: inline-flex;
+
+    padding: 0.12rem;
+
+    border-radius: 0.5rem;
+
+    border: 1px solid var(--color-glass-panel-border);
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container-lowest) 55%,
+      transparent
+    );
+  }
+
+  .moon-cal-view-toggle button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.3rem;
+
+    border: 0;
+
+    border-radius: 0.4rem;
+
+    padding: 0.25rem 0.7rem;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 11px;
+
+    letter-spacing: 0.04em;
+
+    color: var(--color-on-surface-variant);
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .moon-cal-view-toggle button:hover {
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-view-toggle button.is-active {
+    color: var(--color-on-surface);
+
+    background: var(--color-surface-container-high);
+  }
+
+  .moon-cal-table-wrap {
+    overflow-x: auto;
+
+    width: 100%;
+
+    max-width: 920px;
+  }
+
+  .moon-cal-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 640px;
+  }
+
+  .moon-cal-table th {
+    padding: 14px 16px;
+
+    text-align: left;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    color: var(--color-on-surface-variant);
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container) 70%,
+      transparent
+    );
+
+    border-bottom: 1px solid var(--color-glass-panel-border);
+  }
+
+  .moon-cal-table td {
+    padding: 12px 16px;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    color: var(--color-on-surface);
+
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-outline-variant) 40%, transparent);
+
+    vertical-align: middle;
+  }
+
+  .moon-cal-table tbody tr {
+    cursor: pointer;
+
+    transition: background-color 0.15s ease;
+  }
+
+  .moon-cal-table tbody tr:hover {
+    background: color-mix(
+      in srgb,
+      var(--color-primary-container) 8%,
+      transparent
+    );
+  }
+
+  .moon-cal-table tbody tr:focus-visible {
+    outline: 2px solid var(--color-primary-container);
+
+    outline-offset: -2px;
+  }
+
+  .moon-cal-table tbody tr[data-today="true"] {
+    background: color-mix(
+      in srgb,
+      var(--color-secondary-container) 35%,
+      transparent
+    );
+  }
+
+  .moon-cal-table tbody tr[data-selected="true"] {
+    background: color-mix(
+      in srgb,
+      var(--color-primary-container) 14%,
+      transparent
+    );
+
+    box-shadow: inset 3px 0 0 var(--color-primary-container);
+  }
+
+  .moon-cal-table-day {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-weight: 600;
+
+    color: var(--color-primary);
+  }
+
+  .moon-cal-table-today {
+    display: inline-flex;
+
+    padding: 2px 8px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+    color: var(--color-on-primary-container);
+
+    background: var(--color-primary-container);
+  }
+
+  .moon-cal-table-phase {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .moon-cal-table-mono {
+    font-family: var(--font-jetbrains), monospace;
+
+    font-variant-numeric: tabular-nums;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-table-note {
+    max-width: 280px;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-table-expand > td {
+    padding: 0;
+
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-outline-variant) 35%, transparent);
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container) 70%,
+      transparent
+    );
+  }
+
+  .moon-cal-table-expand-inner {
+    padding: 1.25rem 1.5rem 1.4rem;
+
+    border-top: 1px solid var(--color-glass-panel-border);
+
+    animation: moon-cal-panel-in 0.18s ease-out;
+  }
+
+  .moon-cal-table tbody tr[data-selected="true"] + .moon-cal-table-expand {
+    box-shadow: inset 3px 0 0 var(--color-primary-container);
+  }
+
+  .moon-cal-grid-stage {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 920px;
+  }
+
+  .moon-cal-grid {
+    display: grid;
+
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    background: color-mix(
+      in srgb,
+      var(--color-outline-variant) 45%,
+      transparent
+    );
+  }
+
+  .moon-cal-weekday {
+    padding-block: 0.5rem;
+
+    text-align: center;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 12px;
+
+    letter-spacing: 0.05em;
+
+    color: var(--color-on-surface-variant);
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container) 75%,
+      transparent
+    );
+
+    border-bottom: 1px solid var(--color-glass-panel-border);
+  }
+
+  @media (min-width: 768px) {
+    .moon-cal-weekday {
+      padding-block: 0.65rem;
+    }
+  }
+
+  .moon-cal-cell {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    aspect-ratio: 1 / 0.88;
+
+    min-height: 0;
+
+    padding: 0.35rem 0.4rem;
+
+    text-align: left;
+
+    border: 0;
+
+    background: var(--color-surface-container-low);
+
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  @media (min-width: 768px) {
+    .moon-cal-cell {
+      aspect-ratio: 1 / 0.9;
+
+      padding: 0.45rem 0.5rem;
+    }
+  }
+
+  .moon-cal-cell.is-outside {
+    opacity: 0.35;
+  }
+
+  .moon-cal-cell.is-today,
+  .moon-cal-cell.is-selected {
+    z-index: 1;
+
+    box-shadow: inset 0 0 0 2px var(--color-primary-container);
+  }
+
+  .moon-cal-cell-day {
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 11px;
+
+    line-height: 1;
+
+    font-variant-numeric: tabular-nums;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  @media (min-width: 768px) {
+    .moon-cal-cell-day {
+      font-size: 12px;
+    }
+  }
+
+  .moon-cal-cell-day.is-accent {
+    font-weight: 700;
+
+    color: var(--color-primary-container);
+  }
+
+  .moon-cal-cell-moon-stage {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    pointer-events: none;
+  }
+
+  .moon-cal-cell-head {
+    position: relative;
+
+    z-index: 4;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 0.25rem;
+  }
+
+  .moon-cal-cell-foot {
+    position: absolute;
+
+    left: 0.35rem;
+
+    bottom: 0.28rem;
+
+    z-index: 4;
+
+    right: 0.35rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 0.05rem;
+
+    pointer-events: none;
+  }
+
+  .moon-cal-cell-moon {
+    position: relative;
+
+    z-index: 3;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 0.85rem;
+
+    line-height: 1;
+
+    color: color-mix(in srgb, #c9c4ba 50%, #0d121c 50%);
+
+    /* drop-shadow follows the glyph silhouette (box-shadow wraps the square span) */
+
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55))
+      drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4))
+      drop-shadow(
+        0 0 7px color-mix(in srgb, var(--color-accent-glow) 50%, transparent)
+      );
+  }
+
+  .moon-cal-cell.is-today .moon-cal-cell-moon,
+  .moon-cal-cell.is-selected .moon-cal-cell-moon {
+    color: color-mix(in srgb, var(--color-primary-container) 58%, #0d121c 42%);
+
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.55))
+      drop-shadow(0 2px 6px rgba(0, 0, 0, 0.42))
+      drop-shadow(
+        0 0 10px
+          color-mix(in srgb, var(--color-primary-container) 55%, transparent)
+      );
+  }
+
+  @media (min-width: 768px) {
+    .moon-cal-cell-moon {
+      font-size: 1.65rem;
+    }
+  }
+
+  .moon-cal-root--compact {
+    gap: 0.25rem;
+
+    align-items: stretch;
+  }
+
+  .moon-cal-root--compact .moon-cal-toolbar,
+  .moon-cal-root--compact .moon-cal-grid-stage,
+  .moon-cal-root--compact .moon-cal-grid {
+    max-width: none;
+  }
+
+  .moon-cal-root--compact .moon-cal-toolbar {
+    padding: 0.1rem 0.25rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-month-nav {
+    padding: 0.1rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-month-label {
+    min-width: 6.25rem;
+
+    font-size: 0.78rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-weekday {
+    padding-block: 0.18rem;
+
+    font-size: 9px;
+  }
+
+  .moon-cal-root--compact .moon-cal-cell {
+    aspect-ratio: 1 / 0.82;
+
+    min-height: 2.85rem;
+
+    padding: 0.22rem 0.28rem 0.32rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-cell-day {
+    font-size: 9px;
+  }
+
+  .moon-cal-root--compact .moon-cal-cell-moon {
+    font-size: 0.72rem;
+  }
+
+  @media (min-width: 768px) {
+    .moon-cal-root--compact .moon-cal-cell-moon {
+      font-size: 1.05rem;
+    }
+  }
+
+  .moon-cal-root--compact .moon-cal-cell-fav {
+    font-size: 0.82rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-cell-foot {
+    left: 0.22rem;
+
+    right: 0.22rem;
+
+    bottom: 0.28rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-grid-stage {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.35rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-day-panel {
+    position: static;
+
+    top: auto;
+
+    right: auto;
+
+    width: 100%;
+
+    max-height: none;
+
+    padding: 1rem 1.15rem 1.1rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-day-panel-body {
+    gap: 0.5rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-day-panel-moon {
+    font-size: 1.7rem;
+  }
+
+  .moon-cal-root--compact .moon-cal-day-panel-body h4 {
+    font-size: 0.95rem;
+  }
+
+  .moon-cal-cell-marks {
+    display: flex;
+
+    min-height: 0.75rem;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 0.12rem;
+  }
+
+  .moon-cal-cell-marks--bottom {
+    min-height: 0;
+
+    margin-bottom: 0;
+
+    justify-content: flex-start;
+
+    align-self: flex-start;
+  }
+
+  .moon-cal-cell-fav {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 0.9rem;
+
+    line-height: 1;
+
+    filter: saturate(1.15);
+  }
+
+  .moon-cal-favorable-block {
+    margin-top: 0.75rem;
+  }
+
+  .moon-cal-favorable-heading {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-label), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-favorable-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.35rem;
+
+    margin: 0.65rem 0 0;
+
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .moon-cal-favorable-block .moon-cal-favorable-list {
+    margin-top: 0;
+  }
+
+  .moon-cal-day-body {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-day-body .guide-paragraph {
+    margin: 0.4rem 0 0;
+  }
+
+  .moon-cal-favorable-item {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.3rem;
+
+    padding: 0.25rem 0.5rem;
+
+    border-radius: 0.4rem;
+
+    background: color-mix(
+      in srgb,
+      var(--color-primary-container) 14%,
+      transparent
+    );
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 11px;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-favorable-icon {
+    font-size: 1rem;
+
+    line-height: 1;
+
+    filter: saturate(1.15);
+  }
+
+  .moon-cal-favorable-legend {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.35rem 0.65rem;
+
+    margin: 0.15rem 0 0;
+
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .moon-cal-legend-block {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.45rem;
+
+    margin-top: 0.35rem;
+
+    padding: 0.55rem 0.7rem 0.5rem;
+  }
+
+  .moon-cal-tone-legend {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.45rem 0.85rem;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .moon-cal-tone-legend li {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.35rem;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 0.02em;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-tone-swatch {
+    width: 0.7rem;
+
+    height: 0.7rem;
+
+    border-radius: 0.2rem;
+
+    opacity: 0.85;
+  }
+
+  .moon-cal-favorable-legend li {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.2rem;
+
+    font-family: var(--font-jetbrains), monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 0.02em;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-favorable-legend .moon-cal-favorable-icon {
+    font-size: 0.95rem;
+  }
+
+  .moon-cal-day-panel {
+    position: absolute;
+
+    top: 0;
+
+    right: 0;
+
+    z-index: 20;
+
+    width: min(22rem, calc(100% - 1rem));
+
+    max-height: min(100%, 28rem);
+
+    overflow-y: auto;
+
+    padding: 1.5rem 1.65rem 1.6rem;
+
+    animation: moon-cal-panel-in 0.2s ease-out;
+  }
+
+  @keyframes moon-cal-panel-in {
+    from {
+      opacity: 0;
+
+      transform: translateY(-8px);
+    }
+
+    to {
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+  }
+
+  .moon-cal-day-panel-head {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 1rem;
+  }
+
+  .moon-cal-day-panel-close {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 4px;
+
+    border-radius: 0.5rem;
+
+    color: var(--color-on-surface-variant);
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .moon-cal-day-panel-close:hover {
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container-high) 90%,
+      transparent
+    );
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-day-panel-body {
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+  }
+
+  .moon-cal-day-panel-moon {
+    font-size: 3rem;
+
+    line-height: 1;
+  }
+
+  .moon-cal-guide {
+    margin-top: 2.5rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.25rem;
+  }
+
+  .moon-cal-guide-title {
+    font-family: var(--font-headline);
+
+    font-size: 1.5rem;
+
+    line-height: 1.25;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-subtitle {
+    margin-top: -0.5rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.95rem;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-guide-phases {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: grid;
+
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .moon-cal-guide-phases {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .moon-cal-guide-phase {
+    display: flex;
+
+    gap: 0.85rem;
+
+    align-items: flex-start;
+
+    padding: 0.85rem 1rem;
+
+    border-radius: 0.75rem;
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container-high) 88%,
+      transparent
+    );
+  }
+
+  .moon-cal-guide-phase-img {
+    flex-shrink: 0;
+
+    width: 3.5rem;
+
+    height: 3.5rem;
+  }
+
+  .moon-cal-guide-phase-label {
+    font-family: var(--font-headline);
+
+    font-size: 1.05rem;
+
+    color: var(--color-primary);
+  }
+
+  .moon-cal-guide-phase-body {
+    margin-top: 0.25rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    line-height: 1.45;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-block {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.65rem;
+  }
+
+  .moon-cal-guide-block-title {
+    font-family: var(--font-headline);
+
+    font-size: 1.15rem;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-tips {
+    margin: 0;
+
+    padding-left: 1.15rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-zodiac {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: grid;
+
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .moon-cal-guide-zodiac {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .moon-cal-guide-zodiac-item {
+    padding: 0.85rem 1rem;
+
+    border-radius: 0.75rem;
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container) 92%,
+      transparent
+    );
+  }
+
+  .moon-cal-guide-zodiac-label {
+    font-family: var(--font-label);
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+
+    color: var(--color-primary-fixed-dim);
+  }
+
+  .moon-cal-guide-zodiac-signs {
+    margin-top: 0.4rem;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.35rem 0.65rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    color: var(--color-on-surface);
+  }
+  .moon-cal-day-panel-body {
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+  }
+
+  .moon-cal-day-panel-moon {
+    font-size: 3rem;
+
+    line-height: 1;
+  }
+
+  .moon-cal-guide {
+    margin-top: 2.5rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.25rem;
+  }
+
+  .moon-cal-guide-title {
+    font-family: var(--font-headline);
+
+    font-size: 1.5rem;
+
+    line-height: 1.25;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-subtitle {
+    margin-top: -0.5rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.95rem;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  .moon-cal-guide-phases {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: grid;
+
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .moon-cal-guide-phases {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .moon-cal-guide-phase {
+    display: flex;
+
+    gap: 0.85rem;
+
+    align-items: flex-start;
+
+    padding: 0.85rem 1rem;
+
+    border-radius: 0.75rem;
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container-high) 88%,
+      transparent
+    );
+  }
+
+  .moon-cal-guide-phase-img {
+    flex-shrink: 0;
+
+    width: 3.5rem;
+
+    height: 3.5rem;
+  }
+
+  .moon-cal-guide-phase-label {
+    font-family: var(--font-headline);
+
+    font-size: 1.05rem;
+
+    color: var(--color-primary);
+  }
+
+  .moon-cal-guide-phase-body {
+    margin-top: 0.25rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    line-height: 1.45;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-block {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.65rem;
+  }
+
+  .moon-cal-guide-block-title {
+    font-family: var(--font-headline);
+
+    font-size: 1.15rem;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-tips {
+    margin: 0;
+
+    padding-left: 1.15rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-zodiac {
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: grid;
+
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .moon-cal-guide-zodiac {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .moon-cal-guide-zodiac-item {
+    padding: 0.85rem 1rem;
+
+    border-radius: 0.75rem;
+
+    background: color-mix(
+      in srgb,
+      var(--color-surface-container) 92%,
+      transparent
+    );
+  }
+
+  .moon-cal-guide-zodiac-label {
+    font-family: var(--font-label);
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+
+    color: var(--color-primary-fixed-dim);
+  }
+
+  .moon-cal-guide-zodiac-signs {
+    margin-top: 0.4rem;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.35rem 0.65rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.9rem;
+
+    color: var(--color-on-surface);
+  }
+
+  .moon-cal-guide-zodiac-sign {
+    white-space: nowrap;
+  }
+
+  .moon-cal-guide-zodiac-body {
+    margin-top: 0.45rem;
+
+    font-family: var(--font-body);
+
+    font-size: 0.85rem;
+
+    line-height: 1.4;
+
+    color: var(--color-on-surface-variant);
+  }
+
+  /* Tone backgrounds for calendar cells */
+  .moon-cal-cell.is-tone-favorable {
+    background: color-mix(
+      in srgb,
+      var(--color-primary-container) 12%,
+      var(--color-surface-container-low)
+    );
+  }
+
+  .moon-cal-cell.is-tone-unfavorable {
+    background: color-mix(
+      in srgb,
+      var(--color-tertiary-container) 12%,
+      var(--color-surface-container-low)
+    );
+  }
+
+  /* Legend Swatches */
+  .moon-cal-tone-swatch.is-favorable {
+    background: var(--color-primary-container);
+  }
+
+  .moon-cal-tone-swatch.is-unfavorable {
+    background: var(--color-tertiary-container);
+  }

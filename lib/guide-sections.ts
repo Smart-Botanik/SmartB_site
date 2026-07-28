@@ -15,7 +15,6 @@ export const GUIDE_SECTION_TOPIC_KEYS: Record<
 export const GUIDE_SECTION_ORDER: GuideKnowledgeSection[] = [
   "growing",
   "preserving",
-  "reports",
   "interesting",
 ];
 

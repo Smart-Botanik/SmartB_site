@@ -41,25 +41,51 @@ type GuidesKnowledgeSectionsProps = {
   showLayoutToggle?: boolean;
 };
 
+import Image from "next/image";
+
+const SECTION_ICONS: Record<GuideKnowledgeSection, string> = {
+  growing: "/icons/growing.svg",
+  preserving: "/icons/preserving.svg",
+  reports: "/icons/reports.svg",
+  interesting: "/icons/useful.svg",
+};
+
 function SectionHeader({
   id,
+  sectionId,
   title,
   subtitle,
   accentClass,
   trailing,
 }: {
   id: string;
+  sectionId: GuideKnowledgeSection;
   title: string;
   subtitle: string;
   accentClass: string;
   trailing?: ReactNode;
 }) {
+  const iconSrc = SECTION_ICONS[sectionId];
+
   return (
-    <div id={id} className="mb-6 flex scroll-mt-28 items-end justify-between gap-4">
-      <div className="flex min-w-0 flex-col">
-        <h2 className="font-headline text-headline text-primary">{title}</h2>
-        <div className={`mt-1 h-1 w-24 ${accentClass}`} />
-        <p className="mt-2 max-w-xl text-on-surface-variant">{subtitle}</p>
+    <div id={id} className="mb-6 flex scroll-mt-28 items-center justify-between gap-4">
+      <div className="flex items-center gap-3.5 min-w-0">
+        {iconSrc ? (
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-surface-container-high p-2 border border-outline-variant/15 dark:border-outline-variant/10 shadow-sm">
+            <Image
+              src={iconSrc}
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
+            />
+          </div>
+        ) : null}
+        <div className="flex min-w-0 flex-col">
+          <h2 className="font-headline text-headline text-primary">{title}</h2>
+          <div className={`mt-1 h-1 w-24 ${accentClass}`} />
+          <p className="mt-1.5 max-w-xl text-xs text-on-surface-variant opacity-90 sm:text-sm">{subtitle}</p>
+        </div>
       </div>
       {trailing ? <div className="shrink-0 pb-1">{trailing}</div> : null}
     </div>
@@ -89,6 +115,7 @@ function GuideSectionGrid({
     <section>
       <SectionHeader
         id={sectionId}
+        sectionId={sectionId}
         title={meta.title}
         subtitle={meta.subtitle}
         accentClass={meta.accentClass}
@@ -120,7 +147,6 @@ function GuideSectionGrid({
 const DEFAULT_SECTION_IDS: GuideKnowledgeSection[] = [
   "growing",
   "preserving",
-  "reports",
   "interesting",
 ];
 

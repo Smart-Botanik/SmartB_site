@@ -81,7 +81,7 @@ export function SiteHeader() {
   const activeHash = pendingHref ? hashFromHref(pendingHref) : hash;
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20">
+    <header className="block-header fixed top-0 z-50 w-full border-b border-outline-variant/40 bg-surface/85 backdrop-blur-xl dark:border-outline-variant/20">
       <div className="mx-auto grid h-16 max-w-container-max grid-cols-[auto_1fr_auto] items-center px-gutter md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"

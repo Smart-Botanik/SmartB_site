@@ -270,6 +270,14 @@ export function sortPublishedGuides(guides: CropGuide[]): CropGuide[] {
   });
 }
 
+export async function fetchLatestPublishedGuides(): Promise<CropGuide[]> {
+  try {
+    return sortPublishedGuides(await fetchPublishedCropGuides());
+  } catch {
+    return sortPublishedGuides([]);
+  }
+}
+
 export function taxonomyTagToContentLabel(tag: TaxonomyTag): ContentLabel {
   return {
     id: tag.id,

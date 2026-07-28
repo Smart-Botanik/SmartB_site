@@ -5,7 +5,7 @@ import { siteEnv } from "@/lib/env";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto w-full bg-surface-container-highest py-12">
+    <footer className="block-footer mt-auto w-full bg-surface-container-highest py-12">
       <div className="mx-auto flex max-w-container-max flex-col items-center justify-between gap-6 px-gutter md:flex-row">
         <div className="flex flex-col items-center gap-1 md:items-start">
           <span className="font-headline text-headline-mobile text-primary">СмартБотаник</span>
@@ -38,12 +38,6 @@ export function SiteFooter() {
             className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
           >
             Журнал
-          </Link>
-          <Link
-            href="/reports"
-            className="font-label text-label text-on-surface-variant transition-colors hover:text-primary-container"
-          >
-            Репорты
           </Link>
           <a
             href={siteEnv.telegramUrl}

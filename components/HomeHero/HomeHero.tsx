@@ -26,7 +26,7 @@ export function HomeHero({
   ctaHref = "/guides",
 }: HomeHeroProps) {
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden px-gutter py-20">
+    <section className="block-hero-section relative flex min-h-[80vh] items-center justify-center overflow-hidden px-gutter py-20">
       <Image
         src="/hero-home-bg.png"
         alt=""
@@ -58,10 +58,10 @@ export function HomeHero({
         <div className="flex flex-col items-center gap-3">
           <div className="hero-logo-glow">
             <Image
-              src="/smart-botanik-logo-full.png"
+              src="/smart-botanik-logo.webp"
               alt="СмартБотаник"
-              width={1024}
-              height={682}
+              width={699}
+              height={538}
               className="hero-logo-glow-image block h-44 w-auto sm:h-52 md:h-64"
               priority
             />

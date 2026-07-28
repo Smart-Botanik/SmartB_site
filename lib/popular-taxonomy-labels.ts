@@ -112,6 +112,20 @@ export const CULTURE_POPULAR_TAXONOMY_LABEL_SEEDS: Record<
       sortOrder: 20,
     },
   ],
+  "crop.eggplant": [
+    {
+      key: "guides.landing",
+      label: "Посадка",
+      namespace: "TOPIC",
+      sortOrder: 10,
+    },
+    {
+      key: "guides.feeding",
+      label: "Подкормка",
+      namespace: "TOPIC",
+      sortOrder: 20,
+    },
+  ],
   "crop.potato": [
     {
       key: "guides.spraying",

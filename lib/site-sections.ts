@@ -1,5 +1,5 @@
 import type { CropKind } from "./content-api";
-import { DEFAULT_CROP_ORDER } from "./content-api";
+import { DEFAULT_CROP_ORDER, fetchPublishedSitePage } from "./content-api";
 import { DEFAULT_CULTURE_TAG_KEYS } from "./default-cultures";
 
 export type HeroSection = {
@@ -117,6 +117,19 @@ export function parseHomeSections(sections: unknown): ParsedHomeSections {
   }
 
   return result;
+}
+
+export async function loadHomeSections(): Promise<ParsedHomeSections> {
+  let sections = parseHomeSections(null);
+
+  try {
+    const page = await fetchPublishedSitePage("home");
+    sections = parseHomeSections(page?.sections);
+  } catch {
+    /* fallback to defaults */
+  }
+
+  return sections;
 }
 
 /**

@@ -121,6 +121,18 @@ function attachPopularTags(
 }
 
 function cultureOptionFromDefault(culture: DefaultCulture, sortOrder: number): CultureOption {
+  const icon: CultureChipIcon = culture.image
+    ? {
+        kind: "MEDIA",
+        image: { id: culture.tagKey, url: culture.image },
+        emoji: culture.emoji,
+      }
+    : { kind: "EMOJI", emoji: culture.emoji };
+
+  const preview = culture.image
+    ? { id: culture.tagKey, url: culture.image }
+    : null;
+
   return attachPopularTags(
     {
       tagKey: culture.tagKey,
@@ -128,7 +140,8 @@ function cultureOptionFromDefault(culture: DefaultCulture, sortOrder: number): C
       label: culture.label,
       hubSlug: culture.hubSlug,
       sortOrder,
-      icon: { kind: "EMOJI", emoji: culture.emoji },
+      icon,
+      preview,
     },
     culture.popularTags,
   );
@@ -165,6 +178,21 @@ export function resolveDefaultCultureOptions(
       index,
     );
   });
+}
+
+export async function loadCultureOptions(
+  tagKeys?: string[],
+): Promise<CultureOption[]> {
+  let cultureOptions = resolveDefaultCultureOptions([], tagKeys);
+
+  try {
+    const catalog = await fetchPublishedCultureOptions();
+    cultureOptions = resolveDefaultCultureOptions(catalog.options, tagKeys);
+  } catch {
+    /* keep DEFAULT_CULTURES merge without API enrichment */
+  }
+
+  return cultureOptions;
 }
 
 /** Absolute URL for Media from Nest (relative /uploads/...). */

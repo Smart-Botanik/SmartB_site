@@ -5,7 +5,7 @@ import { siteEnv } from "@/lib/env";
 
 export function HomeDiaryCta() {
   return (
-    <section className="mx-auto max-w-container-max px-gutter py-16">
+    <section className="block-diary-cta mx-auto max-w-container-max px-gutter py-16">
       <div className="glass-effect flex flex-col items-center gap-6 rounded-2xl border border-primary-container/20 bg-surface-container-low p-8 text-center md:p-12">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-container/20">
           <MaterialIcon name="dataset" className="text-3xl text-primary-container" filled />

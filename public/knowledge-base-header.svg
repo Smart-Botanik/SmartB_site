@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="kb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#022c22" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="1" />
+    </linearGradient>
+
+    <linearGradient id="mint-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.2" />
+    </linearGradient>
+
+    <linearGradient id="gold-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.1" />
+    </linearGradient>
+
+    <linearGradient id="leaf-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ee7b7" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+
+    <linearGradient id="leaf-grad-2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a7f3d0" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Radial glows -->
+    <radialGradient id="center-sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6ee7b7" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#10b981" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#022c22" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="400" fill="url(#kb-bg)" />
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="250" cy="180" r="220" fill="url(#center-sun)" />
+  <circle cx="950" cy="200" r="250" fill="url(#center-sun)" />
+
+  <!-- Geometric Knowledge Grid Lines -->
+  <g stroke="url(#mint-glow)" stroke-width="1" opacity="0.25" fill="none">
+    <line x1="0" y1="80" x2="1200" y2="80" stroke-dasharray="8,8" />
+    <line x1="0" y1="200" x2="1200" y2="200" stroke-dasharray="4,4" />
+    <line x1="0" y1="320" x2="1200" y2="320" stroke-dasharray="8,8" />
+    <line x1="300" y1="0" x2="300" y2="400" stroke-dasharray="6,6" />
+    <line x1="600" y1="0" x2="600" y2="400" />
+    <line x1="900" y1="0" x2="900" y2="400" stroke-dasharray="6,6" />
+  </g>
+
+  <!-- Network Nodes / Data Points -->
+  <g fill="#34d399" opacity="0.6">
+    <circle cx="300" cy="80" r="4" />
+    <circle cx="600" cy="80" r="5" />
+    <circle cx="900" cy="80" r="4" />
+    <circle cx="300" cy="200" r="5" />
+    <circle cx="600" cy="200" r="7" />
+    <circle cx="900" cy="200" r="5" />
+    <circle cx="300" cy="320" r="4" />
+    <circle cx="600" cy="320" r="5" />
+    <circle cx="900" cy="320" r="4" />
+  </g>
+
+  <!-- Central Knowledge Emblem Vector (Open Book + Sprout) -->
+  <g transform="translate(600, 190)">
+    <!-- Book pages background outline -->
+    <path d="M-140,40 C-80,10 -20,25 0,35 C20,25 80,10 140,40 L120,-50 C70,-70 20,-55 0,-45 C-20,-55 -70,-70 -120,-50 Z" 
+          fill="none" stroke="url(#mint-glow)" stroke-width="2" opacity="0.4" />
+    <path d="M-130,50 C-75,20 -15,35 0,45 C15,35 75,20 130,50 L110,-40 C65,-60 15,-45 0,-35 C-15,-45 -65,-60 -110,-40 Z" 
+          fill="none" stroke="url(#gold-glow)" stroke-width="1.5" opacity="0.3" />
+    
+    <!-- Central Sprout rising from Book -->
+    <path d="M0,45 Q0,-20 0,-70" stroke="#a7f3d0" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9" />
+    
+    <!-- Left Leaf -->
+    <path d="M0,-30 C-35,-45 -55,-25 -40,5 C-20,15 0,-10 0,-30 Z" fill="url(#leaf-grad-1)" opacity="0.85" />
+    <!-- Right Leaf -->
+    <path d="M0,-45 C35,-60 60,-35 45,-5 C25,5 0,-20 0,-45 Z" fill="url(#leaf-grad-2)" opacity="0.9" />
+    <!-- Top Leaf -->
+    <path d="M0,-70 C-15,-90 0,-105 0,-105 C0,-105 15,-90 0,-70 Z" fill="#6ee7b7" opacity="0.95" />
+
+    <!-- Rays / Sparkles -->
+    <circle cx="-60" cy="-60" r="3" fill="#fbbf24" opacity="0.7" />
+    <circle cx="70" cy="-75" r="4" fill="#6ee7b7" opacity="0.8" />
+    <circle cx="100" cy="-20" r="2.5" fill="#f59e0b" opacity="0.6" />
+    <circle cx="-90" cy="-10" r="3" fill="#a7f3d0" opacity="0.7" />
+  </g>
+
+  <!-- Left Side Botanical Accents -->
+  <g transform="translate(180, 200)" opacity="0.4">
+    <path d="M-40,80 Q-20,0 20,-80" stroke="#34d399" stroke-width="2" fill="none" />
+    <path d="M0,20 C-20,10 -30,-10 -15,-20 C0,-10 0,10 0,20 Z" fill="url(#leaf-grad-1)" />
+    <path d="M-10,-30 C10,-40 20,-60 5,-70 C-10,-60 -10,-40 -10,-30 Z" fill="url(#leaf-grad-2)" />
+  </g>
+
+  <!-- Right Side Botanical Accents -->
+  <g transform="translate(1020, 200)" opacity="0.4">
+    <path d="M40,80 Q20,0 -20,-80" stroke="#34d399" stroke-width="2" fill="none" />
+    <path d="M0,20 C20,10 30,-10 15,-20 C0,-10 0,10 0,20 Z" fill="url(#leaf-grad-2)" />
+    <path d="M10,-30 C-10,-40 -20,-60 -5,-70 C10,-60 10,-40 10,-30 Z" fill="url(#leaf-grad-1)" />
+  </g>
+</svg>

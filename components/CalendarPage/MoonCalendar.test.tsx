@@ -24,7 +24,7 @@ describe("MoonCalendar Default Selection", () => {
     vi.clearAllMocks();
   });
 
-  it("should select 'Все культуры' by default when no data is loaded yet, and keep it selected when data is loaded", async () => {
+  it("should show 'Все культуры' by default when no data is loaded yet, and keep it selected when data is loaded", async () => {
     // 1. Render the MoonCalendar component (e.g. as used on the home page)
     render(
       <MoonCalendar
@@ -34,15 +34,11 @@ describe("MoonCalendar Default Selection", () => {
       />
     );
 
-    // 2. Locate select dropdown and assert that "Все культуры" (value = "") is selected before data resolves
-    const selectDropdown = screen.getByLabelText(
-      "Культура для благоприятности",
-    ) as HTMLSelectElement;
-    expect(selectDropdown).toBeInTheDocument();
-    expect(selectDropdown.value).toBe("");
-
-    const checkedOption = selectDropdown.options[selectDropdown.selectedIndex];
-    expect(checkedOption.textContent).toBe("Все культуры");
+    // 2. Locate the custom culture picker trigger button and verify it shows "Все культуры"
+    const pickerButton = screen.getByRole("button", {
+      name: /Культура: Все культуры/i,
+    });
+    expect(pickerButton).toBeInTheDocument();
 
     // 3. Resolve the API call to simulate data loading completion
     await act(async () => {
@@ -50,10 +46,9 @@ describe("MoonCalendar Default Selection", () => {
       await calendarDaysPromise;
     });
 
-    // 4. Assert that "Все культуры" remains selected after data loads
-    expect(selectDropdown.value).toBe("");
+    // 4. Assert that the picker still shows "Все культуры" after data loads
     expect(
-      selectDropdown.options[selectDropdown.selectedIndex].textContent,
-    ).toBe("Все культуры");
+      screen.getByRole("button", { name: /Культура: Все культуры/i })
+    ).toBeInTheDocument();
   });
 });

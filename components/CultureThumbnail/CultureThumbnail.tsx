@@ -1,7 +1,13 @@
+import type { ContentMedia } from "@/lib/content-api";
 import type { CultureChipIcon, CultureOption } from "@/lib/culture-options";
 import { resolveMediaUrl } from "@/lib/culture-options";
 
-type CultureIconSource = Pick<CultureOption, "label" | "icon">;
+type CultureIconSource = Pick<CultureOption, "label"> & {
+  icon?: CultureChipIcon | null;
+  preview?: ContentMedia | null;
+  tagKey?: string;
+  hubSlug?: string;
+};
 
 type CultureThumbnailProps = {
   option: CultureIconSource;
@@ -10,19 +16,41 @@ type CultureThumbnailProps = {
   variant?: "tile" | "inline";
 };
 
+const DEFAULT_CROP_PREVIEW_MAP: Record<string, string> = {
+  "crop.tomato": "/previews/tomato.jpg",
+  tomat: "/previews/tomato.jpg",
+  "crop.zucchini": "/previews/zucchini.jpg",
+  kabachok: "/previews/zucchini.jpg",
+  "crop.eggplant": "/previews/eggplant.jpg",
+  baklazhan: "/previews/eggplant.jpg",
+  "crop.cucumber": "/previews/cucumber.jpg",
+  ogurec: "/previews/cucumber.jpg",
+};
+
 /**
- * Culture list icon priority: LOGO PNG → chip emoji.
- * Never PREVIEW / IMAGE_M (option.preview).
+ * Culture list image priority:
+ * 1. icon.image.url (MEDIA icon)
+ * 2. option.preview.url (ContentMedia)
+ * 3. Default crop photo preview fallback (/previews/*.jpg)
  */
-function pickLogoUrl(icon: CultureChipIcon): string | null {
-  if (icon.kind !== "MEDIA" || !icon.image?.url) {
-    return null;
+function pickImageUrl(option: CultureIconSource): string | null {
+  if (option.icon?.kind === "MEDIA" && option.icon.image?.url) {
+    return resolveMediaUrl(option.icon.image.url);
   }
-  return resolveMediaUrl(icon.image.url);
+  if (option.preview?.url) {
+    return resolveMediaUrl(option.preview.url);
+  }
+  if (option.tagKey && DEFAULT_CROP_PREVIEW_MAP[option.tagKey]) {
+    return DEFAULT_CROP_PREVIEW_MAP[option.tagKey];
+  }
+  if (option.hubSlug && DEFAULT_CROP_PREVIEW_MAP[option.hubSlug]) {
+    return DEFAULT_CROP_PREVIEW_MAP[option.hubSlug];
+  }
+  return null;
 }
 
-function chipEmoji(icon: CultureChipIcon): string {
-  return icon.emoji?.trim() || "🌱";
+function chipEmoji(icon?: CultureChipIcon | null): string {
+  return icon?.emoji?.trim() || "🌱";
 }
 
 export function CultureThumbnail({
@@ -30,21 +58,20 @@ export function CultureThumbnail({
   size = 48,
   variant = "tile",
 }: CultureThumbnailProps) {
-  const logoUrl = pickLogoUrl(option.icon);
+  const imageUrl = pickImageUrl(option);
   const emoji = chipEmoji(option.icon);
 
   if (variant === "inline") {
-    if (logoUrl) {
+    if (imageUrl) {
       return (
-        // next/image does not optimize SVG; keep crisp vector/PNG for chip LOGO.
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={logoUrl}
+          src={imageUrl}
           alt=""
           width={size}
           height={size}
           aria-hidden
-          className="shrink-0 object-contain"
+          className="shrink-0 rounded-full object-cover"
           style={{ width: size, height: size }}
         />
       );
@@ -57,20 +84,19 @@ export function CultureThumbnail({
     );
   }
 
-  if (logoUrl) {
+  if (imageUrl) {
     return (
       <div
-        className="relative shrink-0 overflow-hidden rounded-lg bg-surface-container-high p-2"
+        className="relative shrink-0 overflow-hidden rounded-lg bg-surface-container-high border border-outline-variant/10 dark:border-outline-variant/15"
         style={{ width: size, height: size }}
       >
-        {/* next/image does not optimize SVG; keep crisp vector for chip LOGO. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={logoUrl}
+          src={imageUrl}
           alt={option.label}
           width={size}
           height={size}
-          className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
     );

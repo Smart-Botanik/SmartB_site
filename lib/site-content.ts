@@ -61,7 +61,7 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     title: "Выращивание",
     description:
       "Субстраты, освещение, полив и питание — от рассады до стабильного урожая.",
-    icon: "🌱",
+    icon: "/icons/growing.svg",
     accent: "mint",
     tags: ["Гидропоника", "Освещение", "Почвы"],
     href: "/guides",
@@ -71,27 +71,17 @@ export const HOME_KNOWLEDGE_CHAPTERS: KnowledgeChapter[] = [
     title: "Закрутка",
     description:
       "Консервирование, ферментация и хранение — как сохранить урожай на зиму.",
-    icon: "🫙",
+    icon: "/icons/preserving.svg",
     accent: "gold",
     tags: ["Маринование", "Сушка", "Хранение"],
     href: "/preserving",
-  },
-  {
-    id: "reports",
-    title: "Репорты",
-    description:
-      "Публичные гроу-репорты с заметками, метриками и фото по неделям цикла.",
-    icon: "📊",
-    accent: "emerald",
-    tags: ["Дневник", "Метрики", "Фото"],
-    href: "/reports",
   },
   {
     id: "interesting",
     title: "Полезное",
     description:
       "Подборки, эксперименты и истории из сообщества — без строгих инструкций.",
-    icon: "💡",
+    icon: "/icons/useful.svg",
     accent: "neutral",
     tags: ["Сообщество", "Эксперименты", "Обзоры"],
     href: "/useful",

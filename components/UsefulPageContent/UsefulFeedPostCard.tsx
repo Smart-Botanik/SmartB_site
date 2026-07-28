@@ -120,7 +120,7 @@ export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
           ) : (
             <div className="useful-feed-card-video-placeholder" aria-hidden>
               <MaterialIcon name="play_arrow" filled className="text-[48px]" />
-              <span>Таймлапс</span>
+              <span>Видео</span>
             </div>
           )
         ) : post.mediaSrc ? (
@@ -140,7 +140,7 @@ export function UsefulFeedPostCard({ post }: UsefulFeedPostCardProps) {
         )}
 
         {post.type === "video" ? (
-          <span className="useful-feed-card-live">Таймлапс</span>
+          <span className="useful-feed-card-live">Видео</span>
         ) : null}
         {post.type === "source" && post.sourceHost ? (
           <span className="useful-feed-card-source-chip">{post.sourceHost}</span>

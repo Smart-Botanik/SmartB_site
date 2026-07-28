@@ -1,3 +1,5 @@
+import { fetchPublishedSitePage } from "./content-api";
+
 export type CalendarModeId = "moon" | "seasons";
 
 export type CalendarIntroSection = {
@@ -377,4 +379,21 @@ export function parseSeasonWindows(data: unknown): SeasonCalendarWindow[] {
       },
     ];
   });
+}
+
+export async function loadMoonEntries(): Promise<MoonCalendarEntry[]> {
+  let moonEntries = parseMoonEntries(
+    getDefaultCalendarSections().modes.moon.data,
+  );
+
+  try {
+    const calendarPage = await fetchPublishedSitePage("calendar");
+    moonEntries = parseMoonEntries(
+      parseCalendarSections(calendarPage?.sections).modes.moon.data,
+    );
+  } catch {
+    /* defaults until CMS seed / publish */
+  }
+
+  return moonEntries;
 }

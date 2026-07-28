@@ -12,6 +12,7 @@ type DefaultCultureSeed = {
   label: string;
   hubSlug: string;
   emoji: string;
+  image?: string;
 };
 
 export type DefaultCulture = DefaultCultureSeed & {
@@ -20,12 +21,34 @@ export type DefaultCulture = DefaultCultureSeed & {
 };
 
 const DEFAULT_CULTURE_SEEDS: DefaultCultureSeed[] = [
-  { tagKey: "crop.tomato", label: "Томаты", hubSlug: "tomat", emoji: "🍅" },
-  { tagKey: "crop.pepper", label: "Перец", hubSlug: "perec", emoji: "🌶️" },
-  { tagKey: "crop.cucumber", label: "Огурцы", hubSlug: "ogurec", emoji: "🥒" },
-  { tagKey: "crop.potato", label: "Картошка", hubSlug: "kartoshka", emoji: "🥔" },
-  { tagKey: "crop.cabbage", label: "Капуста", hubSlug: "kapusta", emoji: "🥬" },
-  { tagKey: "crop.pumpkin", label: "Тыква", hubSlug: "tykva", emoji: "🎃" },
+  {
+    tagKey: "crop.tomato",
+    label: "Томаты",
+    hubSlug: "tomat",
+    emoji: "🍅",
+    image: "/previews/tomato.jpg",
+  },
+  {
+    tagKey: "crop.zucchini",
+    label: "Кабачки",
+    hubSlug: "kabachok",
+    emoji: "🥒",
+    image: "/previews/zucchini.jpg",
+  },
+  {
+    tagKey: "crop.eggplant",
+    label: "Баклажаны",
+    hubSlug: "baklazhan",
+    emoji: "🍆",
+    image: "/previews/eggplant.jpg",
+  },
+  {
+    tagKey: "crop.cucumber",
+    label: "Огурцы",
+    hubSlug: "ogurec",
+    emoji: "🥒",
+    image: "/previews/cucumber.jpg",
+  },
 ];
 
 export const DEFAULT_CULTURES: DefaultCulture[] = DEFAULT_CULTURE_SEEDS.map(

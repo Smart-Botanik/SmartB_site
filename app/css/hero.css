@@ -1,0 +1,117 @@
+.hero-scrim-vertical {
+    background: linear-gradient(
+      to bottom,
+
+      var(--color-hero-scrim-top) 0%,
+
+      var(--color-hero-scrim-mid) 42%,
+
+      var(--color-hero-scrim-bottom) 100%
+    );
+  }
+
+  .hero-scrim-accent {
+    background:
+      radial-gradient(
+        ellipse 72% 58% at 50% 40%,
+
+        var(--color-hero-warm-radial) 0%,
+
+        transparent 72%
+      ),
+      radial-gradient(
+        circle at 88% 12%,
+        var(--color-hero-accent-radial),
+        transparent 52%
+      );
+  }
+
+  .hero-scrim-bottom {
+    background: linear-gradient(
+      to top,
+
+      var(--color-hero-bottom-from) 0%,
+
+      var(--color-hero-bottom-via) 22%,
+
+      transparent 48%
+    );
+  }
+
+  .hero-title {
+    color: var(--color-hero-title);
+
+    text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero-subtitle {
+    color: var(--color-hero-subtitle);
+  }
+
+  .hero-accent {
+    color: var(--color-hero-accent);
+  }
+
+  .hero-chip {
+    color: var(--color-hero-accent);
+
+    background: rgba(8, 14, 12, 0.55);
+
+    border: 1px solid rgba(125, 206, 160, 0.28);
+
+    backdrop-filter: blur(16px);
+  }
+
+  .hero-gradient {
+    background:
+      radial-gradient(
+        circle at top right,
+        var(--color-hero-accent-radial),
+        transparent
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-background),
+        var(--color-surface-container-low)
+      );
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px var(--color-accent-glow);
+  }
+
+  .hero-logo-glow {
+    position: relative;
+
+    display: block;
+
+    width: fit-content;
+
+    margin-inline: auto;
+  }
+
+  /* Soft green bloom behind opaque lockup plate */
+  .hero-logo-glow::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: 118%;
+    height: 108%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(61, 143, 92, 0.28) 0%,
+      rgba(61, 143, 92, 0.1) 42%,
+      transparent 72%
+    );
+    filter: blur(28px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-logo-glow-image {
+    position: relative;
+    z-index: 1;
+    border-radius: 1rem;
+  }

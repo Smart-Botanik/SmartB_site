@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 import { GuideMarkdown } from "@/components/GuideMarkdown";
 import { MaterialIcon } from "@/components/MaterialIcon";
@@ -17,7 +17,7 @@ import {
   type FavorableCultureAction,
 } from "@/lib/calendar-favorable";
 import type { MoonCalendarEntry } from "@/lib/calendar-sections";
-import { DEFAULT_CULTURES } from "@/lib/default-cultures";
+import { DEFAULT_CULTURES, type DefaultCulture } from "@/lib/default-cultures";
 import {
   FAVORABLE_ACTIVITIES,
   UNFAVORABLE_DAY_EMOJIS,
@@ -91,6 +91,120 @@ const WEEKDAY_FULL_RU = [
 ] as const;
 
 const CULTURE_ALL = "";
+
+/** Fallback preview images per culture tag key. */
+const CULTURE_PREVIEW_MAP: Record<string, string> = {
+  "crop.tomato": "/previews/tomato.jpg",
+  "crop.zucchini": "/previews/zucchini.jpg",
+  "crop.eggplant": "/previews/eggplant.jpg",
+  "crop.cucumber": "/previews/cucumber.jpg",
+};
+
+type CulturePickerProps = {
+  value: string;
+  onChange: (tagKey: string) => void;
+};
+
+function CulturePicker({ value, onChange }: CulturePickerProps) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
+  const activeCulture = value === CULTURE_ALL
+    ? null
+    : DEFAULT_CULTURES.find(c => c.tagKey === value) ?? null;
+  const activeImage = activeCulture ? (CULTURE_PREVIEW_MAP[activeCulture.tagKey] ?? null) : null;
+  const activeLabel = activeCulture?.label ?? "Все культуры";
+
+  function select(tagKey: string) {
+    onChange(tagKey);
+    setOpen(false);
+  }
+
+  return (
+    <div className="moon-cal-culture-picker" ref={ref}>
+      <button
+        type="button"
+        className={`moon-cal-culture-picker-trigger${open ? " is-open" : ""}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`Культура: ${activeLabel}`}
+        onClick={() => setOpen(o => !o)}
+      >
+        {activeImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={activeImage}
+            alt=""
+            aria-hidden
+            className="moon-cal-culture-picker-thumb"
+          />
+        ) : (
+          <span className="moon-cal-culture-picker-thumb moon-cal-culture-picker-thumb--all" aria-hidden>
+            🌱
+          </span>
+        )}
+        <span className="moon-cal-culture-picker-label">{activeLabel}</span>
+        <span className="moon-cal-culture-picker-chevron" aria-hidden>▾</span>
+      </button>
+
+      {open && (
+        <div className="moon-cal-culture-picker-panel" role="listbox" aria-label="Выберите культуру">
+          {/* All cultures option */}
+          <button
+            type="button"
+            role="option"
+            aria-selected={value === CULTURE_ALL}
+            className={`moon-cal-culture-chip${value === CULTURE_ALL ? " is-active" : ""}`}
+            onClick={() => select(CULTURE_ALL)}
+          >
+            <span className="moon-cal-culture-chip-thumb moon-cal-culture-chip-thumb--all">🌱</span>
+            <span className="moon-cal-culture-chip-label">Все</span>
+          </button>
+
+          {DEFAULT_CULTURES.map(culture => {
+            const img = CULTURE_PREVIEW_MAP[culture.tagKey] ?? null;
+            const isActive = value === culture.tagKey;
+            return (
+              <button
+                key={culture.tagKey}
+                type="button"
+                role="option"
+                aria-selected={isActive}
+                className={`moon-cal-culture-chip${isActive ? " is-active" : ""}`}
+                onClick={() => select(culture.tagKey)}
+              >
+                {img ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={img}
+                    alt=""
+                    aria-hidden
+                    className="moon-cal-culture-chip-thumb"
+                  />
+                ) : (
+                  <span className="moon-cal-culture-chip-thumb" aria-hidden>{culture.emoji}</span>
+                )}
+                <span className="moon-cal-culture-chip-label">{culture.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function buildMonthCells(year: number, monthIndex: number): DayCell[] {
   const todayKey = formatDateKey(new Date());
@@ -200,9 +314,11 @@ function FavorableEmoji({
 function CellBottomMarks({
   tone,
   favorable,
+  favCultures,
 }: {
   tone: DayTone;
   favorable: FavorableActivity[];
+  favCultures?: DefaultCulture[];
 }) {
   if (tone === "unfavorable") {
     return (
@@ -212,6 +328,32 @@ function CellBottomMarks({
             {emoji}
           </span>
         ))}
+      </div>
+    );
+  }
+
+  if (favCultures && favCultures.length > 0) {
+    const maxVisible = 2;
+    const visibleCultures = favCultures.slice(0, maxVisible);
+    const extraCount = favCultures.length - maxVisible;
+
+    return (
+      <div className="moon-cal-cell-marks moon-cal-cell-marks--bottom">
+        {visibleCultures.map(culture => (
+          <span
+            key={culture.tagKey}
+            className="moon-cal-cell-fav"
+            title={culture.label}
+            aria-hidden
+          >
+            {culture.emoji}
+          </span>
+        ))}
+        {extraCount > 0 ? (
+          <span className="text-[9px] font-semibold text-on-surface-variant/80 select-none ml-0.5">
+            +{extraCount}
+          </span>
+        ) : null}
       </div>
     );
   }
@@ -560,21 +702,13 @@ export function MoonCalendar({
           </div>
 
           <div className="moon-cal-toolbar-controls">
-            <label className="moon-cal-culture-select">
+            <div className="moon-cal-culture-select">
               <span className="moon-cal-culture-select-label">Культура</span>
-              <select
+              <CulturePicker
                 value={cultureTagKey}
-                onChange={event => setCultureTagKey(event.target.value)}
-                aria-label="Культура для благоприятности"
-              >
-                <option value={CULTURE_ALL}>Все культуры</option>
-                {DEFAULT_CULTURES.map(culture => (
-                  <option key={culture.tagKey} value={culture.tagKey}>
-                    {culture.emoji} {culture.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+                onChange={setCultureTagKey}
+              />
+            </div>
 
             {!isCompact ? (
               <div
@@ -639,6 +773,24 @@ export function MoonCalendar({
                 cell.published?.title || cell.entry?.note,
               );
 
+              const isAllCultures = cultureTagKey === "";
+              const favCultures = (() => {
+                if (!isAllCultures || !cell.inMonth) return [];
+                const allMatrix = matrixInputForDay(moon.phase, cell.published, "");
+                if (!allMatrix) return [];
+                const actions = listFavorableCultureActions(allMatrix);
+                const seen = new Set<string>();
+                const list: DefaultCulture[] = [];
+                for (const action of actions) {
+                  if (!seen.has(action.tagKey)) {
+                    seen.add(action.tagKey);
+                    const c = DEFAULT_CULTURES.find(x => x.tagKey === action.tagKey);
+                    if (c) list.push(c);
+                  }
+                }
+                return list;
+              })();
+
               return (
                 <button
                   key={cell.key}
@@ -652,9 +804,11 @@ export function MoonCalendar({
                     !cell.inMonth ? "is-outside" : ""
                   } ${cell.isToday ? "is-today" : ""} ${
                     isSelected ? "is-selected" : ""
-                  } ${favorable.length > 0 ? "has-favorable" : ""} ${
-                    tone !== "neutral" ? `is-tone-${tone}` : ""
-                  }`}
+                  } ${
+                    (isAllCultures ? favCultures.length > 0 : favorable.length > 0)
+                      ? "has-favorable"
+                      : ""
+                  } ${tone !== "neutral" ? `is-tone-${tone}` : ""}`}
                 >
                   <div className="moon-cal-cell-head">
                     <div className="moon-cal-cell-marks">
@@ -683,11 +837,19 @@ export function MoonCalendar({
 
                   {isCompact ? (
                     <div className="moon-cal-cell-foot">
-                      <CellBottomMarks tone={tone} favorable={favorable} />
+                      <CellBottomMarks
+                        tone={tone}
+                        favorable={favorable}
+                        favCultures={favCultures}
+                      />
                     </div>
                   ) : (
                     <div className="moon-cal-cell-foot hidden sm:flex">
-                      <CellBottomMarks tone={tone} favorable={favorable} />
+                      <CellBottomMarks
+                        tone={tone}
+                        favorable={favorable}
+                        favCultures={favCultures}
+                      />
                       <span className="truncate font-label text-[9px] leading-tight text-on-surface-variant/80">
                         {moon.lunarDay} л.д.
                       </span>

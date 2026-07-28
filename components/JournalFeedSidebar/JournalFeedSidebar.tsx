@@ -84,7 +84,7 @@ export function JournalFeedSidebar({ feed, communityStats }: JournalFeedSidebarP
       </div>
 
       <Link
-        href="/reports"
+        href="/journal"
         className="flex w-full items-center justify-center gap-2 rounded-xl py-6 font-bold text-on-surface glass-panel transition-colors hover:bg-surface-container-high"
       >
         Вся лента

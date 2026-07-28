@@ -56,7 +56,7 @@ export async function UsefulPageContent() {
           </h1>
         </div>
         <p className="max-w-2xl font-body text-sm text-on-surface-variant">
-          Одна лента: таймлапсы, фото, гайды и внешние источники. Слева — фильтр
+          Одна лента: видео, фото, гайды и внешние источники. Слева — фильтр
           по типу, чтобы быстрее находить полезное.
         </p>
       </div>

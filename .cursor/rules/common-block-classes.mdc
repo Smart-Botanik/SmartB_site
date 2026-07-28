@@ -1,0 +1,21 @@
+---
+description: Identifying classes for main UI component blocks (Header, HeroSection, CultureSection, UpdatesSection, etc.)
+alwaysApply: true
+---
+
+# Common Block Identification Classes
+
+All top-level page section components ("Common Blocks") MUST include a specific identifying CSS class on their outer container element. This enables AI agents, automated tests, and developers to easily identify, select, and style individual UI components across the site.
+
+### Naming Conventions & Required Classes:
+- **Header**: `block-header`
+- **HeroSection**: `block-hero-section`
+- **CultureSection**: `block-culture-section` / `block-culture-presentation`
+- **UpdatesSection**: `block-updates-section`
+- **LunarCalendar**: `block-lunar-calendar`
+- **KnowledgeSection**: `block-knowledge-section`
+- **DiaryCTA**: `block-diary-cta`
+- **Footer**: `block-footer`
+
+### Requirement for Agents:
+Always include `block-<section-name>` on the root element of any main section or common UI block component.

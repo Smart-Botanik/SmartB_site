@@ -1,0 +1,153 @@
+/* —— Engagement / social (Полезное) —— */
+
+.engagement-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.engagement-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 999px;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.engagement-bar-btn:hover {
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+.engagement-bar[data-liked="true"] .engagement-bar-btn:first-child {
+  color: #c45c5c;
+}
+
+.engagement-bar-hint {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.engagement-bar--full {
+  margin-top: 12px;
+  gap: 14px;
+}
+
+.comments-list {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--color-surface-container-low);
+  border: 1px solid rgba(122, 138, 126, 0.2);
+}
+
+.comments-list-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: var(--color-on-surface);
+}
+
+.comments-list-count {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.comments-list-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comments-list-item {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+}
+
+.comments-list-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--color-secondary-container);
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.comments-list-meta {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin-bottom: 2px;
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+}
+
+.comments-list-author {
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.comments-list-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-on-surface);
+}
+
+.comments-list-empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+}
+
+.comments-list-composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.comments-list-composer input {
+  border: 1px solid rgba(122, 138, 126, 0.3);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  color: var(--color-on-surface-variant);
+  font: inherit;
+}
+
+.comments-list-composer button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface-variant);
+  font: inherit;
+  cursor: not-allowed;
+}
+
+.guide-article-comments {
+  margin: 28px 0;
+}
+
+.guide-header-engagement {
+  margin-top: 14px;
+}
