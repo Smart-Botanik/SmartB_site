@@ -197,9 +197,9 @@ export async function loadCultureOptions(
 
 /** Absolute URL for Media from Nest (relative /uploads/...). */
 export function resolveMediaUrl(url: string): string {
-  const rewritePattern = /^(?:https?:\/\/)?(?:localhost|192\.168\.1\.11):3001\/uploads\//i;
+  const rewritePattern = /^(?:https?:\/\/)?(?:localhost|192\.168\.1\.12):3001\/uploads\//i;
   if (rewritePattern.test(url)) {
-    return url.replace(rewritePattern, "http://192.168.1.11:3001/uploads/");
+    return url.replace(rewritePattern, "http://192.168.1.12:3001/uploads/");
   }
 
   if (/^https?:\/\//i.test(url)) {
@@ -208,11 +208,11 @@ export function resolveMediaUrl(url: string): string {
   const base = siteEnv.apiBaseUrl.replace(/\/$/, "");
   const resolved = `${base}${url.startsWith("/") ? url : `/${url}`}`;
   if (rewritePattern.test(resolved)) {
-    return resolved.replace(rewritePattern, "http://192.168.1.11:3001/uploads/");
+    return resolved.replace(rewritePattern, "http://192.168.1.12:3001/uploads/");
   }
   return resolved;
 }
 
 export function cultureHubHref(hubSlug: string): string {
-  return `/guides/kultury/${hubSlug}`;
+  return `/guides/?culture=${hubSlug}`;
 }

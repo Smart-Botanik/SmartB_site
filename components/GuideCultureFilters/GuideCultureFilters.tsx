@@ -92,7 +92,8 @@ export function GuideCultureFilters({
           );
         }
 
-        const href = `${baseHref}?label=${encodeURIComponent(filter.key)}`;
+        const separator = baseHref.includes("?") ? "&" : "?";
+        const href = `${baseHref}${separator}label=${encodeURIComponent(filter.key)}`;
         return (
           <Link
             key={filter.key}

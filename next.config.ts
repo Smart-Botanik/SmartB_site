@@ -23,9 +23,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "http", hostname: "localhost", pathname: "/**" },
       { protocol: "http", hostname: "127.0.0.1", pathname: "/**" },
-      { protocol: "http", hostname: "192.168.1.11", port: "3000", pathname: "/**" },
-      { protocol: "https", hostname: "192.168.1.11", port: "3000", pathname: "/**" },
+      { protocol: "http", hostname: "192.168.1.12", port: "3000", pathname: "/**" },
+      { protocol: "https", hostname: "192.168.1.12", port: "3000", pathname: "/**" },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/guides/kultury/:crop/view",
+        destination: "/guides/view?culture=:crop",
+        permanent: true,
+      },
+      {
+        source: "/guides/kultury/:crop",
+        destination: "/guides/?culture=:crop",
+        permanent: true,
+      },
+    ];
   },
 };
 

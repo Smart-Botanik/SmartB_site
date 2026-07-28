@@ -26,8 +26,8 @@ export function guideCultureHubHref(
   variant: GuideLinkVariant = "default",
 ): string {
   return variant === "view"
-    ? `/guides/kultury/${cultureSlug}/view`
-    : `/guides/kultury/${cultureSlug}`;
+    ? `/guides/view?culture=${cultureSlug}`
+    : `/guides/?culture=${cultureSlug}`;
 }
 
 export function guideArticleHref(slug: string, variant: GuideLinkVariant = "default"): string {
