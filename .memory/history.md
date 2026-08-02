@@ -3,6 +3,76 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-08-02 — Calendar header: moonlit garden WebP (Frontend)
+
+**Role**: Frontend  
+**Change**: Replaced `/calendar` + home lunar header art with compressed moonlit vegetable-garden panoramic (`moon-calendar-header-garden-moon.webp`, 1600×791, ~90KB); previous PNG backed up; object-position/opacity tuned for night scene.  
+**Impact**: Header background ~25× smaller than prior PNG; night garden matches lunar page mood.  
+**Reason**: User supplied new header image to adapt and compress.
+
+## 2026-08-02 — Calendar cell chrome shared + /calendar sizes (Frontend)
+
+**Role**: Frontend  
+**Change**: Same `MoonCalendar` grid on home + `/calendar` (day# / lunar+zodiac stack); full page larger day labels (16–18px) and month header (1.25rem title, 1.5rem chevrons); table toggle remains full-only.  
+**Impact**: `/calendar` matches home cell layout at a larger scale; compact home sizes unchanged.  
+**Reason**: Sync home calendar polish to calendar page; size top labels + month nav.
+
+## 2026-08-02 — Day panel: activity-first culture grouping (Frontend)
+
+**Role**: Frontend  
+**Change**: «По культурам» groups by activity → culture emojis; single culture shows shortLabel chips; emoji instead of Material in panel chips.  
+**Impact**: Day modal is scannable (what work → which crops); no nested culture/activity chip rows.  
+**Reason**: Plan lunar culture grouping UX.
+
+## 2026-08-02 — Hero lockup: original user image (transparent) (Frontend)
+
+**Role**: Frontend  
+**Change**: Restored first user ChatGPT lockup (`Смарт` green / `Ботаник` dark); black knocked out → RGBA; full content res 450×342; archived `assets/smart-botanik-logo-source-user.png`; soft light plate under glow for dark text; WebP ~27KB.  
+**Impact**: Hero uses the approved original artwork without black plate.  
+**Reason**: User asked to use the first provided high-res image.
+
+## 2026-08-02 — Hero lockup: transparent (no black plate) (Frontend)
+
+**Role**: Frontend  
+**Change**: Knocked out black plate → true RGBA; `smart-botanik-logo.webp` (~48KB, alpha) + PNG; removed plate `border-radius`; HomeHero 907×621.  
+**Impact**: Hero logo sits on night bg without opaque black rectangle.  
+**Reason**: User rejected black background on lockup.
+
+## 2026-08-02 — Hero lockup: regen without white spots (Frontend)
+
+**Role**: Frontend  
+**Change**: Regenerated opaque СмартБотаник hero lockup (`smart-botanik-logo-hero-v3`); light black-plate cleanup (`scripts/clean-hero-logo.py`); shipped `public/smart-botanik-logo.webp` (~45KB, q90) + PNG fallback (~262KB, 926×640); HomeHero dims updated.  
+**Impact**: Fewer white speckles on black plate; hero asset ~2× smaller than prior WebP and ~8× vs old full PNG.  
+**Reason**: User reported white pots/spots after previous hero image changes.
+
+## 2026-08-02 — Home calendar cells + day modal polish (Frontend)
+
+**Role**: Frontend  
+**Change**: Compact/home moon cells — calendar day top-right (larger type), lunar day top-right; favorable marks as single icon row; Material icons watering_can / nutrition / content_cut; Esc closes day modal; headings «Благоприятные для:» / «Культуры»; culture actions grouped per crop.  
+**Impact**: Index lunar calendar denser and clearer; day panel lists read as culture lines.  
+**Reason**: User request for home calendar UX pass.
+
+## 2026-08-02 — Day panel: activity-first culture grouping (Frontend)
+
+**Role**: Frontend  
+**Change**: «По культурам» groups by activity → culture emojis; single culture shows shortLabel chips; emoji instead of Material in panel chips.  
+**Impact**: Day modal is scannable (what work → which crops); no nested culture/activity chip rows.  
+**Reason**: Plan lunar culture grouping UX.
+
+## 2026-08-02 — Calendar: favorable day icons replace culture icons (Frontend)
+
+**Role**: Frontend  
+**Change**: Month cells («Все») show deterministic day-sign icons from phase×zodiac (`resolveGeneralDayActivities`) instead of culture emojis; day panel lists «Знаки дня»; added `soil` activity meta.  
+**Impact**: Icons match editorial day themes (уход / полив / удобрения / почва); culture filter still uses crop×activity matrix.  
+**Reason**: User asked to surface description signs as calendar icons, not culture chips.
+
+## 2026-08-02 — Day panel: guide text above favorable (Frontend)
+
+**Role**: Frontend  
+**Change**: In `MoonCalendar` day detail, CMS body (`.guide-paragraph`) renders above `.moon-cal-favorable-block`.  
+**Impact**: Day description appears first; favorable chips follow.  
+**Reason**: User asked to move guide paragraph above favorable block.
+
 ## 2026-07-27 — Culture presentation photos: small 1=2 size (Frontend)
 
 **Role**: Frontend  

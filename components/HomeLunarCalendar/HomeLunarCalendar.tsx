@@ -37,12 +37,12 @@ export async function HomeLunarCalendar({
         {/* Background Image Container */}
         <div className="header-lunar-calendar-bg section-header-bg absolute inset-0 z-0 pointer-events-none select-none">
           <Image
-            src="/moon-calendar-header-garden-moon.png"
+            src="/moon-calendar-header-garden-moon.webp"
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, 720px"
             priority
-            className="object-cover object-[center_60%] opacity-65 sm:opacity-75 dark:opacity-55 sm:dark:opacity-65 saturate-[1.1] dark:saturate-110 dark:brightness-100 transition-all duration-300"
+            className="object-cover object-[center_62%] opacity-70 sm:opacity-80 dark:opacity-58 sm:dark:opacity-68 saturate-[1.08] dark:saturate-105 brightness-[1.04] dark:brightness-100 transition-all duration-300"
           />
           {/* Readability gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/55 to-transparent dark:from-background/95 dark:via-background/65 dark:to-background/25" />

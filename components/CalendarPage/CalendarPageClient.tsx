@@ -27,7 +27,7 @@ export function CalendarPageClient({ sections }: CalendarPageClientProps) {
         <header className="moon-cal-page-header">
           <div className="moon-cal-page-header-media" aria-hidden="true">
             <Image
-              src="/moon-calendar-header-garden-moon.png"
+              src="/moon-calendar-header-garden-moon.webp"
               alt=""
               fill
               priority
@@ -48,7 +48,7 @@ export function CalendarPageClient({ sections }: CalendarPageClientProps) {
         </header>
 
         <section aria-label="Лунный календарь">
-          <MoonCalendar entries={moonEntries} />
+          <MoonCalendar entries={moonEntries} variant="full" />
         </section>
 
         <LunarGuide guide={sections.lunarGuide} />

@@ -60,8 +60,8 @@ export function HomeHero({
             <Image
               src="/smart-botanik-logo.webp"
               alt="СмартБотаник"
-              width={699}
-              height={538}
+              width={450}
+              height={342}
               className="hero-logo-glow-image block h-44 w-auto sm:h-52 md:h-64"
               priority
             />

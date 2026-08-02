@@ -36,6 +36,12 @@ Platform WIP (другие apps): `../../memory/hub.md` — не дублиро�
 
 | Дата | Суть |
 |------|------|
+| 2026-08-02 | Calendar header: moonlit garden WebP (~90KB) on `/calendar` + home |
+| 2026-08-02 | Calendar: shared cell chrome; `/calendar` larger day labels + month header |
+| 2026-08-02 | Hero: original user lockup transparent (450×342), soft light plate |
+| 2026-08-02 | Hero lockup: transparent RGBA (no black plate), WebP ~48KB |
+| 2026-08-02 | Hero lockup regen: clean black plate, WebP ~45KB (no white spots) |
+| 2026-08-02 | Calendar: day-sign icons (phase×zodiac) replace culture emojis on «Все» |
 | 2026-07-27 | Header: hide «Войти» until social module |
 | 2026-07-27 | Hero: trial opaque СмартБотаник lockup (`smart-botanik-logo-full.png`) |
 | 2026-07-27 | Brand: SmartБотаник → СмартБотаник; logo PNGs regenerated |

@@ -90,22 +90,22 @@
     margin-inline: auto;
   }
 
-  /* Soft green bloom behind opaque lockup plate */
+  /* Soft light plate so dark «Ботаник» stays readable on night bg */
   .hero-logo-glow::before {
     content: "";
     position: absolute;
     left: 50%;
-    top: 48%;
-    width: 118%;
-    height: 108%;
+    top: 52%;
+    width: 108%;
+    height: 96%;
     transform: translate(-50%, -50%);
     background: radial-gradient(
       ellipse at center,
-      rgba(61, 143, 92, 0.28) 0%,
-      rgba(61, 143, 92, 0.1) 42%,
+      rgba(252, 250, 245, 0.22) 0%,
+      rgba(61, 143, 92, 0.14) 45%,
       transparent 72%
     );
-    filter: blur(28px);
+    filter: blur(22px);
     pointer-events: none;
     z-index: 0;
   }
@@ -113,5 +113,4 @@
   .hero-logo-glow-image {
     position: relative;
     z-index: 1;
-    border-radius: 1rem;
   }

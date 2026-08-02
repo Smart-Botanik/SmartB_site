@@ -5,15 +5,18 @@ export type FavorableActivity =
   | "watering"
   | "nutrients"
   | "harvest"
-  | "care";
+  | "care"
+  | "soil";
 
 /** Day tone for cell presentation — from matrix resolve, not CMS generalState. */
 export type DayTone = "favorable" | "unfavorable" | "neutral";
 
 export type FavorableActivityMeta = {
   id: FavorableActivity;
-  /** Color emoji glyph for presentation markers. */
+  /** Color emoji glyph for presentation markers / text lines. */
   emoji: string;
+  /** Optional Material Symbol (cells / legend); preferred over emoji when set. */
+  materialIcon?: string;
   label: string;
   shortLabel: string;
 };
@@ -28,14 +31,16 @@ export const FAVORABLE_ACTIVITIES: FavorableActivityMeta[] = [
   {
     id: "watering",
     emoji: "💧",
-    label: "Полив",
+    materialIcon: "water_drop",
+    label: "Полив и увлажнение",
     shortLabel: "Полив",
   },
   {
     id: "nutrients",
-    emoji: "🧪",
-    label: "Подкормка",
-    shortLabel: "Питание",
+    emoji: "🧴",
+    materialIcon: "nutrition",
+    label: "Удобрения",
+    shortLabel: "Удобрения",
   },
   {
     id: "harvest",
@@ -45,9 +50,16 @@ export const FAVORABLE_ACTIVITIES: FavorableActivityMeta[] = [
   },
   {
     id: "care",
-    emoji: "🧤",
-    label: "Уход",
+    emoji: "✂️",
+    materialIcon: "content_cut",
+    label: "Уход, прополка, борьба с вредителями",
     shortLabel: "Уход",
+  },
+  {
+    id: "soil",
+    emoji: "🪴",
+    label: "Работа с почвой",
+    shortLabel: "Почва",
   },
 ];
 
