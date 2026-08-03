@@ -42,6 +42,7 @@
 - [x] Day panel «Знаки дня» + `soil` activity (`resolveGeneralDayActivities`)
 - [x] Home compact: day# top-right (larger), lunar day top-right; fav icon string; Esc closes modal; «Благоприятные для:» / «Культуры» grouped; watering_can / nutrition / content_cut (2026-08-02)
 - [x] Shared cell chrome on `/calendar` + home: day# on top, lunar+zodiac row beneath; `/calendar` larger day labels + month header (chevrons + title); table mode only on full (2026-08-02)
+- [x] `app/css/calendar.css` dedupe/minify: dropped duplicate guide+day-panel block, dead `.moon-cal-cell-moon` sizes, folded `calendar-cell-hover` into `.moon-cal-cell` (~35KB→29KB)
 
 ## Follow-up
 

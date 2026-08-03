@@ -70,6 +70,22 @@ Pre-launch: главная, гайды, Telegram, brand rollout на site UI.
 - `SiteHeaderAuth` returns `null` (desktop + mobile) until social / login module
 - Mock auth helper kept for later restore
 
+### Done (2026-08-03) — Hero lockup (transparent, no black plate)
+
+- User lockup source kept as-is in `assets/smart-botanik-logo-source-user.png`
+- Black plate knocked out → RGBA `public/smart-botanik-logo.png` (1024×682); logo art unchanged
+- Soft light plate CSS restored under `.hero-logo-glow`
+- FE-SITE-BRD hero art slice advanced (tokens/OG still open)
+
+### Done (2026-08-03) — Hero lockup (transparent) [superseded]
+
+- Prior: transparent WebP `smart-botanik-logo.webp` (764×416); replaced by opaque prototype PNG above
+
+### Done (2026-08-03) — Hero: no text brand title
+
+- Removed hero `<h1>` text title; lockup image is the brand `h1` (`alt="СмартБотаник"`)
+- Home no longer passes `sections.hero.title` into `HomeHero`
+
 ### Done (2026-07-27) — Brand `СмартБотаник`
 
 - Display rename `SmartБотаник` → `СмартБотаник` (UI, metadata, brief/TG drafts)

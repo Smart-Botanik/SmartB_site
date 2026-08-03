@@ -3,6 +3,48 @@
 > Локальный лог `site/`. **Не** копия platform `memory/project/history.md`.  
 > Шаблон: date · role · change · impact · reason.
 
+## 2026-08-03 — Hero lockup: no black plate (Frontend)
+
+**Role**: Frontend  
+**Change**: Kept user artwork; knocked black plate → transparent RGBA on `public/smart-botanik-logo.png`; restored soft light plate CSS (no black-plate bloom).  
+**Impact**: Hero lockup floats on photo bg without black rectangle.  
+**Reason**: User — don’t use black background; copy art as-is.
+
+## 2026-08-03 — Hero lockup: black-plate PNG as-is (Frontend) [superseded]
+
+**Role**: Frontend  
+**Change**: Replaced `public/smart-botanik-logo.png` with user black-plate lockup (1024×682 RGB) unchanged; source in `assets/`; soft cream plate → green bloom under `.hero-logo-glow`.  
+**Impact**: Home hero brand = provided lockup (sprout + Смарт Ботаник + smart-botanik.ru).  
+**Reason**: User — add this image for Hero, don’t alter it.
+
+## 2026-08-03 — Hero lockup: prototype PNG as-is (Frontend) [superseded]
+
+**Role**: Frontend  
+**Change**: Dropped in user ChatGPT lockup unchanged as `public/smart-botanik-logo.png` (1024×682); source copy in `assets/`; `HomeHero` src/dims updated; no transparency cleanup or WebP.  
+**Impact**: Hero shows latest prototype lockup; easy to swap again.  
+**Reason**: User — use this image, don’t alter it (prototype).
+
+## 2026-08-03 — Hero: brand via lockup image only (Frontend)
+
+**Role**: Frontend  
+**Change**: Dropped hero text title (`title` prop / CMS `sections.hero.title`); lockup WebP is the sole brand `h1`. Subtitle + CTAs unchanged.  
+**Impact**: No duplicate «СмартБотаник» / SmartБотаник text under the logo.  
+**Reason**: User — remove title, use hero image.
+
+## 2026-08-03 — Hero lockup: transparent WebP + soft plate restored (Frontend)
+
+**Role**: Frontend  
+**Change**: User lockup with black knocked out → RGBA (`smart-botanik-logo.webp` 764×416 ~23KB); restored `.hero-logo-glow::before` soft light plate (no opaque radius/shadow).  
+**Impact**: Hero keeps transparent lockup + existing glow plate; new artwork wired in.  
+**Reason**: User asked to reuse art without removing transparency / soft plate.
+
+## 2026-08-03 — Calendar CSS dedupe/minify (Frontend)
+
+**Role**: Frontend  
+**Change**: Cleaned `app/css/calendar.css` — removed duplicated guide + day-panel rules, dead `.moon-cal-cell-moon` size rules (class unused), folded `calendar-cell-hover` into `.moon-cal-cell`, collapsed property blank lines.  
+**Impact**: ~35KB → ~29KB (−16%); no selector duplicates; same visual behavior.  
+**Reason**: User asked to cut duplicates/unused and minimize calendar CSS.
+
 ## 2026-08-02 — Calendar header: moonlit garden WebP (Frontend)
 
 **Role**: Frontend  

@@ -3,7 +3,7 @@
 > **Старт:** этот файл → [`tasks/active.md`](./tasks/active.md) → card.  
 > **AI:** [`AGENTS.md`](./AGENTS.md)
 
-**Обновлено:** 2026-07-27 (brand СмартБотаник + SITE-JOURNAL-1 WIP)
+**Обновлено:** 2026-08-03 (hero lockup transparent, no black plate)
 
 ---
 
@@ -36,6 +36,12 @@ Platform WIP (другие apps): `../../memory/hub.md` — не дублиро�
 
 | Дата | Суть |
 |------|------|
+| 2026-08-03 | Hero: lockup transparent (black plate out); art as-is |
+| 2026-08-03 | Hero: black-plate lockup PNG as-is (no cleanup) [superseded] |
+| 2026-08-03 | Hero: prototype lockup PNG as-is (no cleanup) [superseded] |
+| 2026-08-03 | Hero: drop text title; brand = lockup image |
+| 2026-08-03 | Hero: transparent СмартБотаник lockup WebP (~23KB) + soft plate |
+| 2026-08-03 | Calendar CSS dedupe/minify (~35→29KB) |
 | 2026-08-02 | Calendar header: moonlit garden WebP (~90KB) on `/calendar` + home |
 | 2026-08-02 | Calendar: shared cell chrome; `/calendar` larger day labels + month header |
 | 2026-08-02 | Hero: original user lockup transparent (450×342), soft light plate |

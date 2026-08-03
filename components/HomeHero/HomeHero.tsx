@@ -7,8 +7,6 @@ import { MaterialIcon } from "@/components/MaterialIcon";
 import { siteEnv } from "@/lib/env";
 
 type HomeHeroProps = {
-  title?: string;
-
   subtitle?: string;
 
   ctaLabel?: string;
@@ -17,8 +15,6 @@ type HomeHeroProps = {
 };
 
 export function HomeHero({
-  title = "Интерактивный дневник вашего сада",
-
   subtitle = "Отслеживайте полив, питание и стадии роста с точностью, которой доверяют опытные гроверы. Гайды, репорты и сообщество — в одном месте.",
 
   ctaLabel = "Смотреть гайды",
@@ -56,16 +52,16 @@ export function HomeHero({
 
       <div className="relative z-10 mx-auto max-w-4xl space-y-6 text-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="hero-logo-glow">
+          <h1 className="hero-logo-glow m-0">
             <Image
-              src="/smart-botanik-logo.webp"
+              src="/smart-botanik-logo.png"
               alt="СмартБотаник"
-              width={450}
-              height={342}
+              width={1024}
+              height={682}
               className="hero-logo-glow-image block h-44 w-auto sm:h-52 md:h-64"
               priority
             />
-          </div>
+          </h1>
 
           <div className="hero-chip inline-flex items-center gap-1 rounded-full px-6 py-2">
             <MaterialIcon name="eco" className="text-[18px]" filled />
@@ -75,36 +71,6 @@ export function HomeHero({
             </span>
           </div>
         </div>
-
-        <h1 className="hero-title font-display text-display-mobile tracking-tighter md:text-[64px] md:leading-tight">
-          {title.includes("\n") ? (
-            title.split("\n").map((line, index) => (
-              <span key={index}>
-                {index > 0 ? <br /> : null}
-
-                {line.includes("дневник") ? (
-                  <>
-                    {line.replace("дневник", "").trim()}{" "}
-                    <span className="hero-accent text-glow italic">
-                      дневник
-                    </span>
-                  </>
-                ) : (
-                  line
-                )}
-              </span>
-            ))
-          ) : title === "Интерактивный дневник вашего сада" ? (
-            <>
-              Интерактивный{" "}
-              <span className="hero-accent text-glow italic">дневник</span>
-              <br />
-              вашего сада
-            </>
-          ) : (
-            title
-          )}
-        </h1>
 
         <p className="hero-subtitle mx-auto max-w-2xl font-body text-base md:text-lg">
           {subtitle}

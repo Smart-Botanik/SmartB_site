@@ -17,7 +17,6 @@ export default async function HomePage() {
   return (
     <div className="home-sections">
       <HomeHero
-        title={sections.hero.title}
         subtitle={sections.hero.subtitle}
         ctaLabel={sections.hero.ctaLabel ?? "Смотреть гайды"}
         ctaHref={sections.hero.ctaHref ?? "/guides"}

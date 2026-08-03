@@ -962,7 +962,7 @@ export function MoonCalendar({
                   aria-expanded={isSelected}
                   aria-current={cell.isToday ? "date" : undefined}
                   onClick={() => toggleDay(cell.key)}
-                  className={`moon-cal-cell calendar-cell-hover ${
+                  className={`moon-cal-cell ${
                     !cell.inMonth ? "is-outside" : ""
                   } ${cell.isToday ? "is-today" : ""} ${
                     isSelected ? "is-selected" : ""
